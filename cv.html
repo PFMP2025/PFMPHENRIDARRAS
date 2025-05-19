@@ -6,225 +6,246 @@
   <title>CV Automatisé</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  <style>
+ <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #f1f2f6, #dbe4f3);
+    padding: 2rem;
+    color: #343a40;
+  }
+
+  .formulaire {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .formulaire label {
+    font-weight: bold;
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .formulaire input, .formulaire select {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+  }
+
+  .cv-container {
+    max-width: 800px;
+    margin: auto;
+    background: #ffffff;
+    display: flex;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    page-break-inside: avoid;
+  }
+
+  .cv-left {
+    background: #004080;
+    color: white;
+    width: 30%;
+    padding: 1.5rem;
+    text-align: center;
+    height: 297mm;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+
+  .cv-left img {
+    display: none;
+  }
+
+  .cv-left .editable {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  .cv-left .editable:focus {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .cv-right {
+    width: 70%;
+    padding: 2rem;
+    background: #ffffff;
+  }
+
+  .editable {
+    border: 1px dashed #c0c0c0;
+    border-radius: 4px;
+    padding: 0.4rem;
+    margin-bottom: 0.4rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .editable:focus {
+    background: #f1f9ff;
+    outline: none;
+  }
+
+  h1 {
+    color: #2c3e50;
+    border-bottom: 2px solid #004080;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    color: #004080;
+    margin-top: 1.5rem;
+    border-left: 4px solid #004080;
+    padding-left: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  .download {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  button {
+    padding: 0.8rem 2rem;
+    background: #004080;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background: #002d5f;
+  }
+
+  .add-btn {
+    font-size: 0.9rem;
+    background: #198754;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 768px) {
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #f1f2f6, #dbe4f3);
-      padding: 2rem;
-      color: #343a40;
+      padding: 1rem;
     }
 
     .formulaire {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-      margin-bottom: 2rem;
-      background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    .formulaire label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-    }
-
-    .formulaire input, .formulaire select {
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 6px;
-      border: 1px solid #ced4da;
+      padding: 1rem;
     }
 
     .cv-container {
-      max-width: 800px;
-      margin: auto;
-      background: #ffffff;
-      display: flex;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      overflow: hidden;
-      page-break-inside: avoid;
+      flex-direction: column;
+      border-radius: 8px;
     }
 
-    .cv-left {
-      background: #004080;
-      color: white;
-      width: 30%;
-      padding: 1.5rem;
-      text-align: center;
+    .cv-left, .cv-right {
+      width: 100%;
+      padding: 1rem;
+      height: auto !important;
     }
 
-    .cv-left img {
-      display: none;
-    }
-
-    .cv-left .editable {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-    }
-
-    .cv-left .editable:focus {
-      background-color: #ffffff;
-      color: #000000;
-    }
-
-    .cv-right {
-      width: 70%;
-      padding: 2rem;
-      background: #ffffff;
-    }
-
-    .editable {
-      border: 1px dashed #c0c0c0;
-      border-radius: 4px;
-      padding: 0.4rem;
-      margin-bottom: 0.4rem;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    .editable:focus {
-      background: #f1f9ff;
-      outline: none;
+    .formulaire input, .formulaire select {
+      width: 100%;
+      max-width: none;
+      font-size: 1rem;
     }
 
     h1 {
-      color: #2c3e50;
-      border-bottom: 2px solid #004080;
-      padding-bottom: 0.5rem;
-      font-size: 1.8rem;
+      font-size: 1.4rem;
     }
 
     h2 {
-      color: #004080;
-      margin-top: 1.5rem;
-      border-left: 4px solid #004080;
-      padding-left: 0.5rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
-    ul {
-      padding-left: 1.5rem;
-    }
-
-    li {
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    .download {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    button {
-      padding: 0.8rem 2rem;
-      background: #004080;
-      color: white;
-      border: none;
-      border-radius: 6px;
+    button, .add-btn {
+      width: 100%;
       font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #002d5f;
-    }
-
-    .add-btn {
-      font-size: 0.9rem;
-      background: #198754;
       margin-top: 0.5rem;
-      border-radius: 4px;
     }
+  }
 
-    /* Responsive mobile */
-    @media (max-width: 768px) {
-      body {
-        padding: 1rem;
-      }
+  .force-desktop {
+    flex-direction: row !important;
+  }
 
-      .formulaire {
-        padding: 1rem;
-      }
+  .force-desktop .cv-left {
+    width: 30% !important;
+  }
 
-      .cv-container {
-        flex-direction: column;
-        border-radius: 8px;
-      }
+  .force-desktop .cv-right {
+    width: 70% !important;
+  }
 
-      .cv-left, .cv-right {
-        width: 100%;
-        padding: 1rem;
-      }
+  .force-desktop .editable {
+    border: none !important;
+    background: none !important;
+    color: #000 !important;
+  }
 
-      .formulaire input, .formulaire select {
-        width: 100%;
-        max-width: none;
-        font-size: 1rem;
-      }
+  .force-desktop .cv-left .editable {
+    color: #fff !important;
+  }
+</style>
 
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      h2 {
-        font-size: 1.1rem;
-      }
-
-      button, .add-btn {
-        width: 100%;
-        font-size: 1rem;
-        margin-top: 0.5rem;
-      }
-    }
-
-    
-.force-desktop {
-  flex-direction: row !important;
-}
-
-.force-desktop .cv-left {
-  width: 30% !important;
-}
-
-.force-desktop .cv-right {
-  width: 70% !important;
-}
-
-.force-desktop .editable {
-  border: none !important;
-  background: none !important;
-  color: #000 !important;
-}
-
-.force-desktop .cv-left .editable {
-  color: #fff !important;
-}
-
-
-  </style>
 </head>
 <body>
   <div class="formulaire">
     <label for="selectMetier">Choisis ton métier :</label>
     <select id="selectMetier" onchange="updateCV()">
-      <option>Technicien Réseaux</option>
-      <option>Domoticien</option>
-      <option>Technicien Cybersécurité</option>
-      <option>Électricien du Bâtiment</option>
-      <option>Automaticien</option>
-      <option>Technicien Électronique</option>
-    </select>
+  <optgroup label="CIEL">
+    <option>Technicien Réseaux</option>
+    <option>Technicien Informatique</option>
+    <option>Technicien Support</option>
+    <option>Technicien Électronique</option>
+    <option>Développeur Web</option>
+    <option>Installateur Domotique</option>
+    <option>Intégrateur IoT</option>
+    <option>Technicien Cybersécurité</option>
+  </optgroup>
+  <optgroup label="MELEC">
+    <option>Électricien du Bâtiment</option>
+    <option>Technicien de Maintenance</option>
+    <option>Électricien Industriel</option>
+    <option>Technicien en Régulation CVC</option>
+  </optgroup>
+  <optgroup label="Chaudronnerie">
+    <option>Ouvrier Chaudronnier</option>
+    <option>Soudeur</option>
+    <option>Assembleur Métallique</option>
+    <option>Monteur en Tuyauterie</option>
+    <option>Opérateur CN</option>
+    <option>Contrôleur Qualité</option>
+  </optgroup>
+</select>
+
   </div>
 
   <div class="cv-container" id="cvContent">
@@ -260,148 +281,174 @@
     <button onclick="generatePDF()">🗃️ Télécharger le CV en PDF</button>
   </div>
 
-  <script>
-    const baseCV = {
-      "Technicien Réseaux": {
-        profil: "Passionné par les infrastructures réseaux, la configuration et la cybersécurité.",
-        competences: [
-          "Adressage IP, VLAN, réseaux LAN/WAN",
-          "Configuration de routeurs et switchs",
-          "Diagnostic et résolution de pannes",
-          "Utilisation de Packet Tracer et Wireshark"
-        ]
-      },
-      "Domoticien": {
-        profil: "Spécialiste des systèmes connectés pour le confort et la sécurité du bâtiment.",
-        competences: [
-          "Installation d’alarmes, volets, thermostats connectés",
-          "Programmation de systèmes KNX, Arduino",
-          "Lecture de plans et schémas électriques",
-          "Maintenance et mise en service domotique"
-        ]
-      },
-      "Technicien Cybersécurité": {
-        profil: "Motivé par la sécurité informatique et la protection des données.",
-        competences: [
-          "Pare-feu, antivirus, mises à jour",
-          "Configuration de systèmes sécurisés",
-          "Notions d’éthique et RGPD",
-          "Surveillance des intrusions"
-        ]
-      },
-      "Électricien du Bâtiment": {
-        profil: "À l’aise avec les installations électriques dans le bâtiment.",
-        competences: [
-          "Câblage courant fort/faible",
-          "Lecture de plans électriques",
-          "Installation d'équipements domotiques",
-          "Normes de sécurité électrique"
-        ]
-      },
-      "Automaticien": {
-        profil: "Attiré par les systèmes industriels automatisés.",
-        competences: [
-          "GRAFCET, automates, relais logiques",
-          "Coffrets de commande",
-          "Maintenance de systèmes automatisés",
-          "Programmation de cycles automatisés"
-        ]
-      },
-      "Technicien Électronique": {
-        profil: "Curieux et précis dans l’assemblage de circuits électroniques.",
-        competences: [
-          "Lecture de schémas électroniques",
-          "Utilisation d'Arduino, multimètre",
-          "Soudure et test de composants",
-          "Maintenance de systèmes embarqués"
-        ]
-      }
-    };
+ <script>
+const baseCV = {
+  "Technicien Réseaux": {
+    profil: "Passionné par les infrastructures réseaux, la configuration et la cybersécurité.",
+    competences: ["Adressage IP, VLAN", "Configuration routeurs/switchs", "Utilisation de Packet Tracer", "Résolution de pannes"]
+  },
+  "Technicien Informatique": {
+    profil: "Polyvalent et à l’aise avec la configuration de postes et le support utilisateur.",
+    competences: ["Installation Windows/Linux", "Support technique", "Création d’images système", "Gestion de parc"]
+  },
+  "Technicien Support": {
+    profil: "Réactif, orienté résolution rapide des pannes informatiques.",
+    competences: ["Assistance bureautique", "Gestion des tickets", "Maintenance matérielle", "Restauration système"]
+  },
+  "Technicien Électronique": {
+    profil: "Curieux, précis, aime l’électronique embarquée.",
+    competences: ["Lecture de schémas", "Arduino, multimètre", "Soudure composants", "Maintenance systèmes embarqués"]
+  },
+  "Développeur Web": {
+    profil: "Créatif dans la conception de sites interactifs.",
+    competences: ["HTML/CSS/JS", "Responsive design", "Débogage navigateur", "Utilisation d’éditeurs web"]
+  },
+  "Installateur Domotique": {
+    profil: "Spécialiste des systèmes connectés pour le bâtiment.",
+    competences: ["Installation alarmes, volets", "Systèmes KNX, Arduino", "Lecture de plans", "Maintenance domotique"]
+  },
+  "Intégrateur IoT": {
+    profil: "Passionné d’objets connectés et d’automatisation.",
+    competences: ["Capteurs/actionneurs", "MQTT, HTTP, TCP/IP", "Raspberry Pi / ESP32", "Connexion réseau local"]
+  },
+  "Technicien Cybersécurité": {
+    profil: "Motivé par la sécurité des systèmes numériques.",
+    competences: ["Pare-feu, antivirus", "Sécurisation des postes", "Surveillance réseau", "RGPD & éthique numérique"]
+  },
+  "Électricien du Bâtiment": {
+    profil: "À l’aise avec les installations dans les logements.",
+    competences: ["Câblage courant fort/faible", "Lecture de plans", "Pose d’équipements domotiques", "Normes de sécurité"]
+  },
+  "Technicien de Maintenance": {
+    profil: "Capable de maintenir et réparer des équipements techniques.",
+    competences: ["Analyse des pannes", "Lecture de plans", "Maintenance préventive", "Diagnostic technique"]
+  },
+  "Électricien Industriel": {
+    profil: "Spécialiste de l’électricité en milieu industriel.",
+    competences: ["Raccordement armoires", "Conduits techniques", "Contrôle d’isolement", "Normes industrielles"]
+  },
+  "Technicien en Régulation CVC": {
+    profil: "Technicien CVC, spécialiste en régulation de clim/chauffage.",
+    competences: ["Régulation PID", "Dépannage régulateurs", "Lecture de schémas", "Paramétrage équipements"]
+  },
+  "Ouvrier Chaudronnier": {
+    profil: "Forme des pièces métalliques sur mesure.",
+    competences: ["Traçage sur tôle", "Lecture de plans", "Soudage TIG/MIG", "Utilisation machines-outils"]
+  },
+  "Soudeur": {
+    profil: "Maîtrise les techniques de soudure pour tous types de métaux.",
+    competences: ["TIG, MIG, à l’arc", "Préparation pièces", "Contrôle visuel", "Sécurité des soudures"]
+  },
+  "Assembleur Métallique": {
+    profil: "Assemble les structures métalliques en atelier ou chantier.",
+    competences: ["Lecture de plan", "Soudure / boulonnage", "Contrôle dimensionnel", "Manutention"]
+  },
+  "Monteur en Tuyauterie": {
+    profil: "Assemble des circuits de tuyaux industriels.",
+    competences: ["Préparation tuyaux", "Lecture isométriques", "Pointage/soudage", "Montage sur site"]
+  },
+  "Opérateur CN": {
+    profil: "Maîtrise les machines à commande numérique.",
+    competences: ["Programmation CN simple", "Montage d’outils", "Contrôle dimensionnel", "Maintenance 1er niveau"]
+  },
+  "Contrôleur Qualité": {
+    profil: "Garantit la conformité des pièces produites.",
+    competences: ["Contrôle visuel", "Mesure dimensionnelle", "Lecture de plans", "Fiches non-conformité"]
+  }
+};
 
-    function updateCV() {
-      const metier = document.getElementById("selectMetier").value;
-      const data = baseCV[metier] || baseCV["Technicien Réseaux"];
+function updateCV() {
+  const metier = document.getElementById("selectMetier").value;
+  const data = baseCV[metier] || baseCV["Technicien Réseaux"];
 
-      document.getElementById("titre").textContent = `CV - ${metier}`;
-      document.getElementById("profil").textContent = data.profil;
+  document.getElementById("titre").textContent = `CV - ${metier}`;
+  document.getElementById("profil").textContent = data.profil;
 
-      const compList = document.getElementById("competences");
-      compList.innerHTML = "";
-      data.competences.forEach(c => {
-        const li = document.createElement("li");
-        li.contentEditable = true;
-        li.className = "editable";
-        li.textContent = c;
-        compList.appendChild(li);
-      });
+  const compList = document.getElementById("competences");
+  compList.innerHTML = "";
+  data.competences.forEach(c => {
+    const li = document.createElement("li");
+    li.contentEditable = true;
+    li.className = "editable";
+    li.textContent = c;
+    compList.appendChild(li);
+  });
 
-      const entrepriseTxt = document.getElementById("nomEntreprise").textContent.replace("Entreprise :", "").trim();
+  const stageList = document.getElementById("stages");
+  stageList.innerHTML = "";
+  [
+    `Stage de 6 semaines dans le domaine : ${metier}`,
+    `Projet réalisé en classe sur le thème : ${metier}`
+  ].forEach(s => {
+    const li = document.createElement("li");
+    li.contentEditable = true;
+    li.className = "editable";
+    li.textContent = s;
+    stageList.appendChild(li);
+  });
 
-      const stageList = document.getElementById("stages");
-      stageList.innerHTML = "";
-      [
-        `Stage de 6 semaines chez ${entrepriseTxt || "____________"}`,
-        `Projet réalisé en classe sur le thème : ${metier}`
-      ].forEach(s => {
-        const li = document.createElement("li");
-        li.contentEditable = true;
-        li.className = "editable";
-        li.textContent = s;
-        stageList.appendChild(li);
-      });
-    }
+  const bg = document.querySelector(".cv-left");
+  if (metier.includes("Technicien") || metier.includes("Développeur") || metier.includes("Installateur") || metier.includes("IoT")) {
+    bg.style.background = "#004080"; // CIEL : bleu
+  } else if (metier.includes("Électricien") || metier.includes("Maintenance") || metier.includes("CVC")) {
+    bg.style.background = "#117a3a"; // MELEC : vert
+  } else {
+    bg.style.background = "#555555"; // Chaudronnerie : gris métal
+  }
+}
 
-    function addCompetence() {
-      const li = document.createElement("li");
-      li.contentEditable = true;
-      li.className = "editable";
-      li.textContent = "Nouvelle compétence";
-      document.getElementById("competences").appendChild(li);
-    }
+function addCompetence() {
+  const li = document.createElement("li");
+  li.contentEditable = true;
+  li.className = "editable";
+  li.textContent = "Nouvelle compétence";
+  document.getElementById("competences").appendChild(li);
+}
 
-    function addStage() {
-      const li = document.createElement("li");
-      li.contentEditable = true;
-      li.className = "editable";
-      li.textContent = "Nouvelle expérience";
-      document.getElementById("stages").appendChild(li);
-    }
+function addStage() {
+  const li = document.createElement("li");
+  li.contentEditable = true;
+  li.className = "editable";
+  li.textContent = "Nouvelle expérience";
+  document.getElementById("stages").appendChild(li);
+}
 
-    function addLoisir() {
-      const li = document.createElement("li");
-      li.contentEditable = true;
-      li.className = "editable";
-      li.textContent = "Nouveau loisir";
-      document.getElementById("loisirs").appendChild(li);
-    }
+function addLoisir() {
+  const li = document.createElement("li");
+  li.contentEditable = true;
+  li.className = "editable";
+  li.textContent = "Nouveau loisir";
+  document.getElementById("loisirs").appendChild(li);
+}
 
-    function generatePDF() {
-      const cvContainer = document.getElementById("cvContent");
-      cvContainer.classList.add("force-desktop");
+function generatePDF() {
+  const cvContainer = document.getElementById("cvContent");
+  cvContainer.classList.add("force-desktop");
 
-      document.getElementById("btnAddComp").style.display = "none";
-      document.getElementById("btnAddStage").style.display = "none";
-      document.getElementById("btnAddLoisir").style.display = "none";
+  document.getElementById("btnAddComp").style.display = "none";
+  document.getElementById("btnAddStage").style.display = "none";
+  document.getElementById("btnAddLoisir").style.display = "none";
 
-      const element = document.getElementById("cvContent");
-      const opt = {
-        margin: 0,
-        filename: 'CV_Personnalise.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 1.5, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all'] }
-      };
+  const element = document.getElementById("cvContent");
+  const opt = {
+    margin: 0,
+    filename: 'CV_Personnalise.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 1.5, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all'] }
+  };
 
-      html2pdf().set(opt).from(element).save().then(() => {
-        cvContainer.classList.remove("force-desktop");
-        document.getElementById("btnAddComp").style.display = "inline-block";
-        document.getElementById("btnAddStage").style.display = "inline-block";
-        document.getElementById("btnAddLoisir").style.display = "inline-block";
-      });
-    }
+  html2pdf().set(opt).from(element).save().then(() => {
+    cvContainer.classList.remove("force-desktop");
+    document.getElementById("btnAddComp").style.display = "inline-block";
+    document.getElementById("btnAddStage").style.display = "inline-block";
+    document.getElementById("btnAddLoisir").style.display = "inline-block";
+  });
+}
 
-    window.onload = updateCV;
-  </script>
+window.onload = updateCV;
+</script>
+
 </body>
 </html>
