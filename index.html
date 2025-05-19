@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CIEL et MELEC – Deux métiers connectés</title>
+  <title>Présentation CIEL, MELEC et Chaudronnerie</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,16 +16,26 @@
       text-align: center;
       margin-bottom: 2rem;
     }
-    .search {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .search input {
-      padding: 0.5rem 1rem;
-      width: 300px;
+    .btn-fiches {
+      display: inline-block;
+      background: #004080;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       font-size: 1rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      max-width: 100%;
+      text-align: center;
+      word-break: break-word;
+    }
+    .btn-fixed {
+      position: fixed;
+      bottom: 10px;
+      left: 5%;
+      width: 90%;
+      z-index: 1000;
     }
     .grid {
       display: grid;
@@ -48,185 +58,162 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .card h2 i {
-      font-size: 1.3rem;
-    }
     .card ul {
       padding-left: 1.2rem;
     }
     .card ul li {
       margin-bottom: 0.5rem;
     }
-    .card.orange h2 { color: #e67e22; }
-    .card.green h2 { color: #27ae60; }
-    .card.purple h2 { color: #8e44ad; }
-    .card.turquoise h2 { color: #16a085; }
-    .card.gold h2 { color: #c49b0e; }
-    .btn-fiches {
-  display: inline-block;
-  background: #004080;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  font-size: 1rem;
-  max-width: 100%;
-  text-align: center;
-  word-break: break-word;
-}
-
-@media screen and (max-width: 600px) {
-  .btn-fiches {
-    font-size: 1rem;
-    padding: 0.6rem 1rem;
-    width: 90%;
-    display: block;
-    margin: 0 auto;
-  }
-}
-    @media screen and (max-width: 600px) {
-  body {
-    padding: 1rem 0.5rem;
-  }
-}
-    @media screen and (max-width: 600px) {
-  .btn-fiches.btn-fixed {
-    position: fixed;
-    bottom: 10px;
-    left: 5%;
-    width: 90%;
-    z-index: 1000;
-  }
-}
-
   </style>
-  <script>
-    function filterCards() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(input) ? 'block' : 'none';
-      });
-    }
-  </script>
 </head>
 <body>
-  <h1>CIEL et MELEC – Deux métiers connectés</h1>
+  <h1>Présentation des Filières : CIEL, MELEC et Chaudronnerie</h1>
+
   <div style="text-align: center; margin-bottom: 1.5rem;">
-  <a href="qcm-orientation-stage.html" class="btn-fiches btn-fixed">
-    🧭 Faire le test d'orientation
-  </a>
-  <br>
-  <a href="cv.html" class="btn-fiches" style="margin-top: 1rem;">
-    📝 Faire mon CV
-  </a>
-</div>
-
-
-
-  <div class="search">
-    <div style="margin-bottom: 1rem;">
-    <a href="fiches.html" class="btn-fiches">
-  🔍 Voir les fiches métiers et lieux de stage
-</a>
+    <a href="qcm-orientation-stage.html" class="btn-fiches btn-fixed">🧭 Faire le test d'orientation</a><br>
+    <a href="cv.html" class="btn-fiches" style="margin-top: 1rem;">📝 Faire mon CV</a><br>
+    <a href="fiches.html" class="btn-fiches" style="margin-top: 1rem;">🔍 Voir les fiches métiers et lieux de stage</a>
   </div>
-    <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Rechercher un mot-clé (ex : domotique, cybersécurité...)">
-  </div>
+
   <div class="grid">
+    <!-- Bloc CIEL -->
+    <div class="card">
+      <h2><i>🛡️</i> CIEL – Cybersécurité, Informatique, Électronique</h2>
+      <ul>
+        <li>Technicien informatique</li>
+        <li>Technicien réseaux</li>
+        <li>Technicien support</li>
+        <li>Technicien électronique</li>
+        <li>Développeur web</li>
+        <li>Développeur embarqué</li>
+        <li>Administrateur systèmes</li>
+        <li>Technicien cybersécurité</li>
+        <li>Installateur domotique</li>
+        <li>Intégrateur IoT</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2><i>🎓</i> Études après CIEL</h2>
+      <ul>
+        <li>BTS CIEL - Informatique et Réseaux</li>
+        <li>BTS CIEL - Électronique et Réseaux</li>
+        <li>BTS Électronique</li>
+        <li>BTS SIO (Services Informatiques aux Organisations)</li>
+        <li>BTS Informatique et Réseaux pour l'Industrie</li>
+        <li>BUT Réseaux et Télécommunications</li>
+        <li>BUT Informatique</li>
+        <li>BUT GEII (Génie Électrique et Informatique Industrielle)</li>
+        <li>Licence professionnelle Cybersécurité</li>
+        <li>Classe préparatoire ATS ou école d’ingénieur</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2><i>💶</i> Métiers & Salaires après CIEL</h2>
+      <ul>
+        <li>Technicien cybersécurité : 2 000–4 000 €</li>
+        <li>Technicien réseaux : 1 900–3 200 €</li>
+        <li>Technicien électronique : 1 800–3 200 €</li>
+        <li>Développeur embarqué : 2 000–3 500 €</li>
+        <li>Développeur web : 1 900–3 500 €</li>
+        <li>Administrateur systèmes : 2 200–3 800 €</li>
+        <li>Technicien IoT : 2 000–3 200 €</li>
+        <li>Technicien réseau télécom : 2 000–3 400 €</li>
+        <li>Installateur domotique : 1 900–2 500 €</li>
+        <li>Responsable sécurité numérique : 2 800–4 500 €</li>
+      </ul>
+    </div>
+
+    <!-- Bloc MELEC -->
     <div class="card">
       <h2><i>💡</i> MELEC – Métiers de l'électricité</h2>
       <ul>
-        <li>Électricité bâtiment / industrielle</li>
-        <li>Câblage d'installations (courants forts/faibles)</li>
-        <li>Lecture de plans électriques et schémas unifilaires</li>
-        <li>Réalisation d'armoires électriques et coffrets</li>
-        <li>Normes de sécurité électrique et prévention</li>
-        <li>Automatismes : GRAFCET, relais logiques (Zelio, Millenium, etc.)</li>
-        <li>Domotique : KNX, objets connectés, alarme, interphonie</li>
-        <li>Régulation de chauffage, ventilation et climatisation</li>
-        <li>Maintenance préventive et curative</li>
-        <li>Notions de réseaux (IP, adressage, switch basique)</li>
+        <li>Électricien du bâtiment</li>
+        <li>Technicien de maintenance</li>
+        <li>Installateur domotique</li>
+        <li>Automaticien</li>
+        <li>Électricien industriel</li>
+        <li>Chargé d’affaires en électricité</li>
+        <li>Technicien en régulation CVC</li>
+        <li>Technicien de chantier</li>
+        <li>Responsable technique électricité</li>
+        <li>Installateur de bornes IRVE</li>
       </ul>
     </div>
-    <div class="card orange">
-      <h2><i>🛡️</i> CIEL – Cybersécurité, Informatique, Électronique</h2>
-      <ul>
-        <li>Architecture des réseaux informatiques (LAN, WAN, fibre)</li>
-        <li>Adressage IP, sous-réseaux, VLAN</li>
-        <li>Installation, configuration et sécurisation de postes informatiques</li>
-        <li>Cybersécurité : antivirus, pare-feu, mises à jour</li>
-        <li>Programmation Python, HTML/CSS, scripts réseau</li>
-        <li>Création et test de cartes électroniques (Arduino, capteurs, microcontrôleurs)</li>
-        <li>Maintenance de systèmes électroniques (soudure, composants, multimètre)</li>
-        <li>Virtualisation, installation de machines Linux / Windows</li>
-        <li>Utilisation de logiciels pro : Wireshark, Packet Tracer, etc.</li>
-        <li>Travail collaboratif en mode projet</li>
-      </ul>
-    </div>
-    <div class="card green">
-      <h2><i>🔗</i> Compétences et domaines communs</h2>
-      <ul>
-        <li>Domotique (volets roulants, alarme, éclairage connecté)</li>
-        <li>Programmation d’équipements connectés (ESP32, Raspberry Pi, etc.)</li>
-        <li>Maintenance de systèmes intelligents (smart building)</li>
-        <li>Objets connectés (IoT) : capteurs, actionneurs</li>
-        <li>Bornes de recharge électriques connectées</li>
-        <li>Armoire réseau + électrique combinée</li>
-        <li>Communication inter-systèmes (protocole TCP/IP, MQTT…)</li>
-      </ul>
-    </div>
-    <div class="card turquoise">
-      <h2><i>🛠️</i> Métiers croisés</h2>
-      <ul>
-        <li>Technicien smart building</li>
-        <li>Électricien domoticien</li>
-        <li>Installateur de réseaux connectés</li>
-        <li>Intégrateur de systèmes domotique / sécurité</li>
-        <li>Technicien IoT – Internet des Objets</li>
-        <li>Technicien fibre optique – courants faibles</li>
-        <li>Automaticien domotique</li>
-        <li>Technicien maintenance systèmes embarqués</li>
-      </ul>
-    </div>
-    <div class="card purple">
-      <h2><i>🎓</i> Poursuites d'études</h2>
-      <strong>Après MELEC :</strong>
+    <div class="card">
+      <h2><i>🎓</i> Études après MELEC</h2>
       <ul>
         <li>BTS Électrotechnique</li>
-        <li>BTS Maintenance des systèmes (option A systèmes de production)</li>
-        <li>BTS Fluides – énergie – domotique (FED)</li>
-        <li>Mention complémentaire Technicien en réseaux électriques</li>
-      </ul>
-      <strong>Après CIEL :</strong>
-      <ul>
-        <li>BTS Systèmes numériques – Option Informatique et Réseaux</li>
-        <li>BTS Systèmes numériques – Option Électronique et Communication</li>
-        <li>BTS Électronique</li>
-        <li>BUT Réseaux et Télécommunications (sur dossier)</li>
-        <li>Classe préparatoire ATS ou école spécialisée</li>
-      </ul>
-      <strong>Communes possibles :</strong>
-      <ul>
-        <li>Licences professionnelles (énergie, cybersécurité, IoT, domotique)</li>
-        <li>Écoles d’ingénieurs en alternance (via concours ou passerelles)</li>
-        <li>Concours techniques (gendarmerie, douanes, SNCF, armée)</li>
+        <li>BTS Maintenance des Systèmes (Option A)</li>
+        <li>BTS Fluides Énergies Domotique (FED)</li>
+        <li>Licence Pro Domotique</li>
+        <li>Licence Pro Maintenance Industrielle</li>
+        <li>Licence Pro Énergie et Développement Durable</li>
+        <li>BUT GEII</li>
+        <li>Classe préparatoire ATS</li>
+        <li>École d’ingénieur en électrotechnique</li>
+        <li>Bachelor en énergies renouvelables</li>
       </ul>
     </div>
-    <div class="card gold">
-      <h2><i>💶</i> Salaires moyens par métier</h2>
+    <div class="card">
+      <h2><i>💶</i> Métiers & Salaires après MELEC</h2>
       <ul>
-        <li><strong>Électricien domotique :</strong> 1 800–2 100 € débutant / jusqu’à 3 000 € expérimenté</li>
-        <li><strong>Technicien réseaux :</strong> 1 900–2 200 € débutant / jusqu’à 3 200 € expérimenté</li>
-        <li><strong>Technicien cybersécurité :</strong> 2 000–2 400 € débutant / jusqu’à 4 000 € expérimenté</li>
-        <li><strong>Automaticien :</strong> 2 000–2 500 € débutant / jusqu’à 3 800 € expérimenté</li>
-        <li><strong>Technicien électronique :</strong> 1 800–2 300 € débutant / jusqu’à 3 200 € expérimenté</li>
-        <li><strong>Technicien smart building :</strong> 2 000–2 500 € débutant / jusqu’à 4 000 € expérimenté</li>
-        <li style="margin-top:1rem; font-style: italic;">
-          Les salaires évoluent avec l’expérience, les responsabilités, les certifications et la mobilité.
-        </li>
+        <li>Automaticien : 2 000–3 800 €</li>
+        <li>Technicien maintenance industrielle : 2 000–3 200 €</li>
+        <li>Smart building : 2 000–4 000 €</li>
+        <li>Chargé d'affaires : 2 200–4 500 €</li>
+        <li>Installateur IRVE : 2 000–3 000 €</li>
+        <li>Électricien industriel : 2 000–3 500 €</li>
+        <li>Technicien régulation : 2 000–3 600 €</li>
+        <li>Responsable de site : 2 500–4 500 €</li>
+        <li>Technicien domotique : 2 000–3 200 €</li>
+        <li>Chef de chantier : 2 300–4 200 €</li>
+      </ul>
+    </div>
+
+    <!-- Bloc Chaudronnerie -->
+    <div class="card">
+      <h2><i>🛠️</i> Chaudronnerie – Technicien en Chaudronnerie Industrielle</h2>
+      <ul>
+        <li>Ouvrier chaudronnier</li>
+        <li>Soudeur</li>
+        <li>Assembleur en structures métalliques</li>
+        <li>Monteur en tuyauterie</li>
+        <li>Technicien en fabrication</li>
+        <li>Opérateur CN</li>
+        <li>Traceur industriel</li>
+        <li>Technicien en contrôle qualité</li>
+        <li>Technicien méthode</li>
+        <li>Chef d’atelier</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2><i>🎓</i> Études après Chaudronnerie</h2>
+      <ul>
+        <li>BTS CRCI</li>
+        <li>Licence Pro Chaudronnerie</li>
+        <li>Licence Pro Maintenance Industrielle</li>
+        <li>Licence Pro Conception & Innovation</li>
+        <li>Licence Pro Soudage & Métallurgie</li>
+        <li>Classe préparatoire ATS</li>
+        <li>École d’ingénieur génie industriel</li>
+        <li>BUT GMP</li>
+        <li>Bachelor Conception mécanique</li>
+        <li>Bachelor matériaux et structures</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2><i>💶</i> Métiers & Salaires après Chaudronnerie</h2>
+      <ul>
+        <li>Chaudronnier expérimenté : 2 200–3 500 €</li>
+        <li>Soudeur qualifié : 2 000–3 800 €</li>
+        <li>Technicien bureau d'études : 2 200–3 500 €</li>
+        <li>Chef d’atelier : 2 500–4 000 €</li>
+        <li>Technicien méthode : 2 200–3 800 €</li>
+        <li>Contrôle qualité : 2 000–3 400 €</li>
+        <li>Programmeur CN : 2 100–3 600 €</li>
+        <li>Monteur tuyauterie : 2 100–3 500 €</li>
+        <li>Responsable production : 2 500–4 500 €</li>
+        <li>Chargé d’industrialisation : 2 300–4 200 €</li>
       </ul>
     </div>
   </div>
