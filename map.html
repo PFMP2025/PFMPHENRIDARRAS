@@ -40,11 +40,25 @@
       border: 1px solid #ccc;
       min-width: 150px;
     }
+	  .bouton-retour {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
   </style>
 </head>
 <body>
 
   <h1>Carte des lieux de PFMP</h1>
+	<button class="bouton-retour" onclick="history.back()">← Retour</button>
 
   <div class="filter">
     <label for="filiereSelect">Filtrer par filière : </label>
