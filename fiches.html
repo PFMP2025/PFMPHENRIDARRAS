@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PFMP</title>
   <style>
     body {
@@ -77,6 +77,31 @@
     details[open] summary {
       background: #e9f5ff;
     }
+    .ville {
+      color: #888;
+      font-style: italic;
+      margin-left: 0.5rem;
+    }
+	#btnMap {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+#btnMap:hover {
+  background-color: #002f5a;
+}
+
   </style>
   <script>
     function filterCards() {
@@ -108,6 +133,8 @@
 </head>
 <body>
   <h1>PFMP</h1>
+  <a href="map.html" id="btnMap">Voir la carte</a>
+
 
   <nav>
     <a href="#ciel">🖥️ CIEL</a>
@@ -122,414 +149,422 @@
       <option value="MELEC">MELEC</option>
       <option value="Chaudronnerie">Chaudronnerie</option>
     </select>
-    <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Rechercher un mot-clé (ex : domotique, cybersécurité...)">
+    <input
+      type="text"
+      id="searchInput"
+      onkeyup="filterCards()"
+      placeholder="Rechercher un mot-clé (ex : domotique, cybersécurité...)"
+    />
   </div>
 
   <div class="grid">
+    <div style="max-width:1000px;margin:3rem auto;">
+      <h2 style="text-align:center;">📂 Lieux de PFMP par Filière</h2>
 
-<div style="max-width:1000px;margin:3rem auto;">
-  <h2 style="text-align:center;">📂 Lieux de PFMP par Filière</h2>
+      <!-- CIEL -->
+      <section id="ciel">
+        <h3 style="color:#004080">🖥️ Filière CIEL</h3>
 
-  <!-- CIEL -->
-  <section>
-    <h3 style="color:#004080">🖥️ Filière CIEL</h3>
+        <details><summary><strong>🔧 Technicien Réseaux/Informatiques/Programmation</strong></summary>
+          <p><strong>Description :</strong> Installe, configure et maintient les réseaux informatiques (serveurs, routeurs, câblage...).</p>
+          <p><strong>Lieux de stage :</strong></p>
+          <ul>
+            <li>Secure Informatique – <span class="ville">Liévin</span></li>
+            <li>DTI Informatique – <span class="ville">Liévin</span></li>
+            <li>XEFI Lens – <span class="ville">Liévin</span></li>
+            <li>ENOVA – <span class="ville">Lille</span></li>
+            <li>NERI Info – <span class="ville">Lens</span></li>
+            <li>LMELEC – <span class="ville">Arras</span></li>
+            <li>Veolia Agriculture – <span class="ville">Arras</span></li>
+            <li>CESI Campus – <span class="ville">Arras</span></li>
+            <li>Manpower – <span class="ville">Lens</span></li>
+            <li>IG2I – <span class="ville">Lens</span></li>
+            <li>Proch'Emploi – <span class="ville">Lens</span></li>
+            <li>Cyberiris – <span class="ville">Lens</span></li>
+            <li>Stormshield – <span class="ville">Villeneuve-d'Ascq</span></li>
+            <li>VINCI Energies – <span class="ville">Gavrelle</span></li>
+            <li>Advitam Performance – <span class="ville">Arras</span></li>
+            <li>Amipro – <span class="ville">Arras</span></li>
+            <li>APF - <span class="ville">Liévin</span></li>
+            <li>Aramys - <span class="ville">Hénin-Beaumont</span></li>
+            <li>Artesienne - <span class="ville">Liévin</span></li>
+            <li>Clic Informatiques - <span class="ville">Arras</span></li>
+            <li>Comitrans - <span class="ville">Henin</span></li>
+            <li>Consultation Reseaux Com - <span class="ville">Achicourt</span></li>
+            <li>Document Solutions 62 - <span class="ville">Sallaumines</span></li>
+            <li>Eurofiber France - <span class="ville">Villeneuve-d’Ascq</span></li>
+            <li>IB Environnement - <span class="ville">Lens</span></li>
+            <li>Itinsell - <span class="ville">Wasquehal</span></li>
+            <li>Iris Informatique - <span class="ville">Douvrin</span></li>
+            <li>Itech Informatique - <span class="ville">Sainte-Catherine</span></li>
+            <li>2K Fibre - <span class="ville">Liévin</span></li>
+            <li>Services informatiques Keolis - <span class="ville">Sallaumines</span></li>
+            <li>A2B Klic Services - <span class="ville">Liévin</span></li>
+            <li>MSI Nord - <span class="ville">Lens</span></li>
+            <li>Netsoft Pro - <span class="ville">Lens</span></li>
+            <li>Reiz Production - <span class="ville">Liévin</span></li>
+            <li>Tibco Services - <span class="ville">Lens</span></li>
+            <li>Waykonect - <span class="ville">Lille</span></li>
+            <li>Yzee Service - <span class="ville">Grenay</span></li>
+            <li>Yzee Service - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Res Vi Com - <span class="ville">Lens</span></li>
+            <li>Roxys - <span class="ville">Arras</span></li>
+            <li>Laptop Informatique - <span class="ville">Arras</span></li>
+            <li>Linup - <span class="ville">Lens</span></li>
+            <li>Ben Informatique - <span class="ville">Billy-Montigny</span></li>
+            <li>LTPC Info - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>ODTel - <span class="ville">Grenay</span></li>
+          </ul>
+        </details>
 
-    <details><summary><strong>🔧 Technicien Réseaux/Informatiques/Programmation</strong></summary>
-      <p><strong>Description :</strong> Installe, configure et maintient les réseaux informatiques (serveurs, routeurs, câblage...).</p>
-      <p><strong>Lieux de stage :</strong></p>
-      <ul>
-        <li>Secure Informatique – Liévin</li>
-        <li>DTI Informatique – Liévin</li>
-        <li>XEFI Lens – Liévin</li>
-        <li>ENOVA – Lille</li>
-        <li>NERI Info – Lens</li>
-        <li>LMELEC – Arras</li>
-        <li>Veolia Agriculture – Arras</li>
-        <li>CESI Campus – Arras</li>
-        <li>Manpower – Lens</li>
-        <li>IG2I – Lens</li>
-        <li>Proch'Emploi – Lens</li>
-        <li>Cyberiris – Lens</li>
-        <li>Stormshield – Villeneuve-d'Ascq</li>
-        <li>VINCI Energies – Gavrelle</li>
-		<li>Advitam Performance – Arras</li>
-		<li>Amipro – Arras</li>
-		<li>APF - Liévin</li>
-		<li>Aramys - Hénin-Beaumont</li>
-		<li>Artesienne - Liévin</li>
-		<li>Clic Informatiques - Arras</li>
-		<li>Comitrans - Henin</li>
-		<li>Consultation Reseaux Com - Achicourt</li>
-		<li>Document Solutions 62 - Sallaumines</li>
-		<li>Eurofiber France - Villeneuve-d’Ascq</li>
-		<li>IB Environnement - Lens</li>
-		<li>Itinsell - Wasquehal</li>
-		<li>Iris Informatique - Douvrin</li>
-		<li>Itech Informatique - Sainte-Catherine</li>
-		<li>2K Fibre - Liévin</li>
-		<li>Services informatiques Keolis - Sallaumines</li>
-		<li>A2B Klic Services - Liévin</li>
-		<li>MSI Nord - Lens</li>
-		<li>Netsoft Pro - Lens</li>
-		<li>Reiz Production - Liévin</li>
-		<li>Tibco Services - Lens</li>
-		<li>Waykonect - Lille</li>
-		<li>Yzee Service - Grenay</li>
-		<li>Yzee Service - Vendin-Le-Vieil</li>	
-		<li>Res Vi Com - Lens</li>
-		<li>Roxys - Arras</li>
-		<li>Laptop Informatique - Arras</li>
-		<li>Linup - Lens</li>
-		<li>Ben Informatique - Billy-Montigny</li>
-		<li>LTPC Info - Vendin-Le-Vieil</li>
-		<li>ODTel - Grenay</li>
-      </ul>
-    </details>
-	
-	<details><summary><strong>🔧 Services techniques Municipaux et Services Informatiques Lycée</strong></summary>
-      <ul>
-        <li>Services Informatiques Mairie - Avion</li>
-        <li>Services Informatiques Mairie - Harnes</li>
-        <li>Services Informatiques Mairie - Lens</li>
-        <li>Services Informatiques Mairie - liévin</li>
-        <li>Services Informatiques Mairie - Méricourt</li>
-        <li>Services Informatiques Mairie - Montigny-en-Gohelle</li>
-        <li>Services Informatiques Mairie - Vendin-le-Vieil</li>
-		<li>Services Informatiques FAC - Lens</li>
-		<li>Services Informatiques IUT - Lens</li>
-		<li>Médiatheque - Lens</li>
-		<li>Sport Services - Lens</li>
-		<li>Lycée Hennebique - Liévin</li>
-		
-		
-       
-      </ul>
-    </details>
+        <details><summary><strong>🔧 Services techniques Municipaux et Services Informatiques Lycée</strong></summary>
+          <ul>
+            <li>Services Informatiques Mairie - <span class="ville">Avion</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Harnes</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Lens</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Liévin</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Méricourt</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Montigny-en-Gohelle</span></li>
+            <li>Services Informatiques Mairie - <span class="ville">Vendin-le-Vieil</span></li>
+            <li>Services Informatiques FAC - <span class="ville">Lens</span></li>
+            <li>Services Informatiques IUT - <span class="ville">Lens</span></li>
+            <li>Médiatheque - <span class="ville">Lens</span></li>
+            <li>Sport Services - <span class="ville">Lens</span></li>
+            <li>Lycée Hennebique - <span class="ville">Liévin</span></li>
+          </ul>
+        </details>
 
-    <details><summary><strong>🛡️ Technicien Cybersécurité</strong></summary>
-      <p><strong>Description :</strong> Protège les données, identifie les failles de sécurité, sécurise les infrastructures informatiques.</p>
-      <ul>
-        <li>No More Crash – Vendin-le-Vieil</li>
-        <li>Nomios – Villeneuve-d’Ascq</li>
-        <li>SkillX – Métropole Lilloise</li>
-        <li>Cyberiris – Béthune</li>
-        <li>Stormshield – Villeneuve-d'Ascq</li>
-        <li>CESI Arras</li>
-        <li>CPAM de Lens</li>
-        <li>Centre Hospitalier d’Arras</li>
-        <li>Proch'Emploi – Hénin-Carvin</li>
-        <li>VINCI Energies – Gavrelle</li>
-        <li>Veolia Agriculture – Arras</li>
-        <li>CESI Campus – Arras</li>
-		<li>Pilliot Cybersécurité - Aire-Sur-La-Lys</li>
-      </ul>
-    </details>
+        <details><summary><strong>🛡️ Technicien Cybersécurité</strong></summary>
+          <p><strong>Description :</strong> Protège les données, identifie les failles de sécurité, sécurise les infrastructures informatiques.</p>
+          <ul>
+            <li>No More Crash – <span class="ville">Vendin-le-Vieil</span></li>
+            <li>Nomios – <span class="ville">Villeneuve-d’Ascq</span></li>
+            <li>SkillX – <span class="ville">Métropole Lilloise</span></li>
+            <li>Cyberiris – <span class="ville">Béthune</span></li>
+            <li>Stormshield – <span class="ville">Villeneuve-d'Ascq</span></li>
+            <li>CESI Arras</li>
+            <li>CPAM de Lens</li>
+            <li>Centre Hospitalier d’Arras</li>
+            <li>Proch'Emploi – <span class="ville">Hénin-Carvin</span></li>
+            <li>VINCI Energies – <span class="ville">Gavrelle</span></li>
+            <li>Veolia Agriculture – <span class="ville">Arras</span></li>
+            <li>CESI Campus – <span class="ville">Arras</span></li>
+            <li>Pilliot Cybersécurité - <span class="ville">Aire-Sur-La-Lys</span></li>
+          </ul>
+        </details>
 
-    <details><summary><strong>📡 Technicien IoT / Smart Building</strong></summary>
-      <p><strong>Description :</strong> Gère les installations d'objets connectés dans les bâtiments (domotique, capteurs...)</p>
-      <ul>
-        <li>Kanope – Lille</li>
-        <li>CITC – Euratech Lille</li>
-        <li>Ganeo Confort – Liévin</li>
-        <li>ECS-ELEC – Lens</li>
-        <li>Instal' Service – Lens</li>
-        <li>JB Domotique – Liévin</li>
-        <li>ROBBE Menuiserie & Domotique – Liévin</li>
-        <li>Delta Dore – National</li>
-		<li>Delta Security Solutions - Lens</li>
-		<li>Luminov - Hulluch</li>
-		<li>VMJ Elec - Loos-en-Gohelle</li>
-		<li>SADE - Lens</li>
-		<li>Genie Elec et Domotique - Liévin</li>
-      </ul>
-    </details>
-	
-	 <details><summary><strong>🛡️ Technicien Installation/Maintenance Electronique</strong></summary>
-      <p><strong>Description :</strong> Spécialistes chargé de diagnostiquer, entretenir et réparer les équipements électroniques.</p>
-      <ul>
-        <li>Avexa - Carvin</li>
-		<li>Aquareze - Douvrin</li>
-		<li>CGM -Lens</li>
-		<li>Cyber Planete - Brebières</li>
-		<li>Darty - Hénin-Beaumont</li>
-		<li>DKA Electro Dépanne - Béthune</li>
-		<li>Ipsicom - Saint-Laurent-Blangy</li>
-		<li>LTPC Info - Vendin-le-Vieil</li>
-		<li>Micro Boutique - Billy-Montigny</li>
-		<li>Mobile Angelo - Douvrin</li>
-		<li>S Inter - Vendin-le-Vieil</li>
-		<li>Solvarea - Oignies</li>
-		<li>Teclic - Thélus</li>
-		<li>Virginie Repar - Haisnes</li>
-		<li>VL Multitronique - Sallaumines</li>
-		<li>Web Deal Market - Béthune</li>
-		<li>Cerelia - Liévin</li>
-		<li> RIS - Lens</li>
-		<li>Seibo - Mazingarbe</li>
-		<li>Haagen Dazs - Arras</li>
-		<li>Imprimerie Nationale - Flers</li>
-		<li>Ineo - Noyelles-Les-Seclin</li>
-		<li>Eco Style - Sainte-Catherine</li>
-		<li>Eiffage - Béthune</li>
-		<li>Eiffage - Lens</li>
-		<li>Action Santé - Aix-Noulette</li>
-		<li>AES DANA - Saint-Laurent-Blangy</li>
-		<li>Axed Protec Automatiques - Hénin-Beaumont</li>
-		<li>Axians - Saint-Laurent-Blangy</li>
-		<li>BM Tech - Béthune</li>
-		<li>BM Tech - Hantay</li>
-		<li>Boulanger - Vendin-Le-Vieil</li>
-		<li>Boulanger - Béthune</li>
-		<li>Boulanger - Lens</li>
-		<li>BUT - Béthune</li>
-		<li>CiterNord - Carvin</li>
-		<li>Micro Boutique - Billy-Montigny</li>
-		<li>Tamda Tech - Lens</li>
-		</ul>
-	    </details>
-  </section>
-  
+        <details><summary><strong>📡 Technicien IoT / Smart Building</strong></summary>
+          <p><strong>Description :</strong> Gère les installations d'objets connectés dans les bâtiments (domotique, capteurs...)</p>
+          <ul>
+            <li>Kanope – <span class="ville">Lille</span></li>
+            <li>CITC – <span class="ville">Euratech Lille</span></li>
+            <li>Ganeo Confort – <span class="ville">Liévin</span></li>
+            <li>ECS-ELEC – <span class="ville">Lens</span></li>
+            <li>Instal' Service – <span class="ville">Lens</span></li>
+            <li>JB Domotique – <span class="ville">Liévin</span></li>
+            <li>ROBBE Menuiserie & Domotique – <span class="ville">Liévin</span></li>
+            <li>Delta Dore – National</li>
+            <li>Delta Security Solutions - <span class="ville">Lens</span></li>
+            <li>Luminov - <span class="ville">Hulluch</span></li>
+            <li>VMJ Elec - <span class="ville">Loos-en-Gohelle</span></li>
+            <li>SADE - <span class="ville">Lens</span></li>
+            <li>Genie Elec et Domotique - <span class="ville">Liévin</span></li>
+          </ul>
+        </details>
 
-  <!-- MELEC -->
-  <section>
-    <h3 style="color:#117a3a">⚡ Filière MELEC</h3>
+        <details><summary><strong>🛡️ Technicien Installation/Maintenance Electronique</strong></summary>
+          <p><strong>Description :</strong> Spécialistes chargé de diagnostiquer, entretenir et réparer les équipements électroniques.</p>
+          <ul>
+            <li>Avexa - <span class="ville">Carvin</span></li>
+            <li>Aquareze - <span class="ville">Douvrin</span></li>
+            <li>CGM -<span class="ville">Lens</span></li>
+            <li>Cyber Planete - <span class="ville">Brebières</span></li>
+            <li>Darty - <span class="ville">Hénin-Beaumont</span></li>
+            <li>DKA Electro Dépanne - <span class="ville">Béthune</span></li>
+            <li>Ipsicom - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>LTPC Info - <span class="ville">Vendin-le-Vieil</span></li>
+            <li>Micro Boutique - <span class="ville">Billy-Montigny</span></li>
+            <li>Mobile Angelo - <span class="ville">Douvrin</span></li>
+            <li>S Inter - <span class="ville">Vendin-le-Vieil</span></li>
+            <li>Solvarea - <span class="ville">Oignies</span></li>
+            <li>Teclic - <span class="ville">Thélus</span></li>
+            <li>Virginie Repar - <span class="ville">Haisnes</span></li>
+            <li>VL Multitronique - <span class="ville">Sallaumines</span></li>
+            <li>Web Deal Market - <span class="ville">Béthune</span></li>
+            <li>Cerelia - <span class="ville">Liévin</span></li>
+            <li> RIS - <span class="ville">Lens</span></li>
+            <li>Seibo - <span class="ville">Mazingarbe</span></li>
+            <li>Haagen Dazs - <span class="ville">Arras</span></li>
+            <li>Imprimerie Nationale - <span class="ville">Flers</span></li>
+            <li>Ineo - <span class="ville">Noyelles-Les-Seclin</span></li>
+            <li>Eco Style - <span class="ville">Sainte-Catherine</span></li>
+            <li>Eiffage - <span class="ville">Béthune</span></li>
+            <li>Eiffage - <span class="ville">Lens</span></li>
+            <li>Action Santé - <span class="ville">Aix-Noulette</span></li>
+            <li>AES DANA - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>Axed Protec Automatiques - <span class="ville">Hénin-Beaumont</span></li>
+            <li>Axians - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>BM Tech - <span class="ville">Béthune</span></li>
+            <li>BM Tech - <span class="ville">Hantay</span></li>
+            <li>Boulanger - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Boulanger - <span class="ville">Béthune</span></li>
+            <li>Boulanger - <span class="ville">Lens</span></li>
+            <li>BUT - <span class="ville">Béthune</span></li>
+            <li>CiterNord - <span class="ville">Carvin</span></li>
+            <li>Micro Boutique - <span class="ville">Billy-Montigny</span></li>
+            <li>Tamda Tech - <span class="ville">Lens</span></li>
+          </ul>
+        </details>
+      </section>
 
-    <details><summary><strong>⚙️ Électricien du Bâtiment/Industrielle</strong></summary>
-       <ul>
-        <li>SNEF</li>
-        <li>SPIE</li>
-        <li>Enedis</li>
-        <li>SPB ÉLEC – Arras</li>
-        <li>GS ELEC – Lens</li>
-        <li>I.R.D ELEC 62 – Rouvroy</li>
-        <li>G.L.I ELEC – Liévin</li>
-        <li>LM Elec – Fresnes-les-Montauban</li>
-        <li>SOCOREBAT – Lens</li>
-        <li>CEVELEC – Seclin</li>
-        <li>Elec 2 Bat – Lens</li>
-        <li>LANELEC – Lens</li>
-        <li>CSF-RENOV – Lens</li>
-		<li>E2J Elec - Ablain-Saint-Nazaire</li>
-		<li>Ramery - Avion</li>
-		<li>Renov Et Vous - Anzin</li>
-		<li>Repair Et Custom - Lens</li>
-		<li>Sertec - Orchies</li>
-		<li>SESG - Gouy-En-Artois</li>
-		<li>Construction Artois Service - LiéviN</li>
-		<li>CTI Elec - Angres</li>
-		<li>DDV Elec Fils - Noeux-Les-Mines</li>
-		<li>Foulon Chauffage - Hersin</li>
-		<li>General Energie - Lens</li>
-		<li>GLI Elec - Liévin</li>
-		<li>Group Electricity - Ruitz</li>
-		<li>Ledieu Elec - Arras</li>
-		<li>L'electricien - Carvin</li>
-		<li>LG Electricite - Aix-Noulette</li>
-		<li>LKT - Liévin</li>
-		<li>LP62 - Lens</li>
-		<li>EDF - Flamanville</li>
-		<li>Eiffage - Béthune</li>
-		<li>Eiffage - Lens</li>
-		<li>2Felec - Pulversheim</li>
-		<li>Flash Energy - Bully-Les-Mines</li>
-		<li>ABC Energie - Merville</li>
-		<li>ADFM Batiment - Lens</li>
-		<li>AES DANA - Saint-Laurent-Blangy</li>
-		<li>Batideko - Lens</li>
-		<li>Be Elec - Angres</li>
-		<li>5COM - Sains-en-Gohelle</li>
-		<li>M4T - Loos-en-Gohelle</li>
-		<li>MT Elec Solutions - Barlin</li>
-		<li>OI France - Wingles</li>
-		<li>Okourant - Wingles</li>
-		<li>STOOPS - Campin-En-Pevelle</li>
-		<li>STTN Energie - Douvrin</li>
-      </ul>
-    </details>
-    <details><summary><strong>🔧 Technicien de Maintenance / Régulation</strong></summary>
-      <ul>
-        <li>ArcelorMittal – Dunkerque</li>
-        <li>Alstom – Petite-Forêt</li>
-        <li>Maxei – Arras</li>
-        <li>ATEC – Arras</li>
-        <li>CITEVERT – Liévin</li>
-        <li>LFB – Arras</li>
-        <li>Eurofins – Hénin-Beaumont</li>
-        <li>D'HONDT BENOIT – Lens</li>
-        <li>FM Bat'inov – Lens</li>
-        <li>SUEZ – Noyelles-Godault</li>
-        <li>EDF</li>
-		<li>Cerelia - Liévin</li>
-		<li>Seibo - Mazingarbe</li>
-		<li>Haagen Dazs - Arras</li>
-		<li>Hôpitaux de l'Artois</li>
-		<li>Idex Energie - Méricourt</li>
-		<li>Ineo - Noyelles-Les-Seclin</li>
-		<li>JD Elec - Bruay-La-Buissière</li>
-		<li>Logista - Lens</li>
-		<li>Logista - Liévin</li>
-		<li>EBM - Avion</li>
-		<li>EBTM - Harnes</li>
-		<li>Eclair Elec - Avion</li>
-		<li>ECL Five - Lille</li>
-		<li>Aide Elec - Maroeil</li>
-		<li>Ahnac - Riaumont</li>
-		<li>ALS LMP - Hénin-Beaumont</li>
-		<li>Amper - Douai</li>
-		<li>Axed Protec Automatiques - Hénin-Beaumont</li>
-		<li>Axians - Saint-Laurent-Blangy</li>
-		<li>Azelec - Rouvroy</li>
-		<li>Ben Alu - Liévin</li>
-		<li>BL2A Chauffage Climatisation - Dourges</li>
-		<li>CiteVert - Liévin</li>
-		<li>Next Energies - Méricourt</li>
-		<li>Plus Froid - Dainville</li>
-		<li>SM Renovelec - Houdain</li>
-		<li>SNCF - Méricourt</li>
-		<li>TADAO - Grenay</li>
-		<li>ToutBat - Avion</li>
-      </ul>
-    </details>
-	<details><summary><strong>🔧 Services techniques Municipaux/Lycée/Collège</strong></summary>
-      <ul>
-        <li>Services Techniques Mairie - Avion</li>
-        <li>Services Techniques Mairie - Harnes</li>
-        <li>Services Techniques Mairie - Lens</li>
-        <li>Services Techniques Mairie - Liévin</li>
-        <li>Services Techniques Mairie - Méricourt</li>
-        <li>Services Techniques Mairie - Montigny-en-Gohelle</li>
-        <li>Services Techniques Mairie - Vendin-le-Vieil</li>
-		<li>Services Techniques Mairie - Souchez</li>
-		<li>Services Techniques Mairie - Billy-Montigny</li>
-		<li>Services Techniques Mairie - Vimy</li>
-       <li>Services Techniques Mairie - Mazingarbe</li>
-	   <li>Services Techniques Mairie - Auchy-Les-Mines</li>
-	   <li>Services Techniques Mairie - Angres</li>
-	   <li>Collège Riaumont - Liévin</li>
-      </ul>
-    </details>
-	<details><summary><strong>🤖 Automaticien</strong></summary>
-  <p><strong>Description :</strong> Programme les systèmes automatiques dans les usines et chaînes de production.</p>
-  <p><strong>Qualités :</strong> Logique, rigueur, esprit de synthèse.</p>
-  <p><strong>Lieux de stage :</strong></p>
-  <ul><li>Actemium</li>
-  <li>Siemens</li>
-  <li>Bosch</li>
-  <li>Recup'Tri - Grenay</li>
-  </ul>
-    </details>
-	<details><summary><strong>🏠 Domoticien</strong></summary>
-  <p><strong>Description :</strong> Configure les équipements connectés : volets roulants, éclairage intelligent, capteurs…</p>
-  <p><strong>Qualités :</strong> Sens du détail, double compétence en électricité/informatique.</p>
-  <p><strong>Lieux de stage :</strong></p>
-  <ul><li>Delta Dore</li>
-  <li>Legrand</li>
-  <li>Somfy</li>
-  <li>R2D - Courrieres</li>
-  <li>Domow Elec - Labourse</li>
-  <li>Genie Elec et Domotique - Liévin</li>
-  </ul>
-  </details>
-  </section>
-  <!-- CHAUDRONNERIE -->
-  <section>
-    <h3 style="color:#8e44ad">🏗️ Filière Chaudronnerie</h3>
+      <!-- MELEC -->
+      <section id="melec">
+        <h3 style="color:#117a3a">⚡ Filière MELEC</h3>
 
-    <details><summary><strong>🛠️ Technicien Chaudronnier</strong></summary>
-      <ul>
-        <li>Rouby Industrie – Lens</li>
-        <li>Groupe Beaucourt – Billy-Berclau</li>
-        <li>BENALU – Liévin</li>
-        <li>STBE – Ruitz</li>
-        <li>Maxystem – Lens</li>
-        <li>ETCI – Lens</li>
-        <li>AFPI Alternance – Hénin-Beaumont</li>
-        <li>SETRACO – Aniche</li>
-        <li>Chaudsoud – Loison-sous-Lens</li>
-        <li>CSM Industrie – Sallaumines</li>
-		<li>Qualitub - Vendin-Le-Vieil</li>
-		<li>Ramery - Avion</li>
-		<li>Renard - Loison-sous-Lens</li>
-		<li>RTE - Béthune</li>
-		<li>RZ Jardin Multi Services - Saint-en-Gohelle</li>
-		<li>SADE - Lens</li>
-		<li>Satmi - Wingles</li>
-		<li>Secre Energie - Lens</li>
-		<li>SET - Rouvroy</li>
-		<li>SGE GPE - Billy-Montigny</li>
-		<li>CMBH - Saint-Laurent-Blangy</li>
-		<li>CML Indus - Wingles</li>
-		<li>Couverture Charpente Solaire - Bully-Les-Mines</li>
-		<li>Cressent - Sains-en-Gohelle</li>
-		<li>Cromi - Oppi</li>
-		<li>CTA - Calonne-Ricouart</li>
-		<li>Dassault Aviation - Seclin</li>
-		<li>Decima - Saint-Laurent-Blangy</li>
-		<li>Delemazure - Haisnes</li>
-		<li>Deligny - Saint-Pôle-Sur-Ternoise</li>
-		<li>Delobelle - Douai</li>
-		<li>Destée Chaudronnerie - Flines-lez-Raches</li>
-		<li>Flinois - Dourges</li>
-		<li>FMS Poulet - Aix-Noulette</li>
-		<li>Haagen Dazs - Arras</li>
-		<li>Heripret - Wingles</li>
-		<li>Huwer - Ruitz</li>
-		<li>J2C Chaudronnerie - La Comté</li>
-		<li>KY Plast - Ruitz</li>
-		<li>LDMD - Lens</li>
-		<li>Loridan - Violaines</li>
-		<li>DPI - Feuchy</li>
-		<li>EBTM - Harnes</li>
-		<li>Eiffage - Béthune</li>
-		<li>Eiffage - Lens</li>
-		<li>EIM - Douvrin</li>
-		<li>Emip - Somme</li>
-		<li>Endel - Lens</li>
-		<li>Escaliers Delalleau - Aix-Noulette</li>
-		<li>ETCI - Vendin-Le-Vieil</li>
-		<li>Eurogaz - Lens</li>
-		<li>Fer et Alu - Liévin</li>
-		<li>ACIP Chaudronnerie - Phalempin</li>
-		<li>ACMB - Beuvry</li>
-		<li>Actri - Noeux-Les-Mines</li>
-		<li>Alkern - Harnes</li>
-		<li>Apic - Ruitz</li>
-		<li>Arras Maxei Feuchy - Arras</li>
-		<li>Atram - Fleurbaix</li>
-		<li>Bati Pat Services - Loos-en-Gohelle</li>
-		<li>Ben Alu - Liévin</li>
-		<li>Bouillet - Wavrin</li>
-		<li>Breschard - Wahagnies</li>
-		<li>Carosserie Barre - Sallaumines</li>
-		<li>Cime Environnement - Labourse</li>
-		<li>Max Mine - Béthune</li>
-		<li>Mecatec - Quiéry La Motte</li>
-		<li>Module Espace Alu - Sailly-La-Bourse</li>
-		<li>M.S.T.I - Vendin-Le-Vieil</li>
-		<li>Nord tuyauterie - Billy-Montigny</li>
-		<li>Ortec Friedlander - Douvrin</li>
-		<li>Palchem - Angres</li>
-		<li>Panien - Inchy-En-Artois</li>
-		<li>Peme - Gourdin</li>
-		<li>Polybat Alu - Herlies</li>
-		<li>SMCI - Vendin-Le-Vieil</li>
-		<li>Snaam - Liévin</li>
-		<li>SNCF - Achicourt</li>
-		<li>STBE - Ruitz</li>
-		<li>STID - Courrieres</li>
-		<li>STIN Verdon - Douvrin</li>
-		<li> TCB - Bruay-La-Buissière</li>
-		<li>TCM - Sains-en-Gohelle</li>
-		<li>TDI - Liévin</li>
-		<li>Techni Gaine Plus - Saint-Laurent-Blangy</li>
-		<li>Terberg Matec - Grenay</li>
-		<li>Tuyauteurs 4 vents - La Comte</li>
-		<li>Vasseur Serrurerie et Métallerie - Méricourt</li>
-		<li>Vitalis - Violaines</li>
-		<li>Wehr Groupe</li>	
-      </ul>
-    </details>
-  </section>
-</div>
+        <details><summary><strong>⚙️ Électricien du Bâtiment/Industrielle</strong></summary>
+          <ul>
+            <li>SNEF</li>
+            <li>SPIE</li>
+            <li>Enedis</li>
+            <li>SPB ÉLEC – <span class="ville">Arras</span></li>
+            <li>GS ELEC – <span class="ville">Lens</span></li>
+            <li>I.R.D ELEC 62 – <span class="ville">Rouvroy</span></li>
+            <li>G.L.I ELEC – <span class="ville">Liévin</span></li>
+            <li>LM Elec – <span class="ville">Fresnes-les-Montauban</span></li>
+            <li>SOCOREBAT – <span class="ville">Lens</span></li>
+            <li>CEVELEC – <span class="ville">Seclin</span></li>
+            <li>Elec 2 Bat – <span class="ville">Lens</span></li>
+            <li>LANELEC – <span class="ville">Lens</span></li>
+            <li>CSF-RENOV – <span class="ville">Lens</span></li>
+            <li>E2J Elec - <span class="ville">Ablain-Saint-Nazaire</span></li>
+            <li>Ramery - <span class="ville">Avion</span></li>
+            <li>Renov Et Vous - <span class="ville">Anzin</span></li>
+            <li>Repair Et Custom - <span class="ville">Lens</span></li>
+            <li>Sertec - <span class="ville">Orchies</span></li>
+            <li>SESG - <span class="ville">Gouy-En-Artois</span></li>
+            <li>Construction Artois Service - <span class="ville">Liévin</span></li>
+            <li>CTI Elec - <span class="ville">Angres</span></li>
+            <li>DDV Elec Fils - <span class="ville">Noeux-Les-Mines</span></li>
+            <li>Foulon Chauffage - <span class="ville">Hersin</span></li>
+            <li>General Energie - <span class="ville">Lens</span></li>
+            <li>GLI Elec - <span class="ville">Liévin</span></li>
+            <li>Group Electricity - <span class="ville">Ruitz</span></li>
+            <li>Ledieu Elec - <span class="ville">Arras</span></li>
+            <li>L'electricien - <span class="ville">Carvin</span></li>
+            <li>LG Electricite - <span class="ville">Aix-Noulette</span></li>
+            <li>LKT - <span class="ville">Liévin</span></li>
+            <li>LP62 - <span class="ville">Lens</span></li>
+            <li>EDF - <span class="ville">Flamanville</span></li>
+            <li>Eiffage - <span class="ville">Béthune</span></li>
+            <li>Eiffage - <span class="ville">Lens</span></li>
+            <li>2Felec - <span class="ville">Pulversheim</span></li>
+            <li>Flash Energy - <span class="ville">Bully-Les-Mines</span></li>
+            <li>ABC Energie - <span class="ville">Merville</span></li>
+            <li>ADFM Batiment - <span class="ville">Lens</span></li>
+            <li>AES DANA - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>Batideko - <span class="ville">Lens</span></li>
+            <li>Be Elec - <span class="ville">Angres</span></li>
+            <li>5COM - <span class="ville">Sains-en-Gohelle</span></li>
+            <li>M4T - <span class="ville">Loos-en-Gohelle</span></li>
+            <li>MT Elec Solutions - <span class="ville">Barlin</span></li>
+            <li>OI France - <span class="ville">Wingles</span></li>
+            <li>Okourant - <span class="ville">Wingles</span></li>
+            <li>STOOPS - <span class="ville">Campin-En-Pevelle</span></li>
+            <li>STTN Energie - <span class="ville">Douvrin</span></li>
+          </ul>
+        </details>
+
+        <details><summary><strong>🔧 Technicien de Maintenance / Régulation</strong></summary>
+          <ul>
+            <li>ArcelorMittal – <span class="ville">Dunkerque</span></li>
+            <li>Alstom – <span class="ville">Petite-Forêt</span></li>
+            <li>Maxei – <span class="ville">Arras</span></li>
+            <li>ATEC – <span class="ville">Arras</span></li>
+            <li>CITEVERT – <span class="ville">Liévin</span></li>
+            <li>LFB – <span class="ville">Arras</span></li>
+            <li>Eurofins – <span class="ville">Hénin-Beaumont</span></li>
+            <li>D'HONDT BENOIT – <span class="ville">Lens</span></li>
+            <li>FM Bat'inov – <span class="ville">Lens</span></li>
+            <li>SUEZ – <span class="ville">Noyelles-Godault</span></li>
+            <li>EDF</li>
+            <li>Cerelia - <span class="ville">Liévin</span></li>
+            <li>Seibo - <span class="ville">Mazingarbe</span></li>
+            <li>Haagen Dazs - <span class="ville">Arras</span></li>
+            <li>Hôpitaux de l'Artois</li>
+            <li>Idex Energie - <span class="ville">Méricourt</span></li>
+            <li>Ineo - <span class="ville">Noyelles-Les-Seclin</span></li>
+            <li>JD Elec - <span class="ville">Bruay-La-Buissière</span></li>
+            <li>Logista - <span class="ville">Lens</span></li>
+            <li>Logista - <span class="ville">Liévin</span></li>
+            <li>EBM - <span class="ville">Avion</span></li>
+            <li>EBTM - <span class="ville">Harnes</span></li>
+            <li>Eclair Elec - <span class="ville">Avion</span></li>
+            <li>ECL Five - <span class="ville">Lille</span></li>
+            <li>Aide Elec - <span class="ville">Maroeil</span></li>
+            <li>Ahnac - <span class="ville">Riaumont</span></li>
+            <li>ALS LMP - <span class="ville">Hénin-Beaumont</span></li>
+            <li>Amper - <span class="ville">Douai</span></li>
+            <li>Axed Protec Automatiques - <span class="ville">Hénin-Beaumont</span></li>
+            <li>Axians - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>Azelec - <span class="ville">Rouvroy</span></li>
+            <li>Ben Alu - <span class="ville">Liévin</span></li>
+            <li>BL2A Chauffage Climatisation - <span class="ville">Dourges</span></li>
+            <li>CiteVert - <span class="ville">Liévin</span></li>
+            <li>Next Energies - <span class="ville">Méricourt</span></li>
+            <li>Plus Froid - <span class="ville">Dainville</span></li>
+            <li>SM Renovelec - <span class="ville">Houdain</span></li>
+            <li>SNCF - <span class="ville">Méricourt</span></li>
+            <li>TADAO - <span class="ville">Grenay</span></li>
+            <li>ToutBat - <span class="ville">Avion</span></li>
+          </ul>
+        </details>
+
+        <details><summary><strong>🔧 Services techniques Municipaux/Lycée/Collège</strong></summary>
+          <ul>
+            <li>Services Techniques Mairie - <span class="ville">Avion</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Harnes</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Lens</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Liévin</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Méricourt</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Montigny-en-Gohelle</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Vendin-le-Vieil</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Souchez</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Billy-Montigny</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Vimy</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Mazingarbe</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Auchy-Les-Mines</span></li>
+            <li>Services Techniques Mairie - <span class="ville">Angres</span></li>
+            <li>Collège Riaumont - <span class="ville">Liévin</span></li>
+          </ul>
+        </details>
+
+        <details><summary><strong>🤖 Automaticien</strong></summary>
+          <p><strong>Description :</strong> Programme les systèmes automatiques dans les usines et chaînes de production.</p>
+          <p><strong>Qualités :</strong> Logique, rigueur, esprit de synthèse.</p>
+          <p><strong>Lieux de stage :</strong></p>
+          <ul>
+            <li>Actemium</li>
+            <li>Siemens</li>
+            <li>Bosch</li>
+            <li>Recup'Tri - <span class="ville">Grenay</span></li>
+          </ul>
+        </details>
+
+        <details><summary><strong>🏠 Domoticien</strong></summary>
+          <p><strong>Description :</strong> Configure les équipements connectés : volets roulants, éclairage intelligent, capteurs…</p>
+          <p><strong>Qualités :</strong> Sens du détail, double compétence en électricité/informatique.</p>
+          <p><strong>Lieux de stage :</strong></p>
+          <ul>
+            <li>Delta Dore</li>
+            <li>Legrand</li>
+            <li>Somfy</li>
+            <li>R2D - <span class="ville">Courrieres</span></li>
+            <li>Domow Elec - <span class="ville">Labourse</span></li>
+            <li>Genie Elec et Domotique - <span class="ville">Liévin</span></li>
+          </ul>
+        </details>
+      </section>
+
+      <!-- CHAUDRONNERIE -->
+      <section id="chaudronnerie">
+        <h3 style="color:#8e44ad">🏗️ Filière Chaudronnerie</h3>
+
+        <details><summary><strong>🛠️ Technicien Chaudronnier</strong></summary>
+          <ul>
+            <li>Rouby Industrie – <span class="ville">Lens</span></li>
+            <li>Groupe Beaucourt – <span class="ville">Billy-Berclau</span></li>
+            <li>BENALU – <span class="ville">Liévin</span></li>
+            <li>STBE – <span class="ville">Ruitz</span></li>
+            <li>Maxystem – <span class="ville">Lens</span></li>
+            <li>ETCI – <span class="ville">Lens</span></li>
+            <li>AFPI Alternance – <span class="ville">Hénin-Beaumont</span></li>
+            <li>SETRACO – <span class="ville">Aniche</span></li>
+            <li>Chaudsoud – <span class="ville">Loison-sous-Lens</span></li>
+            <li>CSM Industrie – <span class="ville">Sallaumines</span></li>
+            <li>Qualitub - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Ramery - <span class="ville">Avion</span></li>
+            <li>Renard - <span class="ville">Loison-sous-Lens</span></li>
+            <li>RTE - <span class="ville">Béthune</span></li>
+            <li>RZ Jardin Multi Services - <span class="ville">Saint-en-Gohelle</span></li>
+            <li>SADE - <span class="ville">Lens</span></li>
+            <li>Satmi - <span class="ville">Wingles</span></li>
+            <li>Secre Energie - <span class="ville">Lens</span></li>
+            <li>SET - <span class="ville">Rouvroy</span></li>
+            <li>SGE GPE - <span class="ville">Billy-Montigny</span></li>
+            <li>CMBH - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>CML Indus - <span class="ville">Wingles</span></li>
+            <li>Couverture Charpente Solaire - <span class="ville">Bully-Les-Mines</span></li>
+            <li>Cressent - <span class="ville">Sains-en-Gohelle</span></li>
+            <li>Cromi - <span class="ville">Oppi</span></li>
+            <li>CTA - <span class="ville">Calonne-Ricouart</span></li>
+            <li>Dassault Aviation - <span class="ville">Seclin</span></li>
+            <li>Decima - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>Delemazure - <span class="ville">Haisnes</span></li>
+            <li>Deligny - <span class="ville">Saint-Pôle-Sur-Ternoise</span></li>
+            <li>Delobelle - <span class="ville">Douai</span></li>
+            <li>Destée Chaudronnerie - <span class="ville">Flines-lez-Raches</span></li>
+            <li>Flinois - <span class="ville">Dourges</span></li>
+            <li>FMS Poulet - <span class="ville">Aix-Noulette</span></li>
+            <li>Haagen Dazs - <span class="ville">Arras</span></li>
+            <li>Heripret - <span class="ville">Wingles</span></li>
+            <li>Huwer - <span class="ville">Ruitz</span></li>
+            <li>J2C Chaudronnerie - <span class="ville">La Comté</span></li>
+            <li>KY Plast - <span class="ville">Ruitz</span></li>
+            <li>LDMD - <span class="ville">Lens</span></li>
+            <li>Loridan - <span class="ville">Violaines</span></li>
+            <li>DPI - <span class="ville">Feuchy</span></li>
+            <li>EBTM - <span class="ville">Harnes</span></li>
+            <li>Eiffage - <span class="ville">Béthune</span></li>
+            <li>Eiffage - <span class="ville">Lens</span></li>
+            <li>EIM - <span class="ville">Douvrin</span></li>
+            <li>Emip - <span class="ville">Somme</span></li>
+            <li>Endel - <span class="ville">Lens</span></li>
+            <li>Escaliers Delalleau - <span class="ville">Aix-Noulette</span></li>
+            <li>ETCI - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Eurogaz - <span class="ville">Lens</span></li>
+            <li>Fer et Alu - <span class="ville">Liévin</span></li>
+            <li>ACIP Chaudronnerie - <span class="ville">Phalempin</span></li>
+            <li>ACMB - <span class="ville">Beuvry</span></li>
+            <li>Actri - <span class="ville">Noeux-Les-Mines</span></li>
+            <li>Alkern - <span class="ville">Harnes</span></li>
+            <li>Apic - <span class="ville">Ruitz</span></li>
+            <li>Arras Maxei Feuchy - <span class="ville">Arras</span></li>
+            <li>Atram - <span class="ville">Fleurbaix</span></li>
+            <li>Bati Pat Services - <span class="ville">Loos-en-Gohelle</span></li>
+            <li>Ben Alu - <span class="ville">Liévin</span></li>
+            <li>Bouillet - <span class="ville">Wavrin</span></li>
+            <li>Breschard - <span class="ville">Wahagnies</span></li>
+            <li>Carosserie Barre - <span class="ville">Sallaumines</span></li>
+            <li>Cime Environnement - <span class="ville">Labourse</span></li>
+            <li>Max Mine - <span class="ville">Béthune</span></li>
+            <li>Mecatec - <span class="ville">Quiéry La Motte</span></li>
+            <li>Module Espace Alu - <span class="ville">Sailly-La-Bourse</span></li>
+            <li>M.S.T.I - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Nord tuyauterie - <span class="ville">Billy-Montigny</span></li>
+            <li>Ortec Friedlander - <span class="ville">Douvrin</span></li>
+            <li>Palchem - <span class="ville">Angres</span></li>
+            <li>Panien - <span class="ville">Inchy-En-Artois</span></li>
+            <li>Peme - <span class="ville">Gourdin</span></li>
+            <li>Polybat Alu - <span class="ville">Herlies</span></li>
+            <li>SMCI - <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>Snaam - <span class="ville">Liévin</span></li>
+            <li>SNCF - <span class="ville">Achicourt</span></li>
+            <li>STBE - <span class="ville">Ruitz</span></li>
+            <li>STID - <span class="ville">Courrieres</span></li>
+            <li>STIN Verdon - <span class="ville">Douvrin</span></li>
+            <li> TCB - <span class="ville">Bruay-La-Buissière</span></li>
+            <li>TCM - <span class="ville">Sains-en-Gohelle</span></li>
+            <li>TDI - <span class="ville">Liévin</span></li>
+            <li>Techni Gaine Plus - <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>Terberg Matec - <span class="ville">Grenay</span></li>
+            <li>Tuyauteurs 4 vents - <span class="ville">La Comte</span></li>
+            <li>Vasseur Serrurerie et Métallerie - <span class="ville">Méricourt</span></li>
+            <li>Vitalis - <span class="ville">Violaines</span></li>
+            <li>Wehr Groupe</li>
+          </ul>
+        </details>
+      </section>
+    </div>
+  </div>
 </body>
 </html>
