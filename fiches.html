@@ -16,16 +16,26 @@
       text-align: center;
       margin-bottom: 2rem;
     }
+    nav {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      color: #004080;
+    }
     .search {
       text-align: center;
       margin-bottom: 2rem;
     }
-    .search input {
+    .search input, .search select {
       padding: 0.5rem 1rem;
-      width: 300px;
       font-size: 1rem;
       border-radius: 5px;
       border: 1px solid #ccc;
+      margin-right: 1rem;
     }
     .grid {
       display: grid;
@@ -48,41 +58,74 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .card h2 i {
-      font-size: 1.3rem;
-    }
     .card ul {
       padding-left: 1.2rem;
     }
     .card ul li {
       margin-bottom: 0.5rem;
     }
-    .card.orange h2 { color: #e67e22; }
-    .card.green h2 { color: #27ae60; }
-    .card.purple h2 { color: #8e44ad; }
-    .card.turquoise h2 { color: #16a085; }
-    .card.gold h2 { color: #c49b0e; }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0.5rem;
+      background: #f7f9fc;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      transition: background 0.3s ease;
+    }
+    details[open] summary {
+      background: #e9f5ff;
+    }
   </style>
- <script>
-  function filterCards() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const details = document.querySelectorAll('details');
-    details.forEach(detail => {
-      const text = detail.innerText.toLowerCase();
-      detail.style.display = text.includes(input) ? 'block' : 'none';
-    });
-  }
-</script>
+  <script>
+    function filterCards() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const details = document.querySelectorAll('details');
+      details.forEach(detail => {
+        const text = detail.innerText.toLowerCase();
+        detail.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
 
+    function filterByFiliere() {
+      const filiere = document.getElementById('filiereSelect').value;
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        const titre = section.querySelector('h3')?.textContent.toLowerCase();
+        section.style.display = (filiere === 'all' || titre.includes(filiere.toLowerCase())) ? '' : 'none';
+      });
+    }
+
+    window.onload = () => {
+      document.querySelectorAll('details').forEach(detail => {
+        const count = detail.querySelectorAll('li').length;
+        const summary = detail.querySelector('summary');
+        summary.innerHTML += ` <span style="color:gray;font-weight:normal;">(${count} lieux)</span>`;
+      });
+    }
+  </script>
 </head>
 <body>
   <h1>PFMP</h1>
+
+  <nav>
+    <a href="#ciel">🖥️ CIEL</a>
+    <a href="#melec">⚡ MELEC</a>
+    <a href="#chaudronnerie">🏗️ Chaudronnerie</a>
+  </nav>
+
   <div class="search">
+    <select id="filiereSelect" onchange="filterByFiliere()">
+      <option value="all">Toutes les filières</option>
+      <option value="CIEL">CIEL</option>
+      <option value="MELEC">MELEC</option>
+      <option value="Chaudronnerie">Chaudronnerie</option>
+    </select>
     <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Rechercher un mot-clé (ex : domotique, cybersécurité...)">
   </div>
+
   <div class="grid">
-    <!-- Cartes métiers insérées ici dans la prochaine étape -->
-  </div>
 
 <div style="max-width:1000px;margin:3rem auto;">
   <h2 style="text-align:center;">📂 Lieux de PFMP par Filière</h2>
