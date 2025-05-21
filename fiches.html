@@ -101,6 +101,19 @@
 #btnMap:hover {
   background-color: #002f5a;
 }
+	  .bouton-retour {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
 
   </style>
   <script>
@@ -134,6 +147,7 @@
 <body>
   <h1>PFMP</h1>
   <a href="map.html" id="btnMap">Voir la carte</a>
+  <button class="bouton-retour" onclick="history.back()">← Retour</button>
 
 
   <nav>
