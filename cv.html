@@ -213,10 +213,24 @@
   .force-desktop .cv-left .editable {
     color: #fff !important;
   }
+   .bouton-retour {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
 </style>
 
 </head>
 <body>
+  <button class="bouton-retour" onclick="history.back()">← Retour</button>
   <div class="formulaire">
     <label for="selectMetier">Choisis ton métier :</label>
     <select id="selectMetier" onchange="updateCV()">
