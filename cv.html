@@ -388,13 +388,33 @@ function updateCV() {
   });
 
   const bg = document.querySelector(".cv-left");
-  if (metier.includes("Technicien") || metier.includes("Développeur") || metier.includes("Installateur") || metier.includes("IoT")) {
-    bg.style.background = "#004080"; // CIEL : bleu
-  } else if (metier.includes("Électricien") || metier.includes("Maintenance") || metier.includes("CVC")) {
-    bg.style.background = "#117a3a"; // MELEC : vert
-  } else {
-    bg.style.background = "#555555"; // Chaudronnerie : gris métal
-  }
+
+const metiersCIEL = [
+  "Technicien Réseaux", "Technicien Informatique", "Technicien Support", 
+  "Technicien Électronique", "Développeur Web", "Installateur Domotique", 
+  "Intégrateur IoT", "Technicien Cybersécurité"
+];
+
+const metiersMELEC = [
+  "Électricien du Bâtiment", "Technicien de Maintenance", 
+  "Électricien Industriel", "Technicien en Régulation CVC"
+];
+
+const metiersChaudronnerie = [
+  "Ouvrier Chaudronnier", "Soudeur", "Assembleur Métallique", 
+  "Monteur en Tuyauterie", "Opérateur CN", "Contrôleur Qualité"
+];
+
+if (metiersCIEL.includes(metier)) {
+  bg.style.background = "#3399ff"; // Bleu CIEL
+} else if (metiersMELEC.includes(metier)) {
+  bg.style.background = "#117a3a"; // Vert MELEC
+} else if (metiersChaudronnerie.includes(metier)) {
+  bg.style.background = "#555555"; // Gris métal
+} else {
+  bg.style.background = "#444"; // Par défaut
+}
+
 }
 
 function addCompetence() {
