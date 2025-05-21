@@ -1,282 +1,85 @@
-<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QCM Orientation Stage</title>
+  <title>Test d'Orientation - Bac Pro</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 2rem;
-      color: #333;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    form {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .question {
-      margin-bottom: 1.5rem;
-    }
-    label {
-      display: block;
-      margin: 0.4rem 0;
-    }
-    button {
-      display: block;
-      margin: 2rem auto;
-      padding: 0.8rem 2rem;
-      background: #004080;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    #resultat {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: #dff0d8;
-      padding: 1.5rem;
-      border-radius: 10px;
-      color: #2d602d;
-      font-weight: bold;
-      display: none;
-    }
-	@media screen and (max-width: 600px) {
-  body {
-    padding: 1rem;
-  }
-
-  h1, h2 {
-    font-size: 1.2rem;
-  }
-
-  .question {
-    margin-bottom: 1rem;
-  }
-
-  label {
-    font-size: 0.95rem;
-  }
-
-  form {
-    padding: 1rem;
-  }
-
-  button {
-    width: 100%;
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .btn-fiches {
-    display: block;
-    width: 90%;
-    margin: 1rem auto;
-    text-align: center;
-  }
-
-  #resultat {
-    font-size: 1rem;
-    padding: 1rem;
-  }
-}
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 2rem; color: #333; }
+    h1, h2 { text-align: center; }
+    form { max-width: 800px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .question { margin-bottom: 1.5rem; }
+    label { display: block; margin: 0.4rem 0; }
+    button { display: block; margin: 2rem auto; padding: 0.8rem 2rem; background: #004080; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+    #resultat { max-width: 600px; margin: 2rem auto; background: #e0ffe0; padding: 1.5rem; border-radius: 10px; color: #004d00; font-weight: bold; display: none; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  
-  </div>
-  <div style="text-align: center; margin-bottom: 2rem;">
-    <a href="#qcmForm" style="background:#004080;color:white;padding:0.8rem 1.5rem;text-decoration:none;border-radius:6px;font-weight:bold;box-shadow:0 2px 5px rgba(0,0,0,0.2);font-size:1rem;">
-      🧭 Commencer le questionnaire d'orientation
-    </a>
-  </div>
-  <h1>QCM d’Orientation : Quel métier est fait pour toi ?</h1>
+  <h1>Test d'Orientation : Quelle filière et quel métier sont faits pour toi ?</h1>
   <form id="qcmForm"></form>
   <div id="resultat"></div>
+  <canvas id="graphiqueFiliere" style="max-width: 500px; margin: 2rem auto; display: none;"></canvas>
   <script>
     const metiers = {
-      reseau: "Technicien Réseaux Informatiques",
-      cyber: "Spécialiste en Cybersécurité",
-      elec: "Électricien du Bâtiment",
-      domo: "Domoticien / Smart Building",
-      maint: "Technicien de Maintenance",
-      iot: "Technicien IoT",
-      auto: "Automaticien",
-      electro: "Technicien Électronique"
+      ciel_devweb: { nom: "Développeur web", filiere: "CIEL" },
+      ciel_embarque: { nom: "Développeur embarqué", filiere: "CIEL" },
+      ciel_cyber: { nom: "Technicien cybersécurité", filiere: "CIEL" },
+      ciel_electronique: { nom: "Technicien électronique", filiere: "CIEL" },
+      melec_electricien: { nom: "Électricien du bâtiment", filiere: "MELEC" },
+      melec_maintenance: { nom: "Technicien de maintenance", filiere: "MELEC" },
+      chaudron_soudeur: { nom: "Soudeur", filiere: "Chaudronnerie" },
+      chaudron_assembleur: { nom: "Assembleur en structures métalliques", filiere: "Chaudronnerie" }
     };
 
     const questions = [
-      {
-        q: "1. Tu préfères travailler :",
-        options: [
-          { t: "Avec des câbles, outils, matériels électriques", m: ["elec", "maint"] },
-          { t: "Sur ordinateur, configurer ou diagnostiquer", m: ["reseau", "cyber"] },
-          { t: "Sur des systèmes automatisés et connectés", m: ["domo", "iot", "auto"] }
-        ]
-      },
-      {
-        q: "2. Face à un problème, tu as tendance à :",
-        options: [
-          { t: "Chercher l’origine de la panne pour réparer", m: ["maint", "auto"] },
-          { t: "Vérifier la configuration réseau ou système", m: ["reseau", "cyber"] },
-          { t: "Remplacer ou sécuriser les équipements", m: ["elec", "maint"] }
-        ]
-      },
-      // Questions 3 à 20
-{
-  q: "3. Travailler en équipe, c’est pour toi :",
-  options: [
-    { t: "Essentiel, surtout sur les chantiers", m: ["elec", "domo", "maint"] },
-    { t: "Utile, mais tu préfères l’autonomie", m: ["cyber", "reseau", "iot"] },
-    { t: "Indifférent, tant que les objectifs sont clairs", m: ["auto", "electro"] }
-  ]
-},
-{
-  q: "4. Tu es le plus à l’aise avec :",
-  options: [
-    { t: "Des outils, du matériel électrique ou mécanique", m: ["elec", "maint"] },
-    { t: "Un clavier, un routeur, un logiciel", m: ["reseau", "cyber"] },
-    { t: "Un circuit imprimé ou une carte programmable", m: ["electro", "iot"] }
-  ]
-},
-{
-  q: "5. Tu es plutôt du genre à :",
-  options: [
-    { t: "Suivre une méthode étape par étape", m: ["auto", "maint"] },
-    { t: "Expérimenter par toi-même", m: ["iot", "electro"] },
-    { t: "Appliquer des règles de sécurité en priorité", m: ["cyber", "elec"] }
-  ]
-},
-{
-  q: "6. Ton environnement de travail idéal :",
-  options: [
-    { t: "Un atelier ou une salle technique", m: ["electro", "auto", "maint"] },
-    { t: "Un chantier ou un bâtiment", m: ["elec", "domo"] },
-    { t: "Un bureau ou un local serveur", m: ["reseau", "cyber"] }
-  ]
-},
-{
-  q: "7. Tu préfères que ton travail ait un impact sur :",
-  options: [
-    { t: "Le confort d’un bâtiment (lumière, volets, capteurs)", m: ["domo", "elec"] },
-    { t: "La sécurité des données", m: ["cyber"] },
-    { t: "Le bon fonctionnement d’une usine ou machine", m: ["auto", "maint"] }
-  ]
-},
-{
-  q: "8. Quand tu travailles, tu aimes :",
-  options: [
-    { t: "Voir un résultat concret et immédiat", m: ["elec", "domo"] },
-    { t: "Résoudre des bugs ou anomalies logiques", m: ["reseau", "cyber"] },
-    { t: "Tester et ajuster des systèmes", m: ["maint", "auto"] }
-  ]
-},
-{
-  q: "9. Tu veux apprendre à :",
-  options: [
-    { t: "Câbler et sécuriser un tableau électrique", m: ["elec", "domo"] },
-    { t: "Configurer un serveur ou un pare-feu", m: ["cyber", "reseau"] },
-    { t: "Programmer une carte ou un microcontrôleur", m: ["iot", "electro"] }
-  ]
-},
-{
-  q: "10. Tu te vois travailler :",
-  options: [
-    { t: "Dans une entreprise industrielle", m: ["maint", "auto", "electro"] },
-    { t: "Dans une PME d’installation ou de service", m: ["elec", "domo"] },
-    { t: "Dans une structure informatique ou cybersécurité", m: ["cyber", "reseau"] }
-  ]
-},
-{
-  q: "11. Tu apprécies particulièrement :",
-  options: [
-    { t: "Lire et interpréter un schéma technique", m: ["elec", "auto", "electro"] },
-    { t: "Configurer des systèmes informatiques", m: ["reseau", "cyber"] },
-    { t: "Installer des capteurs et objets connectés", m: ["iot", "domo"] }
-  ]
-},
-{
-  q: "12. Lors d’un projet, tu préfères :",
-  options: [
-    { t: "Mettre en œuvre l'installation physique", m: ["elec", "domo", "maint"] },
-    { t: "Tester et corriger le système avant mise en service", m: ["auto", "electro", "iot"] },
-    { t: "Superviser et documenter les étapes", m: ["reseau", "cyber"] }
-  ]
-},
-{
-  q: "13. Tu aimerais développer :",
-  options: [
-    { t: "Ta précision manuelle et ton habilité technique", m: ["elec", "electro", "domo"] },
-    { t: "Ta logique et ta compréhension des réseaux", m: ["reseau", "auto"] },
-    { t: "Ton sens de l’analyse et de la prévention", m: ["cyber", "maint"] }
-  ]
-},
-{
-  q: "14. Lequel te ressemble le plus ?",
-  options: [
-    { t: "Observateur, rigoureux, appliqué", m: ["auto", "maint", "cyber"] },
-    { t: "Curieux, bidouilleur, touche-à-tout", m: ["iot", "electro"] },
-    { t: "Dynamique, sociable, orienté terrain", m: ["elec", "domo"] }
-  ]
-},
-{
-  q: "15. Quand tu parles de ton futur métier, tu veux :",
-  options: [
-    { t: "Participer à l’évolution des bâtiments intelligents", m: ["domo", "iot"] },
-    { t: "Garantir la sécurité des infrastructures", m: ["cyber", "reseau"] },
-    { t: "Assurer le bon fonctionnement de systèmes critiques", m: ["maint", "auto"] }
-  ]
-},
-{
-  q: "16. Tu préfères manipuler :",
-  options: [
-    { t: "Des logiciels, des scripts ou des configurations réseau", m: ["reseau", "cyber"] },
-    { t: "Des équipements physiques (tournevis, multimètre, testeurs…)", m: ["elec", "maint"] },
-    { t: "Des cartes Arduino, capteurs, circuits", m: ["iot", "electro"] }
-  ]
-},
-{
-  q: "17. Tu es intéressé par :",
-  options: [
-    { t: "La domotique et les équipements connectés", m: ["domo", "iot"] },
-    { t: "L’électronique et les microcontrôleurs", m: ["electro", "auto"] },
-    { t: "Les interventions techniques et la maintenance", m: ["maint", "elec"] }
-  ]
-},
-{
-  q: "18. Ton enseignant remarque que tu es :",
-  options: [
-    { t: "Minutieux et logique dans ton raisonnement", m: ["auto", "cyber"] },
-    { t: "Autonome et débrouillard avec le matériel", m: ["maint", "elec"] },
-    { t: "Créatif et curieux d’essayer de nouvelles choses", m: ["iot", "electro"] }
-  ]
-},
-{
-  q: "19. En entreprise, tu préférerais :",
-  options: [
-    { t: "Intervenir seul sur des systèmes à sécuriser ou configurer", m: ["cyber", "reseau"] },
-    { t: "Travailler avec d’autres sur chantier ou atelier", m: ["elec", "domo", "maint"] },
-    { t: "Proposer des idées pour améliorer ou automatiser un système", m: ["iot", "auto", "electro"] }
-  ]
-},
-{
-  q: "20. Dans un monde idéal, tu aimerais :",
-  options: [
-    { t: "Créer ou intégrer des objets intelligents", m: ["iot", "domo"] },
-    { t: "Résoudre des pannes complexes", m: ["maint", "auto"] },
-    { t: "Protéger les systèmes contre les intrusions", m: ["cyber", "reseau"] }
-  ]
-}
+      { q: "1. Quand tu travailles sur un projet, tu préfères :", options: [ { t: "Avoir une certaine autonomie pour organiser ton travail à ta façon", m: ["ciel_devweb", "ciel_cyber", "chaudron_soudeur"] }, { t: "Suivre une méthode précise et bien définie", m: ["melec_electricien", "chaudron_soudeur", "ciel_cyber"] }, { t: "Travailler avec d’autres pour avancer ensemble", m: ["melec_electricien", "chaudron_assembleur"] } ] },
+      { q: "2. Tu es le plus satisfait quand tu :", options: [ { t: "Résous un problème complexe en trouvant une solution logique", m: ["ciel_cyber", "ciel_devweb", "melec_maintenance"] }, { t: "Vois le résultat concret de ce que tu as fabriqué ou installé", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Améliores ou ajustes quelque chose de tes mains", m: ["chaudron_assembleur", "melec_maintenance"] } ] },
+      { q: "3. Quand tu découvres un nouvel outil ou système, tu as tendance à :", options: [ { t: "Chercher comment il fonctionne, quitte à l’ouvrir ou tester", m: ["chaudron_soudeur", "ciel_embarque", "melec_electricien"] }, { t: "Lire la documentation ou les règles de sécurité avant", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Observer d’abord les autres avant d’essayer toi-même", m: ["chaudron_assembleur", "melec_electricien"] } ] },
+      { q: "4. Ce qui te motive le plus :", options: [ { t: "Créer des outils ou programmes utiles", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Protéger ou vérifier des systèmes sensibles", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Assembler ou installer avec précision", m: ["chaudron_assembleur", "melec_electricien"] } ] },
+      { q: "5. Ton environnement idéal serait :", options: [ { t: "Un endroit calme avec ordinateurs et logiciels", m: ["ciel_devweb", "ciel_cyber"] }, { t: "Un atelier ou un chantier avec des outils techniques", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Un espace industriel avec des plans et des pièces à monter", m: ["chaudron_assembleur", "melec_maintenance"] } ] },
+      { q: "6. Face à une difficulté technique, tu préfères :", options: [ { t: "Analyser calmement la situation pour trouver une cause logique", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Essayer directement des solutions concrètes", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Poser des questions et chercher en équipe", m: ["chaudron_assembleur", "ciel_embarque"] } ] },
+      { q: "7. Tu aimes particulièrement :", options: [ { t: "Programmer ou comprendre des circuits électroniques", m: ["ciel_embarque", "ciel_electronique"] }, { t: "Travailler sur des câbles, moteurs ou installations", m: ["melec_electricien", "melec_maintenance"] }, { t: "Manipuler des outils de découpe, soudure ou assemblage", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+      { q: "8. Tu te sens plus à l’aise quand :", options: [ { t: "Tu peux imaginer ou créer quelque chose de nouveau", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Tu respectes un plan, une norme ou une consigne", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Tu interviens en autonomie sur un système concret", m: ["melec_maintenance", "chaudron_soudeur"] } ] },
+      { q: "9. Quel compliment te ferait le plus plaisir ?", options: [ { t: "Tu trouves toujours une solution originale !", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Tu travailles proprement et efficacement.", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "On peut compter sur toi, tu assures le fonctionnement des choses.", m: ["melec_maintenance", "ciel_cyber"] } ] },
+      { q: "10. Si tu devais choisir un projet, ce serait :", options: [ { t: "Créer un objet connecté qui réagit à l’environnement", m: ["ciel_embarque", "ciel_electronique"] }, { t: "Monter et câbler une installation électrique complète", m: ["melec_electricien"] }, { t: "Assembler une structure métallique selon un plan", m: ["chaudron_assembleur"] } ] },
+
+      { q: "11. Quand un système ne fonctionne pas, tu as tendance à :", options: [ { t: "Chercher calmement le bug ou la cause logique", m: ["ciel_cyber", "ciel_embarque", "melec_maintenance"] }, { t: "Penser à une solution mécanique ou physique", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Agir directement pour réparer ou tester", m: ["chaudron_soudeur", "melec_electricien"] } ] },
+      { q: "12. Tu préfères apprendre en :", options: [ { t: "Testant par toi-même et en expérimentant", m: ["ciel_devweb", "ciel_embarque", "chaudron_soudeur"] }, { t: "Écoutant les consignes et suivant une procédure", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Posant des questions et en analysant", m: ["ciel_cyber", "melec_maintenance"] } ] },
+      { q: "13. Face à un plan ou un schéma :", options: [ { t: "Tu le comprends rapidement et tu sais l’appliquer", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Tu veux d’abord le modifier ou l’adapter", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Tu préfères qu’on t’explique chaque étape", m: ["chaudron_soudeur", "melec_maintenance"] } ] },
+      { q: "14. Tu es du genre à :", options: [ { t: "Imaginer comment améliorer un objet ou système", m: ["ciel_embarque", "ciel_devweb", "melec_maintenance"] }, { t: "Suivre à la lettre ce qu’on t’a montré", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "T’adapter et bricoler avec ce que tu as sous la main", m: ["chaudron_soudeur", "ciel_electronique"] } ] },
+      { q: "15. Tu es fier quand tu :", options: [ { t: "Crées quelque chose de nouveau et fonctionnel", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Contribues à un travail collectif bien fait", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Répares ou ajustes quelque chose qui bloquait", m: ["melec_maintenance", "chaudron_soudeur"] } ] },
+      { q: "16. Tu préfères travailler dans un environnement :", options: [ { t: "Calme, technique, avec concentration", m: ["ciel_cyber", "ciel_electronique"] }, { t: "Dynamique, physique, avec du mouvement", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Structuré, avec des étapes précises", m: ["melec_maintenance", "chaudron_assembleur"] } ] },
+      { q: "17. Ce que tu trouves le plus intéressant, c’est :", options: [ { t: "Comprendre comment fonctionnent les systèmes connectés", m: ["ciel_embarque", "ciel_cyber"] }, { t: "Travailler avec des outils et des matériaux", m: ["chaudron_soudeur", "melec_electricien"] }, { t: "Suivre une procédure d’installation ou de dépannage", m: ["melec_maintenance", "chaudron_assembleur"] } ] },
+      { q: "18. Tu aimes que ton travail soit :", options: [ { t: "Visible et utile pour les autres", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Structuré et documenté", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Créatif ou personnalisable", m: ["ciel_devweb", "ciel_embarque"] } ] },
+      { q: "19. Tu te sens plus efficace quand :", options: [ { t: "Tu travailles seul sur un poste technique", m: ["ciel_cyber", "ciel_embarque"] }, { t: "Tu fais partie d’une équipe de montage ou de chantier", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Tu alternes travail manuel et résolution de problème", m: ["melec_maintenance", "chaudron_soudeur"] } ] },
+      { q: "20. Si tu devais participer à une mission, tu choisirais :", options: [ { t: "Créer une application ou un système embarqué", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Installer et tester une installation électrique", m: ["melec_electricien", "melec_maintenance"] }, { t: "Souder et monter une pièce complexe en métal", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+
+      { q: "21. Dans tes activités, tu es plus attiré par :", options: [ { t: "Les systèmes ou objets qu’on peut comprendre et analyser", m: ["ciel_embarque", "ciel_cyber", "melec_maintenance"] }, { t: "Ce qui est concret, manipulable, avec des résultats visibles", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "Ce qu’on peut construire, monter ou assembler soi-même", m: ["chaudron_assembleur", "melec_electricien"] } ] },
+      { q: "22. Dans un travail d’équipe, tu préfères :", options: [ { t: "Apporter des idées et tester des solutions", m: ["ciel_embarque", "melec_maintenance"] }, { t: "Appliquer une méthode pour que tout soit bien fait", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Faire des tâches techniques que tu maîtrises bien", m: ["chaudron_soudeur", "ciel_cyber"] } ] },
+      { q: "23. Une situation idéale pour toi serait :", options: [ { t: "Résoudre un bug logiciel ou électronique", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Remettre en marche une installation en panne", m: ["melec_maintenance", "melec_electricien"] }, { t: "Réaliser une pièce technique conforme à un plan", m: ["chaudron_assembleur", "chaudron_soudeur"] } ] },
+      { q: "24. Tu te considères comme quelqu’un de :", options: [ { t: "Curieux et logique", m: ["ciel_devweb", "ciel_cyber"] }, { t: "Précis et appliqué", m: ["chaudron_assembleur", "melec_electricien"] }, { t: "Autonome et débrouillard", m: ["chaudron_soudeur", "melec_maintenance"] } ] },
+      { q: "25. Ce que tu observes en premier, c’est :", options: [ { t: "Les détails techniques ou les petits éléments invisibles aux autres", m: ["ciel_electronique", "ciel_cyber"] }, { t: "La solidité ou le bon fonctionnement d’un objet ou système", m: ["melec_maintenance", "melec_electricien"] }, { t: "L’aspect extérieur et la finition d’un travail bien fait", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+      { q: "26. Ce que tu préfères dans un travail technique :", options: [ { t: "Comprendre comment ça marche et pourquoi", m: ["ciel_embarque", "ciel_cyber"] }, { t: "Appliquer un protocole ou une méthode sûre", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Ajuster, tester, améliorer manuellement", m: ["melec_maintenance", "chaudron_soudeur"] } ] },
+      { q: "27. Tu aimes particulièrement quand tu peux :", options: [ { t: "Manipuler un système intelligent ou connecté", m: ["ciel_embarque", "ciel_electronique"] }, { t: "Contribuer à une installation technique en équipe", m: ["melec_electricien", "melec_maintenance"] }, { t: "Fabriquer quelque chose à partir d’un plan ou d’un modèle", m: ["chaudron_assembleur", "chaudron_soudeur"] } ] },
+      { q: "28. Ce que tu apprécies le plus, c’est :", options: [ { t: "Créer quelque chose de fonctionnel à partir d’une idée", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Réparer ou faire fonctionner un système concret", m: ["melec_maintenance", "melec_electricien"] }, { t: "Assembler ou souder des pièces avec précision", m: ["chaudron_assembleur", "chaudron_soudeur"] } ] },
+      { q: "29. Si tu étais technicien, tu préférerais :", options: [ { t: "Concevoir et programmer des solutions", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Assurer le bon fonctionnement d’installations", m: ["melec_maintenance", "melec_electricien"] }, { t: "Réaliser des pièces ou des structures métalliques", m: ["chaudron_assembleur", "chaudron_soudeur"] } ] },
+      { q: "30. Tu as plus d'affinité avec :", options: [ 
+  { t: "Les systèmes électroniques et informatiques", m: ["ciel_embarque", "ciel_electronique"] },
+  { t: "Les installations électriques et techniques", m: ["melec_maintenance", "melec_electricien"] },
+  { t: "La fabrication ou le montage de pièces métalliques", m: ["chaudron_assembleur", "chaudron_soudeur"] }
+] },
+
+	  
+	  { q: "31. Tu préfères une activité où tu peux :", options: [ { t: "Réfléchir, tester, ajuster pour que tout fonctionne", m: ["ciel_embarque", "melec_maintenance"] }, { t: "Reproduire exactement ce qu’on t’a demandé", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Travailler librement sur une tâche technique", m: ["chaudron_soudeur", "ciel_devweb"] } ] },
+	  { q: "32. Ce que tu fais naturellement, même sans qu’on te le demande :", options: [ { t: "Chercher comment améliorer ce qui existe", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Vérifier que tout est bien branché, bien fixé", m: ["melec_electricien", "melec_maintenance"] }, { t: "Ajuster ou corriger un détail manuel ou visuel", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+	  { q: "33. Pour toi, un bon projet est :", options: [ { t: "Bien documenté, testé et sûr", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Construit proprement, respectant les consignes", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Créatif, original, personnalisé", m: ["ciel_devweb", "chaudron_soudeur"] } ] },
+	  { q: "34. En atelier, tu préfères :", options: [ { t: "T’occuper des branchements ou réglages", m: ["melec_electricien", "melec_maintenance"] }, { t: "Monter, assembler, souder des pièces", m: ["chaudron_soudeur", "chaudron_assembleur"] }, { t: "Tester ou programmer des systèmes", m: ["ciel_embarque", "ciel_electronique"] } ] },
+	  { q: "35. Si tu devais faire un stage, tu préférerais :", options: [ { t: "Un lieu avec ordinateurs, serveurs ou objets connectés", m: ["ciel_devweb", "ciel_cyber", "ciel_embarque"] }, { t: "Un chantier électrique ou industriel", m: ["melec_electricien", "melec_maintenance"] }, { t: "Un atelier de métallurgie ou de fabrication", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+	  { q: "36. Ce que tu trouves le plus satisfaisant :", options: [ { t: "Que tout fonctionne parfaitement sans erreur", m: ["ciel_cyber", "melec_maintenance"] }, { t: "Que l’installation soit finie et bien posée", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Que la pièce soit solide et bien soudée", m: ["chaudron_soudeur", "ciel_electronique"] } ] },
+	  { q: "37. Dans ton futur métier, tu aimerais surtout :", options: [ { t: "Intervenir sur des systèmes complexes à faire évoluer", m: ["melec_maintenance", "ciel_embarque"] }, { t: "Contribuer à des installations concrètes et utiles", m: ["melec_electricien", "chaudron_assembleur"] }, { t: "Fabriquer ou réparer avec précision des éléments techniques", m: ["chaudron_soudeur", "ciel_electronique"] } ] },
+	  { q: "38. Tu te reconnais le plus dans :", options: [ { t: "L’envie de comprendre ce qu’il y a derrière un système", m: ["ciel_embarque", "ciel_cyber"] }, { t: "Le besoin de voir, toucher, manipuler les éléments", m: ["melec_electricien", "chaudron_soudeur"] }, { t: "La précision et l’organisation", m: ["melec_maintenance", "chaudron_assembleur"] } ] },
+	  { q: "39. Ton entourage dit souvent que tu es :", options: [ { t: "Astucieux, logique et débrouillard", m: ["ciel_devweb", "ciel_embarque"] }, { t: "Fiable, sérieux, organisé", m: ["melec_maintenance", "melec_electricien"] }, { t: "Minutieux, manuel, efficace", m: ["chaudron_soudeur", "chaudron_assembleur"] } ] },
+	  { q: "40. Tu aimerais un jour :", options: [ { t: "Créer un système intelligent qui réagit ou communique", m: ["ciel_embarque", "ciel_electronique"] }, { t: "Superviser une installation et assurer sa sécurité", m: ["melec_maintenance", "ciel_cyber"] }, { t: "Réaliser une pièce technique de A à Z", m: ["chaudron_assembleur", "chaudron_soudeur"] } ] }
 
     ];
 
@@ -287,7 +90,7 @@
       const title = document.createElement("h2");
       title.textContent = q.q;
       block.appendChild(title);
-      q.options.forEach((opt, j) => {
+      q.options.forEach((opt) => {
         const label = document.createElement("label");
         label.innerHTML = `<input type="radio" name="q${i}" value="${opt.m.join(',')}"> ${opt.t}`;
         block.appendChild(label);
@@ -300,31 +103,87 @@
     submit.textContent = "Voir mes résultats";
     form.appendChild(submit);
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const scores = {};
-      for (let key in metiers) scores[key] = 0;
-      questions.forEach((_, i) => {
-        const answer = document.querySelector(`input[name='q${i}']:checked`);
-        if (answer) {
-          answer.value.split(',').forEach(m => scores[m]++);
-        }
+   form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const scores = {}, filieres = {};
+  for (let key in metiers) {
+    scores[key] = 0;
+    filieres[metiers[key].filiere] = 0;
+  }
+
+  questions.forEach((_, i) => {
+    const answer = document.querySelector(`input[name="q${i}"]:checked`);
+    if (answer) {
+      answer.value.split(',').forEach(m => {
+        scores[m]++;
+        filieres[metiers[m].filiere]++;
       });
+    }
+  });
 
-      const total = Object.values(scores).reduce((a, b) => a + b, 0);
-      const resultats = Object.entries(scores)
-        .map(([key, val]) => ({ metier: metiers[key], score: Math.round((val / total) * 100) }))
-        .filter(r => r.score > 0)
-        .sort((a, b) => b.score - a.score);
+  const totalMetierPoints = Object.values(scores).reduce((a, b) => a + b, 0);
+  const topMetiers = Object.entries(scores)
+    .map(([key, val]) => ({ nom: metiers[key].nom, score: Math.round((val / totalMetierPoints) * 100) }))
+    .filter(r => r.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
 
-      const output = resultats.map(r => `${r.metier} : ${r.score} %`).join("<br>");
-      const div = document.getElementById("resultat");
-      div.innerHTML = `<h2>🔎 Résultats</h2><p>${output}</p><div style='margin-top:1.5rem; text-align:center;'><button onclick='location.reload()' style='margin:0.5rem;padding:0.5rem 1rem;background:#ccc;border:none;border-radius:4px;'>🔁 Recommencer le test</button> <a href='fiches.html' style='margin:0.5rem;padding:0.5rem 1rem;background:#004080;color:white;border:none;border-radius:4px;text-decoration:none;'>📂 Voir les fiches métiers</a></div>`;
-      div.style.display = "block";
-      form.style.display = "none";
-	  div.scrollIntoView({ behavior: 'smooth' });
+  const topFiliere = Object.entries(filieres).sort((a, b) => b[1] - a[1])[0][0];
 
-    });
+  const div = document.getElementById("resultat");
+  div.innerHTML = `
+    <h2>🔎 Résultats</h2>
+    <p><strong>Filière dominante : ${topFiliere}</strong></p>
+    <ul>
+      ${topMetiers.map(r => `<li>${r.nom} : ${r.score} %</li>`).join('')}
+    </ul>
+    <div style="margin-top:1.5rem; text-align:center;">
+      <button onclick="location.reload()" style="margin:0.5rem;padding:0.5rem 1rem;background:#ccc;border:none;border-radius:4px;">🔁 Recommencer</button>
+    </div>
+  `;
+
+  
+const canvas = document.getElementById("graphiqueFiliere");
+canvas.style.display = "block";
+
+const ctx = canvas.getContext("2d");
+new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['CIEL', 'MELEC', 'Chaudronnerie'],
+    datasets: [{
+      label: 'Répartition par filière',
+      data: [
+        filieres.CIEL || 0,
+        filieres.MELEC || 0,
+        filieres.Chaudronnerie || 0
+      ],
+      backgroundColor: [
+        '#87CEEB', // CIEL : bleu ciel
+        '#32CD32', // MELEC : vert citron
+        '#A9A9A9'  // Chaudronnerie : gris métal
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom' },
+      title: {
+        display: true,
+        text: 'Répartition de tes réponses par filière'
+      }
+    }
+  }
+});
+
+
+
+  div.style.display = "block";
+  form.style.display = "none";
+  div.scrollIntoView({ behavior: 'smooth' });
+});
+
   </script>
 </body>
 </html>
