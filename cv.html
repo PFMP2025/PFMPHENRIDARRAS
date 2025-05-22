@@ -252,6 +252,12 @@
   font-weight: bold;
   margin-left: 8px;
 }
+.appreciation-label {
+  margin-left: 12px;
+  font-style: italic;
+  color: #666;
+}
+
 
 
   </style>
@@ -415,51 +421,50 @@ function updateCV() {
   data.competences.forEach(c => {
   const li = document.createElement("li");
 
-  // Crée le nom de la compétence
   const nom = document.createElement("div");
   nom.contentEditable = true;
   nom.className = "editable";
   nom.textContent = c;
 
-  // Crée la barre de progression
   const bar = document.createElement("div");
   bar.className = "skill-bar";
 
   const fill = document.createElement("div");
   fill.className = "fill";
-  fill.style.width = "70%"; // valeur de base modifiable
+  fill.style.width = "70%";
 
   bar.appendChild(fill);
 
-  
-const percentage = document.createElement("span");
-percentage.textContent = "70%";
-percentage.style.marginLeft = "10px";
-percentage.className = "skill-value";
+  const percentage = document.createElement("span");
+  percentage.textContent = "70%";
+  percentage.className = "skill-value";
 
+  const appreciation = document.createElement("span");
+  appreciation.className = "appreciation-label";
+  appreciation.textContent = "Expert"; // valeur par défaut
 
-const slider = document.createElement("input");
-slider.type = "range";
-slider.min = 0;
-slider.max = 100;
-slider.value = 70;
-slider.classList.add("hide-in-pdf");
-slider.oninput = function () {
-  fill.style.width = this.value + "%";
-  percentage.textContent = this.value + "%";
-};
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = 0;
+  slider.max = 100;
+  slider.value = 70;
+  slider.classList.add("hide-in-pdf");
+  slider.oninput = function () {
+    const val = parseInt(this.value);
+    fill.style.width = val + "%";
+    percentage.textContent = val + "%";
+    appreciation.textContent = val < 34 ? "Débutant" : val < 67 ? "Intermédiaire" : "Expert";
+  };
 
-
-  // Assemble
   li.appendChild(nom);
   li.appendChild(bar);
-  slider.classList.add("hide-in-pdf");
-li.appendChild(slider);
-li.appendChild(percentage);
-
+  li.appendChild(slider);
+  li.appendChild(percentage);
+  li.appendChild(appreciation);
 
   compList.appendChild(li);
 });
+
 
 
 
@@ -508,12 +513,51 @@ if (metiersCIEL.includes(metier)) {
 
 function addCompetence() {
   const li = document.createElement("li");
-  li.innerHTML = `
-    <div contenteditable="true" class="editable">Nouvelle compétence</div>
-    <div class="skill-bar"><div class="fill" style="width: 50%;"></div></div>
-  `;
+
+  const nom = document.createElement("div");
+  nom.contentEditable = true;
+  nom.className = "editable";
+  nom.textContent = "Nouvelle compétence";
+
+  const bar = document.createElement("div");
+  bar.className = "skill-bar";
+
+  const fill = document.createElement("div");
+  fill.className = "fill";
+  fill.style.width = "50%";
+
+  bar.appendChild(fill);
+
+  const percentage = document.createElement("span");
+  percentage.textContent = "50%";
+  percentage.className = "skill-value";
+
+  const appreciation = document.createElement("span");
+  appreciation.className = "appreciation-label";
+  appreciation.textContent = "Intermédiaire";
+
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = 0;
+  slider.max = 100;
+  slider.value = 50;
+  slider.classList.add("hide-in-pdf");
+  slider.oninput = function () {
+    const val = parseInt(this.value);
+    fill.style.width = val + "%";
+    percentage.textContent = val + "%";
+    appreciation.textContent = val < 34 ? "Débutant" : val < 67 ? "Intermédiaire" : "Expert";
+  };
+
+  li.appendChild(nom);
+  li.appendChild(bar);
+  li.appendChild(slider);
+  li.appendChild(percentage);
+  li.appendChild(appreciation);
+
   document.getElementById("competences").appendChild(li);
 }
+
 
 
 function addStage() {
