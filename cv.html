@@ -59,7 +59,6 @@
       width: 30%;
       padding: 1.5rem;
       text-align: center;
-      height: 297mm;
       min-height: 100%;
       box-sizing: border-box;
     }
@@ -199,6 +198,8 @@
     .fill {
       background: #3b82f6;
       height: 100%;
+	  transition: width 0.2s ease-in-out;
+  will-change: width;
     }
 
     @media (max-width: 768px) {
@@ -257,7 +258,38 @@
   font-style: italic;
   color: #666;
 }
+.appreciation-label, .skill-value {
+  display: inline-block;
+  margin-top: 4px;
+}
+input[type="range"] {
+  width: 100px;
+  margin: 0;
+  accent-color: #3b82f6;
+  cursor: pointer;
+  display: inline-block;
+}
 
+
+.skill-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  flex-wrap: nowrap;
+}
+
+.skill-bar {
+  flex: 1;
+  min-width: 100px;
+}
+input[type="range"] {
+  width: 100px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 10px;
+}
 
 
   </style>
@@ -296,7 +328,7 @@
 </select>
 
   </div>
-
+	<div id="a4-wrapper">
   <div class="cv-container" id="cvContent">
     <div class="cv-left">
 	<img id="photoCV" src="placeholder.jpg" alt="Photo" onclick="uploadPhoto()">
@@ -308,6 +340,7 @@
       <p contenteditable="true" class="editable">Email</p>
       <p contenteditable="true" class="editable">Adresse</p>
     </div>
+	
     <div class="cv-right">
       <h1 contenteditable="true" class="editable" id="titre">CV - [Métier]</h1>
       <p id="nomEntreprise" contenteditable="true" class="editable" style="font-style: italic; margin-top: -1rem;">Entreprise : _______________________</p>
@@ -326,6 +359,7 @@
         <li contenteditable="true" class="editable">Exemple : Lecture, sport, informatique</li>
       </ul>
       <button class="add-btn" id="btnAddLoisir" onclick="addLoisir()">+ Ajouter un loisir</button>
+	  </div>
     </div>
   </div>
 
@@ -456,13 +490,19 @@ function updateCV() {
     appreciation.textContent = val < 34 ? "Débutant" : val < 67 ? "Intermédiaire" : "Expert";
   };
 
-  li.appendChild(nom);
-  li.appendChild(bar);
-  li.appendChild(slider);
-  li.appendChild(percentage);
-  li.appendChild(appreciation);
+const skillWrapper = document.createElement("div");
+skillWrapper.className = "skill-wrapper";
 
-  compList.appendChild(li);
+skillWrapper.appendChild(bar);
+skillWrapper.appendChild(percentage);
+skillWrapper.appendChild(appreciation);
+skillWrapper.appendChild(slider);
+
+li.appendChild(nom);
+li.appendChild(skillWrapper);
+compList.appendChild(li);
+
+
 });
 
 
@@ -549,11 +589,19 @@ function addCompetence() {
     appreciation.textContent = val < 34 ? "Débutant" : val < 67 ? "Intermédiaire" : "Expert";
   };
 
-  li.appendChild(nom);
-  li.appendChild(bar);
-  li.appendChild(slider);
-  li.appendChild(percentage);
-  li.appendChild(appreciation);
+  const skillWrapper = document.createElement("div");
+skillWrapper.className = "skill-wrapper";
+
+skillWrapper.appendChild(bar);
+skillWrapper.appendChild(percentage);
+skillWrapper.appendChild(appreciation);
+skillWrapper.appendChild(slider);
+
+li.appendChild(nom);
+li.appendChild(skillWrapper);
+
+
+
 
   document.getElementById("competences").appendChild(li);
 }
@@ -578,29 +626,60 @@ function addLoisir() {
 
 function generatePDF() {
   const cvContainer = document.getElementById("cvContent");
+
+  // Appliquer les styles PDF
   cvContainer.classList.add("force-desktop");
 
-  document.getElementById("btnAddComp").style.display = "none";
-  document.getElementById("btnAddStage").style.display = "none";
-  document.getElementById("btnAddLoisir").style.display = "none";
+  // Masquer les boutons
+  document.querySelectorAll(".add-btn").forEach(btn => btn.style.display = "none");
 
-  const element = document.getElementById("cvContent");
-  const opt = {
-    margin: 0,
-    filename: 'CV_Personnalise.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 1.5, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all'] }
-  };
+  // Forcer largeur A4 794px et échelle réduite si besoin
+  const A4_WIDTH = 794; // px à 96dpi
+  const A4_HEIGHT = 1122;
 
-  html2pdf().set(opt).from(element).save().then(() => {
-    cvContainer.classList.remove("force-desktop");
-    document.getElementById("btnAddComp").style.display = "inline-block";
-    document.getElementById("btnAddStage").style.display = "inline-block";
-    document.getElementById("btnAddLoisir").style.display = "inline-block";
-  });
+  // Optionnel : réduire s’il dépasse
+  const scaleFactor = Math.min(1, A4_HEIGHT / cvContainer.offsetHeight);
+  cvContainer.style.transform = `scale(${scaleFactor})`;
+  cvContainer.style.transformOrigin = "top left";
+  cvContainer.style.width = `${A4_WIDTH / scaleFactor}px`;
+
+  setTimeout(() => {
+    const opt = {
+      margin: [0, 0, 0, 0],
+      filename: 'CV_Personnalise.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        scrollY: 0,
+        backgroundColor: "#ffffff"
+      },
+      jsPDF: {
+        unit: 'pt',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: { mode: ['avoid-all'] }
+    };
+
+    html2pdf()
+      .set(opt)
+      .from(cvContainer)
+      .save()
+      .then(() => {
+        // Rétablir l’état initial
+        cvContainer.classList.remove("force-desktop");
+        document.querySelectorAll(".add-btn").forEach(btn => btn.style.display = "inline-block");
+        cvContainer.style.transform = "";
+        cvContainer.style.width = "";
+      });
+  }, 100); // petite pause pour assurer le rendu complet
 }
+
+
+
+
+
 function uploadPhoto() {
   document.getElementById("uploadInput").click();
 }
