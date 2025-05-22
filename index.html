@@ -4,96 +4,155 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Présentation CIEL, MELEC et Chaudronnerie</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 2rem;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .btn-fiches {
-      display: inline-block;
-      background: #004080;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      font-size: 1rem;
-      max-width: 100%;
-      text-align: center;
-      word-break: break-word;
-    }
-    .btn-fixed {
-      position: fixed;
-      bottom: 10px;
-      left: 5%;
-      width: 90%;
-      z-index: 1000;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-      color: #004080;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .card ul {
-      padding-left: 1.2rem;
-    }
-    .card ul li {
-      margin-bottom: 0.5rem;
-    }
-     #btnMTNE {
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --main-bg: linear-gradient(135deg, #e6edf5 0%, #f7f9fb 100%);
+  --card-bg: #ffffff;
+
+  --accent: #3b82f6;           
+  --accent2: #60a5fa;          
+
+--accent-green: #f59e0b;
+--accent-green-hover: #d97706;
+
+
+
+
+
+  --text-main: #1f2937;        
+  --text-light: #6b7280;       
+}
+
+
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--main-bg);
+    margin: 0;
+    padding: 2rem;
+    color: var(--text-main);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .btn-fiches {
+  background: var(--accent);
+  color: white;
+  padding: 0.7rem 1.4rem;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: none;
+  transition: background 0.2s ease;
+}
+
+.btn-fiches:hover {
+  background: var(--accent2);
+}
+
+
+  .boutons-accueil {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 999;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+
+  #btnMTNE {
   position: fixed;
   top: 1rem;
-  left: 11rem;
-  background-color: #117a3a;
+  right: 1rem;
+  background: var(--accent-green);
   color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  font-weight: 700;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  transition: background 0.2s ease;
   z-index: 1000;
 }
+
 #btnMTNE:hover {
-  background-color: #0e5c2a;
+  background: var(--accent-green-hover);
 }
-  </style>
+
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(34, 41, 70, 0.10);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(136, 201, 249, 0.13);
+  }
+
+  .card h2 {
+    font-family: 'Orbitron', sans-serif;
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card ul {
+    padding-left: 1.2rem;
+  }
+
+  .card ul li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+  }
+  
+
+</style>
+
+
 </head>
 <body>
   <h1>Présentation des Filières : CIEL, MELEC et Chaudronnerie</h1>
   <a href="QCM-MTNE.html" id="btnMTNE">📄 Questionnaire Semaine des PFMP</a>
 
-  <div style="text-align: center; margin-bottom: 1.5rem;">
-    <a href="qcm-orientation-stage.html" class="btn-fiches btn-fixed">🧭 Faire le test d'orientation</a><br>
-    <a href="cv.html" class="btn-fiches" style="margin-top: 1rem;">📝 Faire mon CV</a><br>
-    <a href="fiches.html" class="btn-fiches" style="margin-top: 1rem;">🔍 Voir les fiches métiers et lieux de stage</a>
-  </div>
+  <div class="boutons-accueil">
+  <a href="qcm-orientation-stage.html" class="btn-fiches">🧭 Faire le test d'orientation</a>
+  <a href="cv.html" class="btn-fiches">📝 Faire mon CV</a>
+  <a href="fiches.html" class="btn-fiches">🔍 Voir les fiches métiers et lieux de stage</a>
+</div>
+
 
   <div class="grid">
     <!-- Bloc CIEL -->
