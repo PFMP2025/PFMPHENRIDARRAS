@@ -231,15 +231,15 @@ const iconChaudronnerie = L.icon({
       "Vimy": [50.398, 2.888],
       "Achicourt": [50.287, 2.710],
       "Hénin-Carvin": [50.431, 2.984],
-      "National": [50.633, 3.066] // Juste pour Delta Dore qui est national
+      "National": [50.633, 3.066] 
     };
 
-    // Fonction pour récupérer coords par ville (fallback si inconnue)
+    
     function getCoords(ville) {
       return villesCoords[ville] || [50.4, 2.8]; // Centre Hauts-de-France par défaut
     }
 
-    // Liste des lieux avec ville et filière
+   
     const lieux = [
   // CIEL
   { nom: "Secure Informatique", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
@@ -432,16 +432,16 @@ const iconChaudronnerie = L.icon({
 ];
 
 
-    // Création des marqueurs
+   
     let markers = [];
 
-    // Fonction pour enlever tous les marqueurs de la carte
+   
     function clearMarkers() {
       markers.forEach(marker => map.removeLayer(marker));
       markers = [];
     }
 
-    // Fonction pour ajouter les marqueurs sur la carte selon la liste donnée
+    
     function addMarkers(filteredLieux) {
       clearMarkers();
 
@@ -463,17 +463,17 @@ const iconChaudronnerie = L.icon({
         markers.push(marker);
       });
 
-      // Ajuster la vue pour englober tous les marqueurs si possible
+      
       if (markers.length > 0) {
         const group = L.featureGroup(markers);
         map.fitBounds(group.getBounds().pad(0.3));
       }
     }
 
-    // Affichage initial : tous les lieux
+    
     addMarkers(lieux);
 
-    // Événement sur le filtre pour mettre à jour les marqueurs
+    
     document.getElementById('filiereSelect').addEventListener('change', (e) => {
       const filiere = e.target.value;
       if (filiere === 'all') {
