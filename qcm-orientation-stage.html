@@ -24,6 +24,43 @@
     cursor: pointer;
     z-index: 1000;
 }
+	  .options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.question {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.question h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+label {
+  background: #f0f4ff;
+  padding: 0.6rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+label:hover {
+  background: #e0ecff;
+}
+
+label input[type="radio"] {
+  margin-right: 0.8rem;
+}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -98,19 +135,27 @@
     ];
 
     const form = document.getElementById("qcmForm");
-    questions.forEach((q, i) => {
-      const block = document.createElement("div");
-      block.className = "question";
-      const title = document.createElement("h2");
-      title.textContent = q.q;
-      block.appendChild(title);
-      q.options.forEach((opt) => {
-        const label = document.createElement("label");
-        label.innerHTML = `<input type="radio" name="q${i}" value="${opt.m.join(',')}"> ${opt.t}`;
-        block.appendChild(label);
-      });
-      form.appendChild(block);
-    });
+   questions.forEach((q, i) => {
+  const block = document.createElement("div");
+  block.className = "question";
+
+  const title = document.createElement("h2");
+  title.textContent = q.q;
+  block.appendChild(title);
+
+  const optionsContainer = document.createElement("div");
+  optionsContainer.className = "options";
+
+  q.options.forEach((opt) => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="radio" name="q${i}" value="${opt.m.join(',')}"> ${opt.t}`;
+    optionsContainer.appendChild(label);
+  });
+
+  block.appendChild(optionsContainer);
+  form.appendChild(block);
+});
+
 
     const submit = document.createElement("button");
     submit.type = "submit";
