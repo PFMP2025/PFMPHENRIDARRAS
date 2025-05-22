@@ -580,5 +580,60 @@
       </section>
     </div>
   </div>
+  <script>
+  const tempsTrajets = {
+    "Ablain-Saint-Nazaire": { temps: "13 min", mode: "🚌 Bus" },
+    "Achicourt": { temps: "29 min", mode: "🚌 Bus" },
+    "Aix-Noulette": { temps: "35 min", mode: "🚌 Bus" },
+    "Arras": { temps: "22 min", mode: "🚆 Train" },
+    "Auchy-Les-Mines": { temps: "32 min", mode: "🚌 Bus" },
+    "Avion": { temps: "18 min", mode: "🚌 Bus" },
+    "Billy-Montigny": { temps: "35 min", mode: "🚌 Bus" },
+    "Bruay-La-Buissière": { temps: "62 min", mode: "🚆 Train" },
+    "Bully-Les-Mines": { temps: "14 min", mode: "🚌 Bus" },
+    "Béthune": { temps: "25 min", mode: "🚆 Train" },
+    "Carvin": { temps: "38 min", mode: "🚆 Train" },
+    "Courrieres": { temps: "11 min", mode: "🚌 Bus" },
+    "Dainville": { temps: "30 min", mode: "🚌 Bus" },
+    "Dourges": { temps: "61 min", mode: "🚆 Train" },
+    "Douvrin": { temps: "7 min", mode: "🚌 Bus" },
+    "Grenay": { temps: "66 min", mode: "🚆 Train" },
+    "Hénin-Beaumont": { temps: "61 min", mode: "🚆 Train" },
+    "Labourse": { temps: "74 min", mode: "🚆 Train" },
+    "Lens": { temps: "11 min", mode: "🚌 Bus" },
+    "Lille": { temps: "59 min", mode: "🚆 Train" },
+    "Liévin": { temps: "5 min", mode: "🚌 Bus" },
+    "Loison-sous-Lens": { temps: "40 min", mode: "🚆 Train" },
+    "Loos-en-Gohelle": { temps: "13 min", mode: "🚌 Bus" },
+    "Mazingarbe": { temps: "13 min", mode: "🚌 Bus" },
+    "Montigny-en-Gohelle": { temps: "19 min", mode: "🚌 Bus" },
+    "Méricourt": { temps: "51 min", mode: "🚆 Train" },
+    "Noyelles-Les-Seclin": { temps: "73 min", mode: "🚆 Train" },
+    "Orchies": { temps: "30 min", mode: "🚆 Train" },
+    "Riaumont": { temps: "14 min", mode: "🚌 Bus" },
+    "Rouvroy": { temps: "44 min", mode: "🚆 Train" },
+    "Sains-en-Gohelle": { temps: "75 min", mode: "🚆 Train" },
+    "Saint-Laurent-Blangy": { temps: "21 min", mode: "🚌 Bus" },
+    "Saint-Pôle-Sur-Ternoise": { temps: "64 min", mode: "🚆 Train" },
+    "Sallaumines": { temps: "35 min", mode: "🚌 Bus" },
+    "Seclin": { temps: "47 min", mode: "🚆 Train" },
+    "Vendin-le-Vieil": { temps: "33 min", mode: "🚌 Bus" },
+    "Villeneuve-d'Ascq": { temps: "51 min", mode: "🚆 Train" },
+    "Vimy": { temps: "8 min", mode: "🚌 Bus" },
+    "Wasquehal": { temps: "53 min", mode: "🚆 Train" },
+    "Wingles": { temps: "19 min", mode: "🚌 Bus" }
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.ville').forEach(span => {
+      const ville = span.textContent.trim();
+      if (tempsTrajets[ville]) {
+        const { temps, mode } = tempsTrajets[ville];
+        span.textContent += ` – ${mode} ${temps}`;
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
