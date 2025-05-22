@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test d'Orientation - Bac Pro</title>
+  <title>Test PFMP MTNE</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 2rem; color: #333; }
     h1, h2 { text-align: center; }
@@ -29,7 +29,7 @@
 </head>
 <body>
   <button class="bouton-retour" onclick="history.back()">← Retour</button>
-  <h1>Test d'Orientation : Quelle filière et quel métier sont faits pour toi ?</h1>
+  <h1> Quelle PFMP sont faits pour toi ?</h1>
   <form id="qcmForm"></form>
   <div id="resultat"></div>
   <canvas id="graphiqueFiliere" style="max-width: 500px; margin: 2rem auto; display: none;"></canvas>
@@ -65,6 +65,131 @@
       { q: "5. Ton environnement idéal serait :", options: [
         { t: "Un endroit calme avec ordinateurs et logiciels", m: ["ciel_devweb", "ciel_cyber"] },
         { t: "Un atelier ou un chantier avec des outils techniques", m: ["melec_electricien"] }
+      ]},
+      { q: "6. Quel type de tâche préfères-tu ?", options: [
+        { t: "Coder, tester et améliorer un programme", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Câbler et brancher des composants sur un chantier", m: ["melec_electricien"] },
+        { t: "Chercher et corriger des pannes dans un système", m: ["melec_maintenance", "ciel_cyber"] }
+      ]},
+      { q: "7. Ce qui te motive le plus dans un projet, c’est :", options: [
+        { t: "Comprendre le fonctionnement global", m: ["ciel_cyber", "ciel_embarque"] },
+        { t: "Réaliser proprement une installation électrique", m: ["melec_electricien"] },
+        { t: "Assurer que tout fonctionne bien après mon passage", m: ["melec_maintenance"] }
+      ]},
+      { q: "8. Tu préfères apprendre :", options: [
+        { t: "En bidouillant toi-même", m: ["ciel_embarque", "ciel_devweb"] },
+        { t: "En observant un professionnel faire", m: ["melec_electricien"] },
+        { t: "En suivant des tutoriels clairs et logiques", m: ["ciel_cyber", "melec_maintenance"] }
+      ]},
+      { q: "9. Tu es plutôt :", options: [
+        { t: "Créatif et curieux", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Rigoureux et patient", m: ["melec_maintenance", "ciel_cyber"] },
+        { t: "Précis et manuel", m: ["melec_electricien"] }
+      ]},
+      { q: "10. Dans un travail d’équipe, tu préfères :", options: [
+        { t: "Coder une partie technique", m: ["ciel_devweb"] },
+        { t: "Réaliser des branchements à plusieurs", m: ["melec_electricien"] },
+        { t: "Chercher des solutions ensemble à un problème", m: ["melec_maintenance", "ciel_cyber"] }
+      ]},
+      { q: "11. Tu aimerais qu'on te dise :", options: [
+        { t: "Tu maîtrises vraiment bien les logiciels !", m: ["ciel_devweb", "ciel_cyber"] },
+        { t: "Ton câblage est propre et conforme", m: ["melec_electricien"] },
+        { t: "Grâce à toi, ça remarche !", m: ["melec_maintenance"] }
+      ]},
+      { q: "12. Quand tu entends 'objet connecté', tu penses :", options: [
+        { t: "À un projet domotique que je pourrais développer", m: ["ciel_embarque", "ciel_devweb"] },
+        { t: "À une installation électrique pilotée à distance", m: ["melec_electricien"] },
+        { t: "À un appareil qu’il faudra dépanner s’il tombe en panne", m: ["melec_maintenance"] }
+      ]},
+      { q: "13. Ce que tu préfères dans les TP :", options: [
+        { t: "Créer un système ou un programme de zéro", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Mettre en service une installation complète", m: ["melec_electricien"] },
+        { t: "Trouver et résoudre des défauts de fonctionnement", m: ["melec_maintenance", "ciel_cyber"] }
+      ]},
+      { q: "14. Tu préfères quand :", options: [
+        { t: "Il faut réfléchir à une solution technique originale", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Il faut suivre une procédure et tout tester", m: ["melec_maintenance"] },
+        { t: "Il faut respecter les normes et les plans", m: ["melec_electricien"] }
+      ]},
+      { q: "15. Ton outil préféré serait :", options: [
+        { t: "Un ordinateur avec un éditeur de code", m: ["ciel_devweb", "ciel_cyber"] },
+        { t: "Un multimètre ou un tournevis", m: ["melec_maintenance", "melec_electricien"] },
+        { t: "Un microcontrôleur ou des capteurs", m: ["ciel_embarque"] }
+      ]},
+      { q: "16. Tu préfères travailler dans :", options: [
+        { t: "Une salle informatique ou un bureau calme", m: ["ciel_devweb", "ciel_cyber"] },
+        { t: "Un atelier ou une salle technique", m: ["ciel_embarque", "melec_maintenance"] },
+        { t: "Un chantier ou un bâtiment en construction", m: ["melec_electricien"] }
+      ]},
+      { q: "17. Ce qui t’amuse le plus :", options: [
+        { t: "Programmer des petits jeux ou outils", m: ["ciel_devweb"] },
+        { t: "Brancher et allumer des LED, tester des circuits", m: ["ciel_embarque"] },
+        { t: "Démonter un objet et le réparer", m: ["melec_maintenance"] }
+      ]},
+      { q: "18. Tu es fier quand :", options: [
+        { t: "Ton code fonctionne du premier coup", m: ["ciel_devweb"] },
+        { t: "Ton montage est bien réalisé", m: ["melec_electricien"] },
+        { t: "Tu dépannes un problème complexe", m: ["ciel_cyber", "melec_maintenance"] }
+      ]},
+      { q: "19. En stage, tu aimerais :", options: [
+        { t: "Créer une application ou un système connecté", m: ["ciel_embarque", "ciel_devweb"] },
+        { t: "Aider à une installation électrique", m: ["melec_electricien"] },
+        { t: "Participer à la maintenance de systèmes", m: ["melec_maintenance"] }
+      ]},
+      { q: "20. Ce que tu préfères dans un plan ou schéma :", options: [
+        { t: "L’adapter pour qu’il soit plus efficace", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Le suivre à la lettre pour un montage réussi", m: ["melec_electricien"] },
+        { t: "Le comprendre pour détecter des erreurs", m: ["melec_maintenance"] }
+      ]},
+      { q: "21. Quel compliment te ferait le plus plaisir ?", options: [
+        { t: "Tu as des idées de génie", m: ["ciel_devweb", "ciel_embarque"] },
+        { t: "Ton travail est net et précis", m: ["melec_electricien"] },
+        { t: "Tu trouves toujours la panne", m: ["melec_maintenance", "ciel_cyber"] }
+      ]},
+      { q: "22. Quand tu travailles, tu préfères :", options: [
+        { t: "Coder seul et en silence", m: ["ciel_devweb"] },
+        { t: "Installer avec d'autres sur le terrain", m: ["melec_electricien"] },
+        { t: "Réfléchir en groupe à une solution technique", m: ["melec_maintenance", "ciel_cyber"] }
+      ]},
+      { q: "23. Dans une journée de travail idéale :", options: [
+        { t: "Je crée ou programme un objet", m: ["ciel_embarque"] },
+        { t: "Je monte ou installe une structure", m: ["melec_electricien"] },
+        { t: "Je répare ou optimise un système", m: ["melec_maintenance"] }
+      ]},
+      { q: "24. Tu te sens utile quand :", options: [
+        { t: "Je rends une machine ou un système plus sécurisé", m: ["ciel_cyber", "melec_maintenance"] },
+        { t: "Je rends service à un client en réparant", m: ["melec_maintenance", "melec_electricien"] },
+        { t: "Je fais gagner du temps grâce à mon logiciel", m: ["ciel_devweb"] }
+      ]},
+      { q: "25. Tu serais prêt à :", options: [
+        { t: "Créer un programme de domotique à la maison", m: ["ciel_embarque", "ciel_devweb"] },
+        { t: "Installer des prises et des interrupteurs chez quelqu’un", m: ["melec_electricien"] },
+        { t: "Diagnostiquer un tableau électrique", m: ["melec_maintenance"] }
+      ]},
+      { q: "26. Ton avenir professionnel idéal serait :", options: [
+        { t: "Dans une entreprise de développement logiciel", m: ["ciel_devweb"] },
+        { t: "Sur les chantiers ou dans l’installation technique", m: ["melec_electricien"] },
+        { t: "Dans une équipe de maintenance industrielle", m: ["melec_maintenance"] }
+      ]},
+      { q: "27. Tu préfères travailler avec :", options: [
+        { t: "Des logiciels et interfaces numériques", m: ["ciel_devweb", "ciel_cyber"] },
+        { t: "Des outils électriques et des câbles", m: ["melec_electricien"] },
+        { t: "Des systèmes mécaniques et automatiques", m: ["melec_maintenance"] }
+      ]},
+      { q: "28. Une situation idéale de travail serait :", options: [
+        { t: "Créer une appli de gestion connectée", m: ["ciel_devweb"] },
+        { t: "Monter un coffret électrique complet", m: ["melec_electricien"] },
+        { t: "Diagnostiquer une panne sur une machine", m: ["melec_maintenance"] }
+      ]},
+      { q: "29. Ce que tu aimerais approfondir en formation :", options: [
+        { t: "Les langages informatiques (HTML, Python...)", m: ["ciel_devweb"] },
+        { t: "Le câblage et la norme NFC 15-100", m: ["melec_electricien"] },
+        { t: "Les automatismes et la sécurité", m: ["melec_maintenance"] }
+      ]},
+      { q: "30. Tu préfères un métier qui :", options: [
+        { t: "Évolue avec le numérique et les logiciels", m: ["ciel_devweb", "ciel_cyber"] },
+        { t: "Est utile sur les chantiers et dans les bâtiments", m: ["melec_electricien"] },
+        { t: "Garanti le bon fonctionnement d’installations techniques", m: ["melec_maintenance"] }
       ]}
     ];
 
