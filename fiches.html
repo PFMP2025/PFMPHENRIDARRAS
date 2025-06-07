@@ -583,7 +583,8 @@
       </section>
     </div>
   </div>
-  <script>
+ <script>
+  // Base de données des temps de trajet
   const tempsTrajets = {
     "Ablain-Saint-Nazaire": { temps: "13 min", mode: "🚌 Bus" },
     "Achicourt": { temps: "29 min", mode: "🚌 Bus" },
@@ -627,7 +628,17 @@
     "Wingles": { temps: "19 min", mode: "🚌 Bus" }
   };
 
-  window.addEventListener('DOMContentLoaded', () => {
+  // Fonction pour mélanger un tableau (Fisher-Yates)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Ajout des temps de trajet
     document.querySelectorAll('.ville').forEach(span => {
       const ville = span.textContent.trim();
       if (tempsTrajets[ville]) {
@@ -635,8 +646,24 @@
         span.textContent += ` – ${mode} ${temps}`;
       }
     });
+
+    // 2. Mélange des lieux de stage dans chaque <ul>
+    document.querySelectorAll('details ul').forEach(ul => {
+      const items = Array.from(ul.children);
+      shuffleArray(items).forEach(li => ul.appendChild(li));
+    });
+
+    // 3. Mise à jour des compteurs de lieux
+    document.querySelectorAll('details').forEach(detail => {
+      const count = detail.querySelectorAll('li').length;
+      const summary = detail.querySelector('summary');
+      if (!summary.innerHTML.includes('lieux')) {
+        summary.innerHTML += ` <span style="color:gray;font-weight:normal;">(${count} lieux)</span>`;
+      }
+    });
   });
 </script>
+
 
 </body>
 </html>
