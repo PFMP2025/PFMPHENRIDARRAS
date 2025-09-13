@@ -1,300 +1,280 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Présentation CIEL, MELEC et Chaudronnerie</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --main-bg: linear-gradient(135deg, #e6edf5 0%, #f7f9fb 100%);
-  --card-bg: #ffffff;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PFMP — Présentation CIEL • MELEC • Chaudronnerie</title>
+  <!-- Police moderne avec fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --surface:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#0b4ea2;      /* bleu CIEL */
+      --primary-2:#1f8b4c;     /* vert MELEC */
+      --primary-3:#7b3fb3;     /* violet Chaudronnerie */
+      --ring: rgba(11,78,162,.25);
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+      --radius: 14px;
+    }
 
-  --accent: #3b82f6;           
-  --accent2: #60a5fa;          
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.6;
+    }
 
---accent-green: #f59e0b;
---accent-green-hover: #d97706;
+    /* ====== Header / Navbar ====== */
+    .navbar{
+      position:sticky; top:0; z-index:1000; backdrop-filter:saturate(180%) blur(8px);
+      background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      border-bottom:1px solid #e5e7eb;
+    }
+    .nav-inner{max-width:1200px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:18px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px}
+    .brand .logo{width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, var(--primary), #1a73e8); box-shadow:0 6px 16px rgba(26,115,232,.35); display:grid; place-items:center; color:#fff; font-size:18px}
+    .brand span{font-size:18px}
 
+    .nav-links{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
+    .nav-links a{
+      text-decoration:none; color:var(--text); font-weight:600; font-size:14px; padding:8px 12px; border-radius:10px; transition:all .2s ease;
+    }
+    .nav-links a:hover{ background:#eef2ff; color:var(--primary)}
+    .nav-links .cta{background:#111827; color:#fff;}
+    .nav-links .cta:hover{filter:brightness(1.1)}
 
+    /* ====== Hero / Titre ====== */
+    .hero{max-width:1200px; margin:24px auto 0; padding:0 20px 8px}
+    .hero h1{margin:8px 0 8px; font-size:clamp(24px, 3vw, 36px)}
+    .hero p{margin:0; color:var(--muted)}
+    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
 
+    .btn{appearance:none; border:0; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; box-shadow:var(--shadow); background:var(--primary); color:#fff; transition:transform .15s ease, filter .15s ease; text-decoration:none; display:inline-flex; align-items:center; gap:8px}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.dark{background:#111827}
+    .btn.alt{background:linear-gradient(135deg, #2563eb, #1d4ed8)}
 
+    /* ====== Layout ====== */
+    .container{max-width:1200px; margin:0 auto; padding:0 20px 60px}
+    .grid{display:grid; grid-template-columns:repeat(12, 1fr); gap:16px; margin-top:18px}
+    .section{grid-column:1 / -1; margin-top:10px}
+    .section h2{display:flex; align-items:center; gap:10px; margin:6px 0 10px; font-size:clamp(18px, 2.2vw, 24px)}
+    .tag{font-size:12px; font-weight:700; padding:6px 10px; border-radius:999px; background:#eef2ff; color:var(--primary)}
+    .section[data-fil="melec"] .tag{background:#ebf7ef; color:var(--primary-2)}
+    .section[data-fil="chaud"] .tag{background:#f4ebff; color:var(--primary-3)}
 
-  --text-main: #1f2937;        
-  --text-light: #6b7280;       
-}
+    .cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+    .card{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; transition:transform .15s ease}
+    .card:hover{transform:translateY(-2px)}
+    .card h3{margin:0 0 8px; font-size:16px; display:flex; align-items:center; gap:8px; color:var(--primary)}
+    .card[data-variant="melec"] h3{color:var(--primary-2)}
+    .card[data-variant="chaud"] h3{color:var(--primary-3)}
+    .card ul{margin:0; padding-left:18px}
+    .card li{margin:6px 0; color:var(--muted)}
 
+    /* ====== Footer ====== */
+    footer{border-top:1px solid #e5e7eb; background:#fff;}
+    .foot-inner{max-width:1200px; margin:0 auto; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; color:var(--muted); font-size:14px}
 
-
-  body {
-    font-family: 'Quicksand', sans-serif;
-    background: var(--main-bg);
-    margin: 0;
-    padding: 2rem;
-    color: var(--text-main);
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-family: 'Orbitron', sans-serif;
-    color: var(--accent);
-    letter-spacing: 2px;
-  }
-
-  .btn-fiches {
-  background: var(--accent);
-  color: white;
-  padding: 0.7rem 1.4rem;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: none;
-  transition: background 0.2s ease;
-}
-
-.btn-fiches:hover {
-  background: var(--accent2);
-}
-
-
-  .boutons-accueil {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  z-index: 999;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-}
-
-
-  #btnMTNE {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: var(--accent-green);
-  color: white;
-  padding: 0.6rem 1rem;
-  border-radius: 30px;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  transition: background 0.2s ease;
-  z-index: 1000;
-}
-
-#btnMTNE:hover {
-  background: var(--accent-green-hover);
-}
-
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 18px;
-    box-shadow: 0 2px 12px rgba(34, 41, 70, 0.10);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .card:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 8px 32px rgba(136, 201, 249, 0.13);
-  }
-
-  .card h2 {
-    font-family: 'Orbitron', sans-serif;
-    margin-top: 0;
-    font-size: 1.2rem;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .card ul {
-    padding-left: 1.2rem;
-  }
-
-  .card ul li {
-    margin-bottom: 0.5rem;
-    color: var(--text-light);
-  }
-  
-
-</style>
-
-
+    /* Utils */
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+  </style>
 </head>
 <body>
-  <h1>Présentation des Filières : CIEL, MELEC et Chaudronnerie</h1>
-  <a href="QCM-MTNE.html" id="btnMTNE">📄 Questionnaire Semaine des PFMP</a>
+  <!-- Navbar -->
+  <header class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="brand" aria-label="Accueil">
+        <div class="logo">HD</div>
+        <span>PFMP — Présentation</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#ciel" title="Aller à CIEL">🖥️ CIEL</a>
+        <a href="#melec" title="Aller à MELEC">⚡ MELEC</a>
+        <a href="#chaudronnerie" title="Aller à Chaudronnerie">🏗️ Chaudronnerie</a>
+        <a class="cta" href="QCM-MTNE.html">📄 Questionnaire PFMP</a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="boutons-accueil">
-  <a href="qcm-orientation-stage.html" class="btn-fiches">🧭 Faire le test d'orientation</a>
-  <a href="cv.html" class="btn-fiches">📝 Faire mon CV</a>
-  <a href="fiches.html" class="btn-fiches">🔍 Voir les fiches métiers et lieux de stage</a>
-</div>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="titre-page">
+    <h1 id="titre-page">Présentation des filières : CIEL • MELEC • Chaudronnerie</h1>
+    <p>Découvrez les métiers, les poursuites d'études et les salaires indicatifs.</p>
+    <div class="actions" role="group" aria-label="Liens rapides">
+      <a class="btn alt" href="qcm-orientation-stage.html">🧭 Faire le test d'orientation</a>
+      <a class="btn" href="cv.html">📝 Faire mon CV</a>
+      <a class="btn dark" href="fiches.html">🔍 Voir les fiches métiers & lieux de stage</a>
+    </div>
+  </section>
 
+  <main class="container">
+    <!-- ===== CIEL ===== -->
+    <section id="ciel" class="section" data-fil="ciel">
+      <h2>🖥️ Filière CIEL <span class="tag">Cybersécurité • Informatique • Électronique</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3>📋 Métiers possibles</h3>
+          <ul>
+            <li>Technicien informatique</li>
+            <li>Technicien réseaux</li>
+            <li>Technicien support</li>
+            <li>Technicien électronique</li>
+            <li>Développeur web</li>
+            <li>Développeur embarqué</li>
+            <li>Administrateur systèmes</li>
+            <li>Technicien cybersécurité</li>
+            <li>Installateur domotique</li>
+            <li>Intégrateur IoT</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>🎓 Études après CIEL</h3>
+          <ul>
+            <li>BTS CIEL — Informatique & Réseaux</li>
+            <li>BTS CIEL — Électronique & Réseaux</li>
+            <li>BTS Électronique</li>
+            <li>BTS SIO</li>
+            <li>BTS IR (Industrie)</li>
+            <li>BUT Réseaux & Télécoms</li>
+            <li>BUT Informatique</li>
+            <li>BUT GEII</li>
+            <li>Licence pro Cybersécurité</li>
+            <li>ATS / École d’ingénieur</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>💶 Métiers & salaires indicatifs</h3>
+          <ul>
+            <li>Technicien cybersécurité : 2 000–4 000 €</li>
+            <li>Technicien réseaux : 1 900–3 200 €</li>
+            <li>Technicien électronique : 1 800–3 200 €</li>
+            <li>Développeur embarqué : 2 000–3 500 €</li>
+            <li>Développeur web : 1 900–3 500 €</li>
+            <li>Administrateur systèmes : 2 200–3 800 €</li>
+            <li>Technicien IoT : 2 000–3 200 €</li>
+            <li>Réseau télécom : 2 000–3 400 €</li>
+            <li>Installateur domotique : 1 900–2 500 €</li>
+            <li>RSSI junior : 2 800–4 500 €</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
-  <div class="grid">
-    <!-- Bloc CIEL -->
-    <div class="card">
-      <h2><i>🛡️</i> CIEL – Cybersécurité, Informatique, Électronique</h2>
-      <ul>
-        <li>Technicien informatique</li>
-        <li>Technicien réseaux</li>
-        <li>Technicien support</li>
-        <li>Technicien électronique</li>
-        <li>Développeur web</li>
-        <li>Développeur embarqué</li>
-        <li>Administrateur systèmes</li>
-        <li>Technicien cybersécurité</li>
-        <li>Installateur domotique</li>
-        <li>Intégrateur IoT</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2><i>🎓</i> Études après CIEL</h2>
-      <ul>
-        <li>BTS CIEL - Informatique et Réseaux</li>
-        <li>BTS CIEL - Électronique et Réseaux</li>
-        <li>BTS Électronique</li>
-        <li>BTS SIO (Services Informatiques aux Organisations)</li>
-        <li>BTS Informatique et Réseaux pour l'Industrie</li>
-        <li>BUT Réseaux et Télécommunications</li>
-        <li>BUT Informatique</li>
-        <li>BUT GEII (Génie Électrique et Informatique Industrielle)</li>
-        <li>Licence professionnelle Cybersécurité</li>
-        <li>Classe préparatoire ATS ou école d’ingénieur</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2><i>💶</i> Métiers & Salaires après CIEL</h2>
-      <ul>
-        <li>Technicien cybersécurité : 2 000–4 000 €</li>
-        <li>Technicien réseaux : 1 900–3 200 €</li>
-        <li>Technicien électronique : 1 800–3 200 €</li>
-        <li>Développeur embarqué : 2 000–3 500 €</li>
-        <li>Développeur web : 1 900–3 500 €</li>
-        <li>Administrateur systèmes : 2 200–3 800 €</li>
-        <li>Technicien IoT : 2 000–3 200 €</li>
-        <li>Technicien réseau télécom : 2 000–3 400 €</li>
-        <li>Installateur domotique : 1 900–2 500 €</li>
-        <li>Responsable sécurité numérique : 2 800–4 500 €</li>
-      </ul>
-    </div>
+    <!-- ===== MELEC ===== -->
+    <section id="melec" class="section" data-fil="melec">
+      <h2>⚡ Filière MELEC <span class="tag">Électricité • Maintenance • Domotique</span></h2>
+      <div class="cards">
+        <article class="card" data-variant="melec">
+          <h3>📋 Métiers possibles</h3>
+          <ul>
+            <li>Électricien du bâtiment</li>
+            <li>Technicien de maintenance</li>
+            <li>Installateur domotique</li>
+            <li>Automaticien</li>
+            <li>Électricien industriel</li>
+            <li>Chargé d’affaires</li>
+            <li>Technicien régulation CVC</li>
+            <li>Technicien de chantier</li>
+            <li>Responsable technique</li>
+            <li>Installateur de bornes IRVE</li>
+          </ul>
+        </article>
+        <article class="card" data-variant="melec">
+          <h3>🎓 Études après MELEC</h3>
+          <ul>
+            <li>BTS Électrotechnique</li>
+            <li>BTS MS (Option A)</li>
+            <li>BTS FED</li>
+            <li>Licences pro (Domotique, Maintenance, Énergies)</li>
+            <li>BUT GEII</li>
+            <li>Classe préparatoire ATS</li>
+            <li>École d’ingénieur</li>
+            <li>Bachelor énergies renouvelables</li>
+          </ul>
+        </article>
+        <article class="card" data-variant="melec">
+          <h3>💶 Métiers & salaires indicatifs</h3>
+          <ul>
+            <li>Automaticien : 2 000–3 800 €</li>
+            <li>Maintenance industrielle : 2 000–3 200 €</li>
+            <li>Smart building : 2 000–4 000 €</li>
+            <li>Chargé d'affaires : 2 200–4 500 €</li>
+            <li>Installateur IRVE : 2 000–3 000 €</li>
+            <li>Électricien industriel : 2 000–3 500 €</li>
+            <li>Technicien régulation : 2 000–3 600 €</li>
+            <li>Responsable de site : 2 500–4 500 €</li>
+            <li>Domotique : 2 000–3 200 €</li>
+            <li>Chef de chantier : 2 300–4 200 €</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
-    <!-- Bloc MELEC -->
-    <div class="card">
-      <h2><i>💡</i> MELEC – Métiers de l'électricité</h2>
-      <ul>
-        <li>Électricien du bâtiment</li>
-        <li>Technicien de maintenance</li>
-        <li>Installateur domotique</li>
-        <li>Automaticien</li>
-        <li>Électricien industriel</li>
-        <li>Chargé d’affaires en électricité</li>
-        <li>Technicien en régulation CVC</li>
-        <li>Technicien de chantier</li>
-        <li>Responsable technique électricité</li>
-        <li>Installateur de bornes IRVE</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2><i>🎓</i> Études après MELEC</h2>
-      <ul>
-        <li>BTS Électrotechnique</li>
-        <li>BTS Maintenance des Systèmes (Option A)</li>
-        <li>BTS Fluides Énergies Domotique (FED)</li>
-        <li>Licence Pro Domotique</li>
-        <li>Licence Pro Maintenance Industrielle</li>
-        <li>Licence Pro Énergie et Développement Durable</li>
-        <li>BUT GEII</li>
-        <li>Classe préparatoire ATS</li>
-        <li>École d’ingénieur en électrotechnique</li>
-        <li>Bachelor en énergies renouvelables</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2><i>💶</i> Métiers & Salaires après MELEC</h2>
-      <ul>
-        <li>Automaticien : 2 000–3 800 €</li>
-        <li>Technicien maintenance industrielle : 2 000–3 200 €</li>
-        <li>Smart building : 2 000–4 000 €</li>
-        <li>Chargé d'affaires : 2 200–4 500 €</li>
-        <li>Installateur IRVE : 2 000–3 000 €</li>
-        <li>Électricien industriel : 2 000–3 500 €</li>
-        <li>Technicien régulation : 2 000–3 600 €</li>
-        <li>Responsable de site : 2 500–4 500 €</li>
-        <li>Technicien domotique : 2 000–3 200 €</li>
-        <li>Chef de chantier : 2 300–4 200 €</li>
-      </ul>
-    </div>
+    <!-- ===== CHAUDRONNERIE ===== -->
+    <section id="chaudronnerie" class="section" data-fil="chaud">
+      <h2>🏗️ Filière Chaudronnerie <span class="tag">Métallerie • Soudage • Tuyauterie</span></h2>
+      <div class="cards">
+        <article class="card" data-variant="chaud">
+          <h3>📋 Métiers possibles</h3>
+          <ul>
+            <li>Ouvrier chaudronnier</li>
+            <li>Soudeur</li>
+            <li>Assembleur structures métalliques</li>
+            <li>Monteur en tuyauterie</li>
+            <li>Technicien de fabrication</li>
+            <li>Opérateur CN</li>
+            <li>Traceur industriel</li>
+            <li>Technicien contrôle qualité</li>
+            <li>Technicien méthode</li>
+            <li>Chef d’atelier</li>
+          </ul>
+        </article>
+        <article class="card" data-variant="chaud">
+          <h3>🎓 Études après Chaudronnerie</h3>
+          <ul>
+            <li>BTS CRCI</li>
+            <li>Licences pro (Chaudronnerie, Maintenance, Conception)</li>
+            <li>Licence pro Soudage & Métallurgie</li>
+            <li>ATS / École d’ingénieur génie industriel</li>
+            <li>BUT GMP</li>
+            <li>Bachelors : Conception mécanique, Matériaux</li>
+          </ul>
+        </article>
+        <article class="card" data-variant="chaud">
+          <h3>💶 Métiers & salaires indicatifs</h3>
+          <ul>
+            <li>Chaudronnier expérimenté : 2 200–3 500 €</li>
+            <li>Soudeur qualifié : 2 000–3 800 €</li>
+            <li>Technicien BE : 2 200–3 500 €</li>
+            <li>Chef d’atelier : 2 500–4 000 €</li>
+            <li>Technicien méthode : 2 200–3 800 €</li>
+            <li>Contrôle qualité : 2 000–3 400 €</li>
+            <li>Programmeur CN : 2 100–3 600 €</li>
+            <li>Monteur tuyauterie : 2 100–3 500 €</li>
+            <li>Responsable production : 2 500–4 500 €</li>
+            <li>Chargé d’industrialisation : 2 300–4 200 €</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
 
-    <!-- Bloc Chaudronnerie -->
-    <div class="card">
-      <h2><i>🛠️</i> Chaudronnerie – Technicien en Chaudronnerie Industrielle</h2>
-      <ul>
-        <li>Ouvrier chaudronnier</li>
-        <li>Soudeur</li>
-        <li>Assembleur en structures métalliques</li>
-        <li>Monteur en tuyauterie</li>
-        <li>Technicien en fabrication</li>
-        <li>Opérateur CN</li>
-        <li>Traceur industriel</li>
-        <li>Technicien en contrôle qualité</li>
-        <li>Technicien méthode</li>
-        <li>Chef d’atelier</li>
-      </ul>
+  <footer>
+    <div class="foot-inner">
+      <span>© <span id="year"></span> PFMP HENRI DARRAS</span>
+      <span>PFMP HENRI DARRAS • 2025</span>
     </div>
-    <div class="card">
-      <h2><i>🎓</i> Études après Chaudronnerie</h2>
-      <ul>
-        <li>BTS CRCI</li>
-        <li>Licence Pro Chaudronnerie</li>
-        <li>Licence Pro Maintenance Industrielle</li>
-        <li>Licence Pro Conception & Innovation</li>
-        <li>Licence Pro Soudage & Métallurgie</li>
-        <li>Classe préparatoire ATS</li>
-        <li>École d’ingénieur génie industriel</li>
-        <li>BUT GMP</li>
-        <li>Bachelor Conception mécanique</li>
-        <li>Bachelor matériaux et structures</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2><i>💶</i> Métiers & Salaires après Chaudronnerie</h2>
-      <ul>
-        <li>Chaudronnier expérimenté : 2 200–3 500 €</li>
-        <li>Soudeur qualifié : 2 000–3 800 €</li>
-        <li>Technicien bureau d'études : 2 200–3 500 €</li>
-        <li>Chef d’atelier : 2 500–4 000 €</li>
-        <li>Technicien méthode : 2 200–3 800 €</li>
-        <li>Contrôle qualité : 2 000–3 400 €</li>
-        <li>Programmeur CN : 2 100–3 600 €</li>
-        <li>Monteur tuyauterie : 2 100–3 500 €</li>
-        <li>Responsable production : 2 500–4 500 €</li>
-        <li>Chargé d’industrialisation : 2 300–4 200 €</li>
-      </ul>
-    </div>
-  </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
