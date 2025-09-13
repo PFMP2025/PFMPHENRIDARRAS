@@ -3,486 +3,539 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Carte PFMP</title>
+  <title>Carte PFMP — Pro</title>
   
-  
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  />
-  
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-:root {
-  --main-bg: linear-gradient(135deg, #e6edf5 0%, #f7f9fb 100%);
-  --card-bg: #ffffff;
-  --accent: #3b82f6;
-  --accent2: #60a5fa;
-  --accent-green: #f59e0b;
-  --accent-green-hover: #d97706;
-  --text-main: #1f2937;
-  --text-light: #6b7280;
-}
+  <style>
+  :root {
+    --accent: #2563eb;
+    --accent-light: #3b82f6;
+    --accent-green: #16a34a;
+    --bg: #f3f4f6;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --card: #ffffff;
+  }
 
-body {
-  font-family: 'Quicksand', sans-serif;
-  background: var(--main-bg);
-  margin: 0;
-  padding: 2rem;
-  color: var(--text-main);
-}
+  * { box-sizing: border-box; }
 
-h1 {
-  text-align: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  color: var(--accent);
-  letter-spacing: 2px;
-  margin-bottom: 1.5rem;
-}
+  body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+  }
 
-#map {
-  height: 600px;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
+  header {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+    padding: 1rem 2rem;
+    text-align: center;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
 
-.filter {
-  max-width: 1000px;
-  margin: 0 auto 1.5rem auto;
-  text-align: center;
-}
+  header h1 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
 
-label {
-  font-weight: 600;
-  margin-right: 0.5rem;
-  font-size: 1.1rem;
-}
+  .container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
 
-select {
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  transition: border 0.2s ease;
-}
+  .toolbar {
+    background: var(--card);
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
 
-select:focus {
-  outline: none;
-  border: 1px solid var(--accent);
-}
+  .toolbar .filters {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
 
-.bouton-retour {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  border-radius: 30px;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-  z-index: 1000;
-  transition: background 0.2s ease;
-}
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
 
-.bouton-retour:hover {
-  background-color: var(--accent2);
-}
-</style>
+  select {
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border 0.2s ease;
+    background: #fff;
+  }
 
+  select:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  #map {
+    height: 640px;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    color: var(--text-light);
+    font-size: 0.95rem;
+  }
+  .legend .dot {
+    width: 12px; height: 20px;
+    background: no-repeat center/contain url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png');
+    display: inline-block;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
+  }
+  .legend .dot.green {
+    background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png');
+  }
+  .legend .dot.grey {
+    background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png');
+  }
+
+  .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    padding: 0.5rem;
+  }
+  .leaflet-popup-tip {
+    border: none;
+  }
+
+  .popup-card { font-family: 'Quicksand', sans-serif; }
+  .popup-card h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .popup-card p {
+    margin: 0.2rem 0;
+    color: var(--text-light);
+    font-size: 0.92rem;
+  }
+
+  .fab {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+    transition: transform 0.15s ease, background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+  }
+  .fab:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+  @media (max-width: 640px) {
+    #map { height: 70vh; }
+  }
+  </style>
 </head>
 <body>
 
+<header>
   <h1>Carte des lieux de PFMP</h1>
-	<button class="bouton-retour" onclick="history.back()">← Retour</button>
+</header>
 
-  <div class="filter">
-    <label for="filiereSelect">Filtrer par filière : </label>
-    <select id="filiereSelect">
-      <option value="all">Toutes les filières</option>
-      <option value="CIEL">CIEL</option>
-      <option value="MELEC">MELEC</option>
-      <option value="Chaudronnerie">Chaudronnerie</option>
-    </select>
+<div class="container">
+  <div class="toolbar">
+    <div class="filters">
+      <label for="filiereSelect">Filtrer par filière :</label>
+      <select id="filiereSelect">
+        <option value="all">Toutes les filières</option>
+        <option value="CIEL">CIEL</option>
+        <option value="MELEC">MELEC</option>
+        <option value="Chaudronnerie">Chaudronnerie</option>
+      </select>
+    </div>
+    <div class="legend" aria-label="Légende des filières">
+      <span><span class="dot"></span> CIEL</span>
+      <span><span class="dot green"></span> MELEC</span>
+      <span><span class="dot grey"></span> Chaudronnerie</span>
+    </div>
   </div>
 
   <div id="map"></div>
+</div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    // Carte centrée sur la région Hauts-de-France
-    const map = L.map('map').setView([50.4, 2.8], 10);
+<button class="fab" title="Retour" onclick="history.back()">⟲</button>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-	const iconCIEL = L.icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png', // bleu ciel
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // --- Carte centrée sur la région Hauts-de-France
+  const map = L.map('map').setView([50.4, 2.8], 10);
 
-const iconMELEC = L.icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png', // vert
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
 
-const iconChaudronnerie = L.icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png', // gris métal
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+  // --- Icônes par filière
+  const iconCIEL = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  const iconMELEC = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+  const iconChaudronnerie = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
+  // --- Coordonnées approximatives des villes principales
+  const villesCoords = {
+    "Liévin": [50.433, 2.777],
+    "Lens": [50.433, 2.828],
+    "Arras": [50.289, 2.776],
+    "Lille": [50.633, 3.066],
+    "Villeneuve-d'Ascq": [50.609, 3.144],
+    "Hénin-Beaumont": [50.441, 2.978],
+    "Béthune": [50.533, 2.533],
+    "Douvrin": [50.474, 2.813],
+    "Grenay": [50.461, 2.738],
+    "Vendin-Le-Vieil": [50.449, 2.759],
+    "Sallaumines": [50.435, 2.700],
+    "Carvin": [50.495, 2.813],
+    "Wasquehal": [50.651, 3.138],
+    "Saint-Laurent-Blangy": [50.272, 2.783],
+    "Loos-en-Gohelle": [50.450, 2.750],
+    "Méricourt": [50.404, 2.813],
+    "Billy-Montigny": [50.460, 2.760],
+    "Aix-Noulette": [50.505, 2.702],
+    "Rouvroy": [50.453, 2.666],
+    "Bruay-La-Buissière": [50.466, 2.576],
+    "Phalempin": [50.560, 3.125],
+    "Calonne-Ricouart": [50.477, 2.543],
+    "Sains-en-Gohelle": [50.461, 2.727],
+    "Angres": [50.473, 2.644],
+    "Labourse": [50.475, 2.659],
+    "Saint-Pôle-Sur-Ternoise": [50.340, 2.397],
+    "Loison-sous-Lens": [50.406, 2.870],
+    "Harnes": [50.447, 2.793],
+    "Mazingarbe": [50.444, 2.588],
+    "Fleurbaix": [50.667, 2.730],
+    "Dourges": [50.460, 2.660],
+    "Wavrin": [50.630, 3.035],
+    "Wahagnies": [50.584, 3.055],
+    "Courrières": [50.400, 2.860],
+    "Violaines": [50.525, 2.686],
+    "Bully-Les-Mines": [50.470, 2.714],
+    "Haisnes": [50.446, 2.760],
+    "Riaumont": [50.460, 2.680],
+    "Ablain-Saint-Nazaire": [50.448, 2.692],
+    "Dainville": [50.287, 2.740],
+    "Flers": [50.295, 2.660],
+    "Seclin": [50.556, 3.068],
+    "Noeux-Les-Seclin": [50.541, 3.050],
+    "Saint-en-Gohelle": [50.430, 2.720],
+    "Ruitz": [50.500, 2.610],
+    "Inchy-En-Artois": [50.372, 2.738],
+    "Fresnes-les-Montauban": [50.567, 3.047],
+    "Maroeil": [50.300, 2.700],
+    "Campin-En-Pevelle": [50.590, 3.050],
+    "Courrieres": [50.422, 2.900],
+    "Noeux-Les-Mines": [50.455, 2.580],
+    "Aire-Sur-La-Lys": [50.727, 2.464],
+    "Wingles": [50.500, 2.685],
+    "Flines-lez-Raches": [50.406, 3.130],
+    "Somme": [49.900, 2.700],
+    "La Comté": [50.583, 2.890],
+    "Vimy": [50.398, 2.888],
+    "Achicourt": [50.287, 2.710],
+    "Hénin-Carvin": [50.431, 2.984],
+    "National": [50.633, 3.066] 
+  };
 
+  function getCoords(ville) {
+    return villesCoords[ville] || [50.4, 2.8];
+  }
 
+  // --- Données des lieux (inchangées depuis ta version)
+  const lieux = [
+    // CIEL
+    { nom: "Secure Informatique", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "DTI Informatique", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "XEFI Lens", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "ENOVA", ville: "Lille", filiere: "CIEL", lat: 50.629, lon: 3.057 },
+    { nom: "NERI Info", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "LMELEC", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Veolia Agriculture", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "CESI Campus", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Manpower", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "IG2I", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Proch'Emploi", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Cyberiris", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Stormshield", ville: "Villeneuve-d'Ascq", filiere: "CIEL", lat: 50.608, lon: 3.170 },
+    { nom: "VINCI Energies", ville: "Gavrelle", filiere: "CIEL", lat: 50.381, lon: 2.777 },
+    { nom: "Advitam Performance", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Amipro", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "APF", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "Aramys", ville: "Hénin-Beaumont", filiere: "CIEL", lat: 50.391, lon: 3.019 },
+    { nom: "Artesienne", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "Clic Informatiques", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Comitrans", ville: "Hénin-Beaumont", filiere: "CIEL", lat: 50.391, lon: 3.019 },
+    { nom: "Consultation Reseaux Com", ville: "Achicourt", filiere: "CIEL", lat: 50.280, lon: 2.760 },
+    { nom: "Document Solutions 62", ville: "Sallaumines", filiere: "CIEL", lat: 50.416, lon: 2.749 },
+    { nom: "Eurofiber France", ville: "Villeneuve-d'Ascq", filiere: "CIEL", lat: 50.608, lon: 3.170 },
+    { nom: "IB Environnement", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Itinsell", ville: "Wasquehal", filiere: "CIEL", lat: 50.625, lon: 3.127 },
+    { nom: "Iris Informatique", ville: "Douvrin", filiere: "CIEL", lat: 50.460, lon: 2.817 },
+    { nom: "Itech Informatique", ville: "Sainte-Catherine", filiere: "CIEL", lat: 50.444, lon: 2.823 },
+    { nom: "2K Fibre", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "Services informatiques Keolis", ville: "Sallaumines", filiere: "CIEL", lat: 50.416, lon: 2.749 },
+    { nom: "A2B Klic Services", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "MSI Nord", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Netsoft Pro", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Reiz Production", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
+    { nom: "Tibco Services", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Waykonect", ville: "Lille", filiere: "CIEL", lat: 50.629, lon: 3.057 },
+    { nom: "Yzee Service", ville: "Grenay", filiere: "CIEL", lat: 50.429, lon: 2.699 },
+    { nom: "Yzee Service", ville: "Vendin-Le-Vieil", filiere: "CIEL", lat: 50.419, lon: 2.717 },
+    { nom: "Res Vi Com", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Roxys", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Laptop Informatique", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
+    { nom: "Linup", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
+    { nom: "Ben Informatique", ville: "Billy-Montigny", filiere: "CIEL", lat: 50.429, lon: 2.823 },
+    { nom: "LTPC Info", ville: "Vendin-Le-Vieil", filiere: "CIEL", lat: 50.419, lon: 2.717 },
+    { nom: "ODTel", ville: "Grenay", filiere: "CIEL", lat: 50.429, lon: 2.699 },
 
-    // Coordonnées approximatives des villes principales
-    const villesCoords = {
-      "Liévin": [50.433, 2.777],
-      "Lens": [50.433, 2.828],
-      "Arras": [50.289, 2.776],
-      "Lille": [50.633, 3.066],
-      "Villeneuve-d'Ascq": [50.609, 3.144],
-      "Hénin-Beaumont": [50.441, 2.978],
-      "Béthune": [50.533, 2.533],
-      "Douvrin": [50.474, 2.813],
-      "Grenay": [50.461, 2.738],
-      "Vendin-Le-Vieil": [50.449, 2.759],
-      "Sallaumines": [50.435, 2.700],
-      "Carvin": [50.495, 2.813],
-      "Wasquehal": [50.651, 3.138],
-      "Saint-Laurent-Blangy": [50.272, 2.783],
-      "Loos-en-Gohelle": [50.450, 2.750],
-      "Méricourt": [50.404, 2.813],
-      "Billy-Montigny": [50.460, 2.760],
-      "Aix-Noulette": [50.505, 2.702],
-      "Rouvroy": [50.453, 2.666],
-      "Bruay-La-Buissière": [50.466, 2.576],
-      "Phalempin": [50.560, 3.125],
-      "Calonne-Ricouart": [50.477, 2.543],
-      "Sains-en-Gohelle": [50.461, 2.727],
-      "Angres": [50.473, 2.644],
-      "Labourse": [50.475, 2.659],
-      "Saint-Pôle-Sur-Ternoise": [50.340, 2.397],
-      "Loison-sous-Lens": [50.406, 2.870],
-      "Harnes": [50.447, 2.793],
-      "Mazingarbe": [50.444, 2.588],
-      "Billy-Montigny": [50.460, 2.760],
-      "Fleurbaix": [50.667, 2.730],
-      "Dourges": [50.460, 2.660],
-      "Wavrin": [50.630, 3.035],
-      "Wahagnies": [50.584, 3.055],
-      "Courrières": [50.400, 2.860],
-      "Violaines": [50.525, 2.686],
-      "Bully-Les-Mines": [50.470, 2.714],
-      "Haisnes": [50.446, 2.760],
-      "Riaumont": [50.460, 2.680],
-      "Ablain-Saint-Nazaire": [50.448, 2.692],
-      "Dainville": [50.287, 2.740],
-      "Flers": [50.295, 2.660],
-      "Seclin": [50.556, 3.068],
-      "Noeux-Les-Seclin": [50.541, 3.050],
-      "Saint-en-Gohelle": [50.430, 2.720],
-      "Béthune": [50.533, 2.533],
-      "Ruitz": [50.500, 2.610],
-      "Inchy-En-Artois": [50.372, 2.738],
-      "Phalempin": [50.560, 3.125],
-      "Fresnes-les-Montauban": [50.567, 3.047],
-      "Maroeil": [50.300, 2.700],
-      "Campin-En-Pevelle": [50.590, 3.050],
-      "Courrieres": [50.422, 2.900],
-      "Noeux-Les-Mines": [50.455, 2.580],
-      "Aire-Sur-La-Lys": [50.727, 2.464],
-      "Bruay-La-Buissière": [50.466, 2.576],
-      "Sains-en-Gohelle": [50.461, 2.727],
-      "Wingles": [50.500, 2.685],
-      "Phalempin": [50.560, 3.125],
-      "Labourse": [50.475, 2.659],
-      "Flines-lez-Raches": [50.406, 3.130],
-      "Somme": [49.900, 2.700],
-      "Douvrin": [50.474, 2.813],
-      "Bully-Les-Mines": [50.470, 2.714],
-      "Labourse": [50.475, 2.659],
-      "La Comté": [50.583, 2.890],
-      "Méricourt": [50.404, 2.813],
-      "Violaines": [50.525, 2.686],
-      "Noeux-Les-Mines": [50.455, 2.580],
-      "Fleurbaix": [50.667, 2.730],
-      "Vimy": [50.398, 2.888],
-      "Achicourt": [50.287, 2.710],
-      "Hénin-Carvin": [50.431, 2.984],
-      "National": [50.633, 3.066] 
-    };
+    // MELEC
+    { nom: "SNEF", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "SPIE", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "Enedis", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "SPB ÉLEC", ville: "Arras", filiere: "MELEC", lat: 50.291, lon: 2.777 },
+    { nom: "GS ELEC", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "I.R.D ELEC 62", ville: "Rouvroy", filiere: "MELEC", lat: 50.383, lon: 2.788 },
+    { nom: "G.L.I ELEC", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
+    { nom: "LM Elec", ville: "Fresnes-les-Montauban", filiere: "MELEC", lat: 50.258, lon: 2.886 },
+    { nom: "SOCOREBAT", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "CEVELEC", ville: "Seclin", filiere: "MELEC", lat: 50.520, lon: 3.010 },
+    { nom: "Elec 2 Bat", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "LANELEC", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "CSF-RENOV", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "E2J Elec", ville: "Ablain-Saint-Nazaire", filiere: "MELEC", lat: 50.298, lon: 2.827 },
+    { nom: "Ramery", ville: "Avion", filiere: "MELEC", lat: 50.409, lon: 2.835 },
+    { nom: "Renov Et Vous", ville: "Anzin", filiere: "MELEC", lat: 50.383, lon: 3.408 },
+    { nom: "Repair Et Custom", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "Sertec", ville: "Orchies", filiere: "MELEC", lat: 50.473, lon: 3.177 },
+    { nom: "SESG", ville: "Gouy-En-Artois", filiere: "MELEC", lat: 50.336, lon: 2.651 },
+    { nom: "Construction Artois Service", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
+    { nom: "CTI Elec", ville: "Angres", filiere: "MELEC", lat: 50.405, lon: 2.725 },
+    { nom: "DDV Elec Fils", ville: "Noeux-Les-Mines", filiere: "MELEC", lat: 50.410, lon: 2.796 },
+    { nom: "Foulon Chauffage", ville: "Hersin", filiere: "MELEC", lat: 50.378, lon: 2.858 },
+    { nom: "General Energie", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "GLI Elec", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
+    { nom: "Group Electricity", ville: "Ruitz", filiere: "MELEC", lat: 50.455, lon: 2.678 },
+    { nom: "Ledieu Elec", ville: "Arras", filiere: "MELEC", lat: 50.291, lon: 2.777 },
+    { nom: "L'electricien", ville: "Carvin", filiere: "MELEC", lat: 50.439, lon: 2.850 },
+    { nom: "LG Electricite", ville: "Aix-Noulette", filiere: "MELEC", lat: 50.441, lon: 2.759 },
+    { nom: "LKT", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
+    { nom: "LP62", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "EDF", ville: "Flamanville", filiere: "MELEC", lat: 49.500, lon: -1.550 },
+    { nom: "Eiffage", ville: "Béthune", filiere: "MELEC", lat: 50.520, lon: 2.650 },
+    { nom: "Eiffage", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "2Felec", ville: "Pulversheim", filiere: "MELEC", lat: 47.780, lon: 7.240 },
+    { nom: "Flash Energy", ville: "Bully-Les-Mines", filiere: "MELEC", lat: 50.412, lon: 2.698 },
+    { nom: "ABC Energie", ville: "Merville", filiere: "MELEC", lat: 50.545, lon: 2.665 },
+    { nom: "ADFM Batiment", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "AES DANA", ville: "Saint-Laurent-Blangy", filiere: "MELEC", lat: 50.287, lon: 2.773 },
+    { nom: "Batideko", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
+    { nom: "Be Elec", ville: "Angres", filiere: "MELEC", lat: 50.405, lon: 2.725 },
+    { nom: "5COM", ville: "Sains-en-Gohelle", filiere: "MELEC", lat: 50.442, lon: 2.709 },
+    { nom: "M4T", ville: "Loos-en-Gohelle", filiere: "MELEC", lat: 50.429, lon: 2.745 },
+    { nom: "MT Elec Solutions", ville: "Barlin", filiere: "MELEC", lat: 50.448, lon: 2.622 },
+    { nom: "OI France", ville: "Wingles", filiere: "MELEC", lat: 50.498, lon: 2.689 },
+    { nom: "Okourant", ville: "Wingles", filiere: "MELEC", lat: 50.498, lon: 2.689 },
+    { nom: "STOOPS", ville: "Campin-En-Pevelle", filiere: "MELEC", lat: 50.482, lon: 3.055 },
+    { nom: "STTN Energie", ville: "Douvrin", filiere: "MELEC", lat: 50.460, lon: 2.817 },
 
-    
-    function getCoords(ville) {
-      return villesCoords[ville] || [50.4, 2.8]; // Centre Hauts-de-France par défaut
-    }
+    // Chaudronnerie
+    { nom: "Rouby Industrie", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "Groupe Beaucourt", ville: "Billy-Berclau", filiere: "Chaudronnerie", lat: 50.500, lon: 2.853 },
+    { nom: "BENALU", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
+    { nom: "STBE", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
+    { nom: "Maxystem", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "ETCI", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "AFPI Alternance", ville: "Hénin-Beaumont", filiere: "Chaudronnerie", lat: 50.391, lon: 3.019 },
+    { nom: "SETRACO", ville: "Aniche", filiere: "Chaudronnerie", lat: 50.319, lon: 3.457 },
+    { nom: "Chaudsoud", ville: "Loison-sous-Lens", filiere: "Chaudronnerie", lat: 50.409, lon: 2.844 },
+    { nom: "CSM Industrie", ville: "Sallaumines", filiere: "Chaudronnerie", lat: 50.416, lon: 2.749 },
+    { nom: "Qualitub", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
+    { nom: "Ramery", ville: "Avion", filiere: "Chaudronnerie", lat: 50.409, lon: 2.835 },
+    { nom: "Renard", ville: "Loison-sous-Lens", filiere: "Chaudronnerie", lat: 50.409, lon: 2.844 },
+    { nom: "RTE", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
+    { nom: "RZ Jardin Multi Services", ville: "Saint-en-Gohelle", filiere: "Chaudronnerie", lat: 50.436, lon: 2.748 },
+    { nom: "SADE", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "Satmi", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
+    { nom: "Secre Energie", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "SET", ville: "Rouvroy", filiere: "Chaudronnerie", lat: 50.383, lon: 2.788 },
+    { nom: "SGE GPE", ville: "Billy-Montigny", filiere: "Chaudronnerie", lat: 50.429, lon: 2.823 },
+    { nom: "CMBH", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
+    { nom: "CML Indus", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
+    { nom: "Couverture Charpente Solaire", ville: "Bully-Les-Mines", filiere: "Chaudronnerie", lat: 50.412, lon: 2.698 },
+    { nom: "Cressent", ville: "Sains-en-Gohelle", filiere: "Chaudronnerie", lat: 50.442, lon: 2.709 },
+    { nom: "Cromi", ville: "Oppi", filiere: "Chaudronnerie", lat: 50.473, lon: 2.686 },
+    { nom: "CTA", ville: "Calonne-Ricouart", filiere: "Chaudronnerie", lat: 50.438, lon: 2.580 },
+    { nom: "Dassault Aviation", ville: "Seclin", filiere: "Chaudronnerie", lat: 50.520, lon: 3.010 },
+    { nom: "Decima", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
+    { nom: "Delemazure", ville: "Haisnes", filiere: "Chaudronnerie", lat: 50.414, lon: 2.774 },
+    { nom: "Deligny", ville: "Saint-Pôle-Sur-Ternoise", filiere: "Chaudronnerie", lat: 50.220, lon: 2.387 },
+    { nom: "Delobelle", ville: "Douai", filiere: "Chaudronnerie", lat: 50.369, lon: 3.083 },
+    { nom: "Destée Chaudronnerie", ville: "Flines-lez-Raches", filiere: "Chaudronnerie", lat: 50.343, lon: 3.158 },
+    { nom: "Flinois", ville: "Dourges", filiere: "Chaudronnerie", lat: 50.412, lon: 2.876 },
+    { nom: "FMS Poulet", ville: "Aix-Noulette", filiere: "Chaudronnerie", lat: 50.441, lon: 2.759 },
+    { nom: "Haagen Dazs", ville: "Arras", filiere: "Chaudronnerie", lat: 50.291, lon: 2.777 },
+    { nom: "Heripret", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
+    { nom: "Huwer", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
+    { nom: "J2C Chaudronnerie", ville: "La Comté", filiere: "Chaudronnerie", lat: 50.469, lon: 2.763 },
+    { nom: "KY Plast", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
+    { nom: "LDMD", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "Loridan", ville: "Violaines", filiere: "Chaudronnerie", lat: 50.444, lon: 2.681 },
+    { nom: "DPI", ville: "Feuchy", filiere: "Chaudronnerie", lat: 50.308, lon: 2.838 },
+    { nom: "EBTM", ville: "Harnes", filiere: "Chaudronnerie", lat: 50.411, lon: 2.802 },
+    { nom: "Eiffage", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
+    { nom: "Eiffage", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "EIM", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
+    { nom: "Emip", ville: "Somme", filiere: "Chaudronnerie", lat: 49.900, lon: 2.900 },
+    { nom: "Endel", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "Escaliers Delalleau", ville: "Aix-Noulette", filiere: "Chaudronnerie", lat: 50.441, lon: 2.759 },
+    { nom: "ETCI", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
+    { nom: "Eurogaz", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
+    { nom: "Fer et Alu", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
+    { nom: "ACIP Chaudronnerie", ville: "Phalempin", filiere: "Chaudronnerie", lat: 50.525, lon: 3.098 },
+    { nom: "ACMB", ville: "Beuvry", filiere: "Chaudronnerie", lat: 50.497, lon: 2.709 },
+    { nom: "Actri", ville: "Noeux-Les-Mines", filiere: "Chaudronnerie", lat: 50.411, lon: 2.796 },
+    { nom: "Alkern", ville: "Harnes", filiere: "Chaudronnerie", lat: 50.411, lon: 2.802 },
+    { nom: "Apic", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
+    { nom: "Arras Maxei Feuchy", ville: "Arras", filiere: "Chaudronnerie", lat: 50.291, lon: 2.777 },
+    { nom: "Atram", ville: "Fleurbaix", filiere: "Chaudronnerie", lat: 50.652, lon: 2.816 },
+    { nom: "Bati Pat Services", ville: "Loos-en-Gohelle", filiere: "Chaudronnerie", lat: 50.429, lon: 2.745 },
+    { nom: "Ben Alu", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
+    { nom: "Bouillet", ville: "Wavrin", filiere: "Chaudronnerie", lat: 50.613, lon: 3.034 },
+    { nom: "Breschard", ville: "Wahagnies", filiere: "Chaudronnerie", lat: 50.438, lon: 3.100 },
+    { nom: "Carosserie Barre", ville: "Sallaumines", filiere: "Chaudronnerie", lat: 50.416, lon: 2.749 },
+    { nom: "Cime Environnement", ville: "Labourse", filiere: "Chaudronnerie", lat: 50.515, lon: 2.657 },
+    { nom: "Max Mine", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
+    { nom: "Mecatec", ville: "Quiéry La Motte", filiere: "Chaudronnerie", lat: 50.383, lon: 2.824 },
+    { nom: "Module Espace Alu", ville: "Sailly-La-Bourse", filiere: "Chaudronnerie", lat: 50.444, lon: 2.774 },
+    { nom: "M.S.T.I", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
+    { nom: "Nord tuyauterie", ville: "Billy-Montigny", filiere: "Chaudronnerie", lat: 50.429, lon: 2.823 },
+    { nom: "Ortec Friedlander", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
+    { nom: "Palchem", ville: "Angres", filiere: "Chaudronnerie", lat: 50.405, lon: 2.725 },
+    { nom: "Panien", ville: "Inchy-En-Artois", filiere: "Chaudronnerie", lat: 50.356, lon: 2.813 },
+    { nom: "Peme", ville: "Gourdin", filiere: "Chaudronnerie", lat: 50.341, lon: 2.694 },
+    { nom: "Polybat Alu", ville: "Herlies", filiere: "Chaudronnerie", lat: 50.371, lon: 3.086 },
+    { nom: "SMCI", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
+    { nom: "Snaam", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
+    { nom: "SNCF", ville: "Achicourt", filiere: "Chaudronnerie", lat: 50.283, lon: 2.739 },
+    { nom: "STBE", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
+    { nom: "STID", ville: "Courrieres", filiere: "Chaudronnerie", lat: 50.409, lon: 2.858 },
+    { nom: "STIN Verdon", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
+    { nom: "TCB", ville: "Bruay-La-Buissière", filiere: "Chaudronnerie", lat: 50.450, lon: 2.581 },
+    { nom: "TCM", ville: "Sains-en-Gohelle", filiere: "Chaudronnerie", lat: 50.442, lon: 2.709 },
+    { nom: "TDI", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
+    { nom: "Techni Gaine Plus", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
+    { nom: "Terberg Matec", ville: "Grenay", filiere: "Chaudronnerie", lat: 50.429, lon: 2.699 },
+    { nom: "Tuyauteurs 4 vents", ville: "La Comte", filiere: "Chaudronnerie", lat: 50.469, lon: 2.763 },
+    { nom: "Vasseur Serrurerie et Métallerie", ville: "Méricourt", filiere: "Chaudronnerie", lat: 50.409, lon: 2.850 },
+    { nom: "Vitalis", ville: "Violaines", filiere: "Chaudronnerie", lat: 50.444, lon: 2.681 },
+    { nom: "Wehr Groupe", ville: "non spécifiée", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 }
+  ];
 
-   
-    const lieux = [
-  // CIEL
-  { nom: "Secure Informatique", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "DTI Informatique", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "XEFI Lens", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "ENOVA", ville: "Lille", filiere: "CIEL", lat: 50.629, lon: 3.057 },
-  { nom: "NERI Info", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "LMELEC", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Veolia Agriculture", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "CESI Campus", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Manpower", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "IG2I", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Proch'Emploi", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Cyberiris", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Stormshield", ville: "Villeneuve-d'Ascq", filiere: "CIEL", lat: 50.608, lon: 3.170 },
-  { nom: "VINCI Energies", ville: "Gavrelle", filiere: "CIEL", lat: 50.381, lon: 2.777 },
-  { nom: "Advitam Performance", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Amipro", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "APF", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "Aramys", ville: "Hénin-Beaumont", filiere: "CIEL", lat: 50.391, lon: 3.019 },
-  { nom: "Artesienne", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "Clic Informatiques", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Comitrans", ville: "Hénin-Beaumont", filiere: "CIEL", lat: 50.391, lon: 3.019 },
-  { nom: "Consultation Reseaux Com", ville: "Achicourt", filiere: "CIEL", lat: 50.280, lon: 2.760 },
-  { nom: "Document Solutions 62", ville: "Sallaumines", filiere: "CIEL", lat: 50.416, lon: 2.749 },
-  { nom: "Eurofiber France", ville: "Villeneuve-d'Ascq", filiere: "CIEL", lat: 50.608, lon: 3.170 },
-  { nom: "IB Environnement", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Itinsell", ville: "Wasquehal", filiere: "CIEL", lat: 50.625, lon: 3.127 },
-  { nom: "Iris Informatique", ville: "Douvrin", filiere: "CIEL", lat: 50.460, lon: 2.817 },
-  { nom: "Itech Informatique", ville: "Sainte-Catherine", filiere: "CIEL", lat: 50.444, lon: 2.823 },
-  { nom: "2K Fibre", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "Services informatiques Keolis", ville: "Sallaumines", filiere: "CIEL", lat: 50.416, lon: 2.749 },
-  { nom: "A2B Klic Services", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "MSI Nord", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Netsoft Pro", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Reiz Production", ville: "Liévin", filiere: "CIEL", lat: 50.422, lon: 2.788 },
-  { nom: "Tibco Services", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Waykonect", ville: "Lille", filiere: "CIEL", lat: 50.629, lon: 3.057 },
-  { nom: "Yzee Service", ville: "Grenay", filiere: "CIEL", lat: 50.429, lon: 2.699 },
-  { nom: "Yzee Service", ville: "Vendin-Le-Vieil", filiere: "CIEL", lat: 50.419, lon: 2.717 },
-  { nom: "Res Vi Com", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Roxys", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Laptop Informatique", ville: "Arras", filiere: "CIEL", lat: 50.291, lon: 2.777 },
-  { nom: "Linup", ville: "Lens", filiere: "CIEL", lat: 50.430, lon: 2.828 },
-  { nom: "Ben Informatique", ville: "Billy-Montigny", filiere: "CIEL", lat: 50.429, lon: 2.823 },
-  { nom: "LTPC Info", ville: "Vendin-Le-Vieil", filiere: "CIEL", lat: 50.419, lon: 2.717 },
-  { nom: "ODTel", ville: "Grenay", filiere: "CIEL", lat: 50.429, lon: 2.699 },
+  // --- Helpers
+  function iconFor(filiere) {
+    if (filiere === 'CIEL') return iconCIEL;
+    if (filiere === 'MELEC') return iconMELEC;
+    if (filiere === 'Chaudronnerie') return iconChaudronnerie;
+    return undefined;
+  }
 
-  // MELEC
-  { nom: "SNEF", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "SPIE", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "Enedis", ville: "non spécifiée", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "SPB ÉLEC", ville: "Arras", filiere: "MELEC", lat: 50.291, lon: 2.777 },
-  { nom: "GS ELEC", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "I.R.D ELEC 62", ville: "Rouvroy", filiere: "MELEC", lat: 50.383, lon: 2.788 },
-  { nom: "G.L.I ELEC", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
-  { nom: "LM Elec", ville: "Fresnes-les-Montauban", filiere: "MELEC", lat: 50.258, lon: 2.886 },
-  { nom: "SOCOREBAT", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "CEVELEC", ville: "Seclin", filiere: "MELEC", lat: 50.520, lon: 3.010 },
-  { nom: "Elec 2 Bat", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "LANELEC", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "CSF-RENOV", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "E2J Elec", ville: "Ablain-Saint-Nazaire", filiere: "MELEC", lat: 50.298, lon: 2.827 },
-  { nom: "Ramery", ville: "Avion", filiere: "MELEC", lat: 50.409, lon: 2.835 },
-  { nom: "Renov Et Vous", ville: "Anzin", filiere: "MELEC", lat: 50.383, lon: 3.408 },
-  { nom: "Repair Et Custom", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "Sertec", ville: "Orchies", filiere: "MELEC", lat: 50.473, lon: 3.177 },
-  { nom: "SESG", ville: "Gouy-En-Artois", filiere: "MELEC", lat: 50.336, lon: 2.651 },
-  { nom: "Construction Artois Service", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
-  { nom: "CTI Elec", ville: "Angres", filiere: "MELEC", lat: 50.405, lon: 2.725 },
-  { nom: "DDV Elec Fils", ville: "Noeux-Les-Mines", filiere: "MELEC", lat: 50.410, lon: 2.796 },
-  { nom: "Foulon Chauffage", ville: "Hersin", filiere: "MELEC", lat: 50.378, lon: 2.858 },
-  { nom: "General Energie", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "GLI Elec", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
-  { nom: "Group Electricity", ville: "Ruitz", filiere: "MELEC", lat: 50.455, lon: 2.678 },
-  { nom: "Ledieu Elec", ville: "Arras", filiere: "MELEC", lat: 50.291, lon: 2.777 },
-  { nom: "L'electricien", ville: "Carvin", filiere: "MELEC", lat: 50.439, lon: 2.850 },
-  { nom: "LG Electricite", ville: "Aix-Noulette", filiere: "MELEC", lat: 50.441, lon: 2.759 },
-  { nom: "LKT", ville: "Liévin", filiere: "MELEC", lat: 50.422, lon: 2.788 },
-  { nom: "LP62", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "EDF", ville: "Flamanville", filiere: "MELEC", lat: 49.500, lon: -1.550 },
-  { nom: "Eiffage", ville: "Béthune", filiere: "MELEC", lat: 50.520, lon: 2.650 },
-  { nom: "Eiffage", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "2Felec", ville: "Pulversheim", filiere: "MELEC", lat: 47.780, lon: 7.240 },
-  { nom: "Flash Energy", ville: "Bully-Les-Mines", filiere: "MELEC", lat: 50.412, lon: 2.698 },
-  { nom: "ABC Energie", ville: "Merville", filiere: "MELEC", lat: 50.545, lon: 2.665 },
-  { nom: "ADFM Batiment", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "AES DANA", ville: "Saint-Laurent-Blangy", filiere: "MELEC", lat: 50.287, lon: 2.773 },
-  { nom: "Batideko", ville: "Lens", filiere: "MELEC", lat: 50.430, lon: 2.828 },
-  { nom: "Be Elec", ville: "Angres", filiere: "MELEC", lat: 50.405, lon: 2.725 },
-  { nom: "5COM", ville: "Sains-en-Gohelle", filiere: "MELEC", lat: 50.442, lon: 2.709 },
-  { nom: "M4T", ville: "Loos-en-Gohelle", filiere: "MELEC", lat: 50.429, lon: 2.745 },
-  { nom: "MT Elec Solutions", ville: "Barlin", filiere: "MELEC", lat: 50.448, lon: 2.622 },
-  { nom: "OI France", ville: "Wingles", filiere: "MELEC", lat: 50.498, lon: 2.689 },
-  { nom: "Okourant", ville: "Wingles", filiere: "MELEC", lat: 50.498, lon: 2.689 },
-  { nom: "STOOPS", ville: "Campin-En-Pevelle", filiere: "MELEC", lat: 50.482, lon: 3.055 },
-  { nom: "STTN Energie", ville: "Douvrin", filiere: "MELEC", lat: 50.460, lon: 2.817 },
+  function formatPopup(lieu) {
+    return `
+      <div class="popup-card">
+        <h3>${lieu.nom}</h3>
+        <p><strong>Ville :</strong> ${lieu.ville}</p>
+        <p><strong>Filière :</strong> ${lieu.filiere}</p>
+        <p><strong>Métier :</strong> ${lieu.metier || 'Non spécifié'}</p>
+      </div>
+    `;
+  }
 
-  // Chaudronnerie
-  { nom: "Rouby Industrie", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "Groupe Beaucourt", ville: "Billy-Berclau", filiere: "Chaudronnerie", lat: 50.500, lon: 2.853 },
-  { nom: "BENALU", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
-  { nom: "STBE", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
-  { nom: "Maxystem", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "ETCI", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "AFPI Alternance", ville: "Hénin-Beaumont", filiere: "Chaudronnerie", lat: 50.391, lon: 3.019 },
-  { nom: "SETRACO", ville: "Aniche", filiere: "Chaudronnerie", lat: 50.319, lon: 3.457 },
-  { nom: "Chaudsoud", ville: "Loison-sous-Lens", filiere: "Chaudronnerie", lat: 50.409, lon: 2.844 },
-  { nom: "CSM Industrie", ville: "Sallaumines", filiere: "Chaudronnerie", lat: 50.416, lon: 2.749 },
-  { nom: "Qualitub", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
-  { nom: "Ramery", ville: "Avion", filiere: "Chaudronnerie", lat: 50.409, lon: 2.835 },
-  { nom: "Renard", ville: "Loison-sous-Lens", filiere: "Chaudronnerie", lat: 50.409, lon: 2.844 },
-  { nom: "RTE", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
-  { nom: "RZ Jardin Multi Services", ville: "Saint-en-Gohelle", filiere: "Chaudronnerie", lat: 50.436, lon: 2.748 },
-  { nom: "SADE", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "Satmi", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
-  { nom: "Secre Energie", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "SET", ville: "Rouvroy", filiere: "Chaudronnerie", lat: 50.383, lon: 2.788 },
-  { nom: "SGE GPE", ville: "Billy-Montigny", filiere: "Chaudronnerie", lat: 50.429, lon: 2.823 },
-  { nom: "CMBH", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
-  { nom: "CML Indus", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
-  { nom: "Couverture Charpente Solaire", ville: "Bully-Les-Mines", filiere: "Chaudronnerie", lat: 50.412, lon: 2.698 },
-  { nom: "Cressent", ville: "Sains-en-Gohelle", filiere: "Chaudronnerie", lat: 50.442, lon: 2.709 },
-  { nom: "Cromi", ville: "Oppi", filiere: "Chaudronnerie", lat: 50.473, lon: 2.686 },
-  { nom: "CTA", ville: "Calonne-Ricouart", filiere: "Chaudronnerie", lat: 50.438, lon: 2.580 },
-  { nom: "Dassault Aviation", ville: "Seclin", filiere: "Chaudronnerie", lat: 50.520, lon: 3.010 },
-  { nom: "Decima", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
-  { nom: "Delemazure", ville: "Haisnes", filiere: "Chaudronnerie", lat: 50.414, lon: 2.774 },
-  { nom: "Deligny", ville: "Saint-Pôle-Sur-Ternoise", filiere: "Chaudronnerie", lat: 50.220, lon: 2.387 },
-  { nom: "Delobelle", ville: "Douai", filiere: "Chaudronnerie", lat: 50.369, lon: 3.083 },
-  { nom: "Destée Chaudronnerie", ville: "Flines-lez-Raches", filiere: "Chaudronnerie", lat: 50.343, lon: 3.158 },
-  { nom: "Flinois", ville: "Dourges", filiere: "Chaudronnerie", lat: 50.412, lon: 2.876 },
-  { nom: "FMS Poulet", ville: "Aix-Noulette", filiere: "Chaudronnerie", lat: 50.441, lon: 2.759 },
-  { nom: "Haagen Dazs", ville: "Arras", filiere: "Chaudronnerie", lat: 50.291, lon: 2.777 },
-  { nom: "Heripret", ville: "Wingles", filiere: "Chaudronnerie", lat: 50.498, lon: 2.689 },
-  { nom: "Huwer", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
-  { nom: "J2C Chaudronnerie", ville: "La Comté", filiere: "Chaudronnerie", lat: 50.469, lon: 2.763 },
-  { nom: "KY Plast", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
-  { nom: "LDMD", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "Loridan", ville: "Violaines", filiere: "Chaudronnerie", lat: 50.444, lon: 2.681 },
-  { nom: "DPI", ville: "Feuchy", filiere: "Chaudronnerie", lat: 50.308, lon: 2.838 },
-  { nom: "EBTM", ville: "Harnes", filiere: "Chaudronnerie", lat: 50.411, lon: 2.802 },
-  { nom: "Eiffage", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
-  { nom: "Eiffage", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "EIM", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
-  { nom: "Emip", ville: "Somme", filiere: "Chaudronnerie", lat: 49.900, lon: 2.900 },
-  { nom: "Endel", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "Escaliers Delalleau", ville: "Aix-Noulette", filiere: "Chaudronnerie", lat: 50.441, lon: 2.759 },
-  { nom: "ETCI", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
-  { nom: "Eurogaz", ville: "Lens", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 },
-  { nom: "Fer et Alu", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
-  { nom: "ACIP Chaudronnerie", ville: "Phalempin", filiere: "Chaudronnerie", lat: 50.525, lon: 3.098 },
-  { nom: "ACMB", ville: "Beuvry", filiere: "Chaudronnerie", lat: 50.497, lon: 2.709 },
-  { nom: "Actri", ville: "Noeux-Les-Mines", filiere: "Chaudronnerie", lat: 50.411, lon: 2.796 },
-  { nom: "Alkern", ville: "Harnes", filiere: "Chaudronnerie", lat: 50.411, lon: 2.802 },
-  { nom: "Apic", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
-  { nom: "Arras Maxei Feuchy", ville: "Arras", filiere: "Chaudronnerie", lat: 50.291, lon: 2.777 },
-  { nom: "Atram", ville: "Fleurbaix", filiere: "Chaudronnerie", lat: 50.652, lon: 2.816 },
-  { nom: "Bati Pat Services", ville: "Loos-en-Gohelle", filiere: "Chaudronnerie", lat: 50.429, lon: 2.745 },
-  { nom: "Ben Alu", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
-  { nom: "Bouillet", ville: "Wavrin", filiere: "Chaudronnerie", lat: 50.613, lon: 3.034 },
-  { nom: "Breschard", ville: "Wahagnies", filiere: "Chaudronnerie", lat: 50.438, lon: 3.100 },
-  { nom: "Carosserie Barre", ville: "Sallaumines", filiere: "Chaudronnerie", lat: 50.416, lon: 2.749 },
-  { nom: "Cime Environnement", ville: "Labourse", filiere: "Chaudronnerie", lat: 50.515, lon: 2.657 },
-  { nom: "Max Mine", ville: "Béthune", filiere: "Chaudronnerie", lat: 50.520, lon: 2.650 },
-  { nom: "Mecatec", ville: "Quiéry La Motte", filiere: "Chaudronnerie", lat: 50.383, lon: 2.824 },
-  { nom: "Module Espace Alu", ville: "Sailly-La-Bourse", filiere: "Chaudronnerie", lat: 50.444, lon: 2.774 },
-  { nom: "M.S.T.I", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
-  { nom: "Nord tuyauterie", ville: "Billy-Montigny", filiere: "Chaudronnerie", lat: 50.429, lon: 2.823 },
-  { nom: "Ortec Friedlander", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
-  { nom: "Palchem", ville: "Angres", filiere: "Chaudronnerie", lat: 50.405, lon: 2.725 },
-  { nom: "Panien", ville: "Inchy-En-Artois", filiere: "Chaudronnerie", lat: 50.356, lon: 2.813 },
-  { nom: "Peme", ville: "Gourdin", filiere: "Chaudronnerie", lat: 50.341, lon: 2.694 },
-  { nom: "Polybat Alu", ville: "Herlies", filiere: "Chaudronnerie", lat: 50.371, lon: 3.086 },
-  { nom: "SMCI", ville: "Vendin-Le-Vieil", filiere: "Chaudronnerie", lat: 50.419, lon: 2.717 },
-  { nom: "Snaam", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
-  { nom: "SNCF", ville: "Achicourt", filiere: "Chaudronnerie", lat: 50.283, lon: 2.739 },
-  { nom: "STBE", ville: "Ruitz", filiere: "Chaudronnerie", lat: 50.455, lon: 2.678 },
-  { nom: "STID", ville: "Courrieres", filiere: "Chaudronnerie", lat: 50.409, lon: 2.858 },
-  { nom: "STIN Verdon", ville: "Douvrin", filiere: "Chaudronnerie", lat: 50.460, lon: 2.817 },
-  { nom: "TCB", ville: "Bruay-La-Buissière", filiere: "Chaudronnerie", lat: 50.450, lon: 2.581 },
-  { nom: "TCM", ville: "Sains-en-Gohelle", filiere: "Chaudronnerie", lat: 50.442, lon: 2.709 },
-  { nom: "TDI", ville: "Liévin", filiere: "Chaudronnerie", lat: 50.422, lon: 2.788 },
-  { nom: "Techni Gaine Plus", ville: "Saint-Laurent-Blangy", filiere: "Chaudronnerie", lat: 50.287, lon: 2.773 },
-  { nom: "Terberg Matec", ville: "Grenay", filiere: "Chaudronnerie", lat: 50.429, lon: 2.699 },
-  { nom: "Tuyauteurs 4 vents", ville: "La Comte", filiere: "Chaudronnerie", lat: 50.469, lon: 2.763 },
-  { nom: "Vasseur Serrurerie et Métallerie", ville: "Méricourt", filiere: "Chaudronnerie", lat: 50.409, lon: 2.850 },
-  { nom: "Vitalis", ville: "Violaines", filiere: "Chaudronnerie", lat: 50.444, lon: 2.681 },
-  { nom: "Wehr Groupe", ville: "non spécifiée", filiere: "Chaudronnerie", lat: 50.430, lon: 2.828 }
-];
+  // --- Markers
+  let markers = [];
 
+  function clearMarkers() {
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+  }
 
-   
-    let markers = [];
-
-   
-    function clearMarkers() {
-      markers.forEach(marker => map.removeLayer(marker));
-      markers = [];
-    }
-
-    
-    function addMarkers(filteredLieux) {
-      clearMarkers();
-
-      filteredLieux.forEach(lieu => {
-        let icon;
-        if (lieu.filiere === "CIEL") icon = iconCIEL;
-        else if (lieu.filiere === "MELEC") icon = iconMELEC;
-        else if (lieu.filiere === "Chaudronnerie") icon = iconChaudronnerie;
-        else icon = null;
-
-        const marker = L.marker([lieu.lat, lieu.lon], { icon: icon }).addTo(map);
-
-        marker.bindPopup(`
-          <b>${lieu.nom}</b><br/>
-          Ville : ${lieu.ville}<br/>
-          Filière : ${lieu.filiere}<br/>
-          Métier : ${lieu.metier || 'Non spécifié'}
-        `);
-        markers.push(marker);
-      });
-
-      
-      if (markers.length > 0) {
-        const group = L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.3));
-      }
-    }
-
-    
-    addMarkers(lieux);
-
-    
-    document.getElementById('filiereSelect').addEventListener('change', (e) => {
-      const filiere = e.target.value;
-      if (filiere === 'all') {
-        addMarkers(lieux);
-      } else {
-        const filtered = lieux.filter(l => l.filiere === filiere);
-        addMarkers(filtered);
-      }
+  function addMarkers(list) {
+    clearMarkers();
+    list.forEach(lieu => {
+      const marker = L.marker([lieu.lat, lieu.lon], { icon: iconFor(lieu.filiere) }).addTo(map);
+      marker.bindPopup(formatPopup(lieu));
+      markers.push(marker);
     });
-  </script>
+    if (markers.length) {
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds().pad(0.3));
+    }
+  }
+
+  addMarkers(lieux);
+
+  // --- Filtre
+  const filiereSelect = document.getElementById('filiereSelect');
+  filiereSelect.addEventListener('change', (e) => {
+    const v = e.target.value;
+    addMarkers(v === 'all' ? lieux : lieux.filter(l => l.filiere === v));
+  });
+</script>
 </body>
 </html>
