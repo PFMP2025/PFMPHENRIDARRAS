@@ -3,667 +3,813 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PFMP</title>
+  <title>PFMP — Lieux de stage</title>
+  <!-- Police moderne avec fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 2rem;
-      color: #333;
+    :root{
+      --bg:#f6f8fb;
+      --surface:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#0b4ea2;      /* bleu CIEL */
+      --primary-2:#1f8b4c;     /* vert MELEC */
+      --primary-3:#7b3fb3;     /* violet Chaudronnerie */
+      --ring: rgba(11,78,162,.25);
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+      --radius: 14px;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: bold;
-      color: #004080;
-    }
-    .search {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .search input, .search select {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-right: 1rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-      color: #004080;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .card ul {
-      padding-left: 1.2rem;
-    }
-    .card ul li {
-      margin-bottom: 0.5rem;
-    }
-    details summary {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      padding: 0.5rem;
-      background: #f7f9fc;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      transition: background 0.3s ease;
-    }
-    details[open] summary {
-      background: #e9f5ff;
-    }
-    .ville {
-      color: #888;
-      font-style: italic;
-      margin-left: 0.5rem;
-    }
-	#btnMap {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background-color: #004080;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-  z-index: 1000;
-}
-#btnMap:hover {
-  background-color: #002f5a;
-}
-	  .bouton-retour {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    padding: 8px 16px;
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-}
-	 
 
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.6;
+    }
 
+    /* ====== Header / Navbar ====== */
+    .navbar{
+      position:sticky; top:0; z-index:1000; backdrop-filter:saturate(180%) blur(8px);
+      background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      border-bottom:1px solid #e5e7eb;
+    }
+    .nav-inner{max-width:1200px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:18px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px}
+    .brand .logo{width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, var(--primary), #1a73e8); box-shadow:0 6px 16px rgba(26,115,232,.35); display:grid; place-items:center; color:#fff; font-size:18px}
+    .brand span{font-size:18px}
+
+    .nav-links{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
+    .nav-links a{
+      text-decoration:none; color:var(--text); font-weight:600; font-size:14px; padding:8px 12px; border-radius:10px; transition:all .2s ease;
+    }
+    .nav-links a:hover{ background:#eef2ff; color:var(--primary)}
+
+    /* Boutons flottants */
+    .btn-float{
+      position:fixed; right:16px; bottom:16px; z-index:900; display:flex; flex-direction:column; gap:10px;
+    }
+    .btn{appearance:none; border:0; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; box-shadow:var(--shadow); background:var(--primary); color:#fff; transition:transform .15s ease, filter .15s ease}
+    .btn.secondary{background:#111827}
+    .btn:hover{transform:translateY(-1px)}
+
+    /* ====== Hero / Titre ====== */
+    .hero{max-width:1200px; margin:24px auto 0; padding:0 20px 24px}
+    .hero h1{margin:8px 0 6px; font-size:clamp(24px, 3vw, 36px)}
+    .hero p{margin:0; color:var(--muted)}
+
+    /* ====== Barre outils (recherche/filtre) ====== */
+    .toolbar{max-width:1200px; margin:18px auto; padding:0 20px}
+    .toolcard{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .field{position:relative}
+    .field input, .field select{
+      appearance:none; border:1px solid #e5e7eb; border-radius:999px; padding:12px 44px 12px 44px; font-size:14px; outline:none; transition:border-color .2s, box-shadow .2s; background:#fff; min-width:260px
+    }
+    .field select{padding-left:16px; min-width:200px}
+    .field input:focus, .field select:focus{border-color:var(--primary); box-shadow:0 0 0 6px var(--ring)}
+    .field .icon{position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--muted)}
+
+    .stats{margin-left:auto; display:flex; gap:12px; flex-wrap:wrap}
+    .badge{display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; background:#f3f4f6; font-weight:600; font-size:12px}
+    .badge .dot{width:8px; height:8px; border-radius:50%}
+    .dot.ciel{background:var(--primary)}
+    .dot.melec{background:var(--primary-2)}
+    .dot.chaud{background:var(--primary-3)}
+
+    /* ====== Sections ====== */
+    .container{max-width:1200px; margin:0 auto; padding:0 20px 60px}
+    .section{margin:28px 0}
+    .section h2{display:flex; align-items:center; gap:10px; margin:6px 0 14px; font-size:clamp(18px, 2.2vw, 24px)}
+    .section h2 .tag{font-size:12px; font-weight:700; padding:6px 10px; border-radius:999px; background:#eef2ff; color:var(--primary)}
+    .section[data-fil="melec"] h2 .tag{background:#ebf7ef; color:var(--primary-2)}
+    .section[data-fil="chaud"] h2 .tag{background:#f4ebff; color:var(--primary-3)}
+
+    /* Accordéons / cartes */
+    details{border-radius:14px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow); margin-bottom:14px; transition:transform .15s ease}
+    details:hover{transform:translateY(-2px)}
+    summary{list-style:none; cursor:pointer; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; background:linear-gradient(180deg, #f8fafc, #f1f5f9); border-bottom:1px solid #eef2f7; font-weight:700}
+    summary::-webkit-details-marker{display:none}
+    .sum-left{display:flex; align-items:center; gap:10px}
+    .sum-title{display:flex; align-items:center; gap:8px}
+    .counter{color:var(--muted); font-weight:600; font-size:12px}
+    .chev{transition:transform .2s ease;}
+    details[open] .chev{transform:rotate(180deg)}
+    .panel{padding:10px 18px 16px; animation:reveal .25s ease}
+    @keyframes reveal{from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none}}
+
+    ul.place-list{margin:0; padding:0}
+    ul.place-list li{list-style:none; padding:9px 10px; border-radius:10px; display:flex; align-items:center; gap:10px}
+    ul.place-list li:not(:last-child){border-bottom:1px dashed #e5e7eb}
+    .place-icon{font-size:18px}
+    .place-name{font-weight:600}
+    .ville{margin-left:auto; color:var(--muted); font-style:italic; white-space:nowrap}
+
+    /* Footer */
+    footer{border-top:1px solid #e5e7eb; background:#fff;}
+    .foot-inner{max-width:1200px; margin:0 auto; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; color:var(--muted); font-size:14px}
+
+    /* Utilitaires */
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .spacer{height:8px}
+
+    @media (max-width:640px){
+      .stats{width:100%; justify-content:space-between}
+      .field input{min-width:unset; width:100%}
+      .toolcard{justify-content:stretch}
+    }
   </style>
-  <script>
-    function filterCards() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const details = document.querySelectorAll('details');
-      details.forEach(detail => {
-        const text = detail.innerText.toLowerCase();
-        detail.style.display = text.includes(input) ? 'block' : 'none';
-      });
-    }
-
-    function filterByFiliere() {
-      const filiere = document.getElementById('filiereSelect').value;
-      const sections = document.querySelectorAll('section');
-      sections.forEach(section => {
-        const titre = section.querySelector('h3')?.textContent.toLowerCase();
-        section.style.display = (filiere === 'all' || titre.includes(filiere.toLowerCase())) ? '' : 'none';
-      });
-    }
-
-    window.onload = () => {
-      document.querySelectorAll('details').forEach(detail => {
-        const count = detail.querySelectorAll('li').length;
-        const summary = detail.querySelector('summary');
-        summary.innerHTML += ` <span style="color:gray;font-weight:normal;">(${count} lieux)</span>`;
-      });
-    }
-  </script>
 </head>
 <body>
-  <h1>PFMP</h1>
-  <a href="map.html" id="btnMap">Voir la carte</a>
-  <button class="bouton-retour" onclick="history.back()">← Retour</button>
+  <!-- Navbar -->
+  <header class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="brand" aria-label="Accueil">
+        <div class="logo">HD</div>
+        <span>PFMP — Lieux de stage</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#ciel" title="Aller à CIEL">🖥️ CIEL</a>
+        <a href="#melec" title="Aller à MELEC">⚡ MELEC</a>
+        <a href="#chaudronnerie" title="Aller à Chaudronnerie">🏗️ Chaudronnerie</a>
+      </nav>
+    </div>
+  </header>
 
-
-
-  <nav>
-    <a href="#ciel">🖥️ CIEL</a>
-    <a href="#melec">⚡ MELEC</a>
-    <a href="#chaudronnerie">🏗️ Chaudronnerie</a>
-  </nav>
-
-  <div class="search">
-    <select id="filiereSelect" onchange="filterByFiliere()">
-      <option value="all">Toutes les filières</option>
-      <option value="CIEL">CIEL</option>
-      <option value="MELEC">MELEC</option>
-      <option value="Chaudronnerie">Chaudronnerie</option>
-    </select>
-    <input
-      type="text"
-      id="searchInput"
-      onkeyup="filterCards()"
-      placeholder="Rechercher un mot-clé (ex : domotique, cybersécurité...)"
-    />
+  <!-- Boutons flottants -->
+  <div class="btn-float" aria-label="Actions rapides">
+    <a class="btn" href="map.html">Voir la carte</a>
+    <button class="btn secondary" onclick="history.back()">← Retour</button>
   </div>
 
-  <div class="grid">
-    <div style="max-width:1000px;margin:3rem auto;">
-      <h2 style="text-align:center;">📂 Lieux de PFMP par Filière</h2>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="titre-page">
+    <h1 id="titre-page">Trouvez rapidement un lieu de PFMP</h1>
+    <p>Filtrez par filière ou recherchez des mots-clés (ex. domotique, cybersécurité, maintenance...).</p>
+  </section>
 
-      <!-- CIEL -->
-      <section id="ciel">
-        <h3 style="color:#004080">🖥️ Filière CIEL</h3>
+  <!-- Barre outils -->
+  <section class="toolbar" aria-label="Outils de recherche">
+    <div class="toolcard" role="group" aria-label="Filtres">
+      <label class="sr-only" for="filiereSelect">Filtrer par filière</label>
+      <div class="field">
+        <select id="filiereSelect" onchange="filterByFiliere()">
+          <option value="all">Toutes les filières</option>
+          <option value="ciel">CIEL</option>
+          <option value="melec">MELEC</option>
+          <option value="chaud">Chaudronnerie</option>
+        </select>
+      </div>
 
-        <details><summary><strong>🔧 Technicien Réseaux/Informatiques/Programmation</strong></summary>
+      <label class="sr-only" for="searchInput">Rechercher</label>
+      <div class="field" style="flex:1; min-width:260px">
+        <span class="icon">🔎</span>
+        <input id="searchInput" type="text" placeholder="Rechercher un mot-clé, une entreprise ou une ville" oninput="filterCards()" />
+      </div>
+
+      <div class="stats">
+        <div class="badge"><span class="dot ciel"></span> CIEL <span id="count-ciel"></span></div>
+        <div class="badge"><span class="dot melec"></span> MELEC <span id="count-melec"></span></div>
+        <div class="badge"><span class="dot chaud"></span> Chaudronnerie <span id="count-chaud"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <main class="container">
+    <!-- CIEL -->
+    <section id="ciel" class="section" data-fil="ciel">
+      <h2>🖥️ Filière CIEL <span class="tag">Réseaux • Cybersécurité • IoT</span></h2>
+
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🔧 Technicien Réseaux/Informatiques/Programmation</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
           <p><strong>Description :</strong> Installe, configure et maintient les réseaux informatiques (serveurs, routeurs, câblage...).</p>
-          <p><strong>Lieux de stage :</strong></p>
-          <ul>
-            <li>Secure Informatique – <span class="ville">Liévin</span></li>
-            <li>DTI Informatique – <span class="ville">Liévin</span></li>
-            <li>XEFI Lens – <span class="ville">Liévin</span></li>
-            <li>ENOVA – <span class="ville">Lille</span></li>
-            <li>NERI Info – <span class="ville">Lens</span></li>
-            <li>LMELEC – <span class="ville">Arras</span></li>
-            <li>Veolia Agriculture – <span class="ville">Arras</span></li>
-            <li>CESI Campus – <span class="ville">Arras</span></li>
-            <li>Manpower – <span class="ville">Lens</span></li>
-            <li>IG2I – <span class="ville">Lens</span></li>
-            <li>Proch'Emploi – <span class="ville">Lens</span></li>
-            <li>Cyberiris – <span class="ville">Lens</span></li>
-            <li>Stormshield – <span class="ville">Villeneuve-d'Ascq</span></li>
-            <li>VINCI Energies – <span class="ville">Gavrelle</span></li>
-            <li>Advitam Performance – <span class="ville">Arras</span></li>
-            <li>Amipro – <span class="ville">Arras</span></li>
-            <li>APF - <span class="ville">Liévin</span></li>
-            <li>Aramys - <span class="ville">Hénin-Beaumont</span></li>
-            <li>Artesienne - <span class="ville">Liévin</span></li>
-            <li>Clic Informatiques - <span class="ville">Arras</span></li>
-            <li>Comitrans - <span class="ville">Henin</span></li>
-            <li>Consultation Reseaux Com - <span class="ville">Achicourt</span></li>
-            <li>Document Solutions 62 - <span class="ville">Sallaumines</span></li>
-            <li>Eurofiber France - <span class="ville">Villeneuve-d’Ascq</span></li>
-            <li>IB Environnement - <span class="ville">Lens</span></li>
-            <li>Itinsell - <span class="ville">Wasquehal</span></li>
-            <li>Iris Informatique - <span class="ville">Douvrin</span></li>
-            <li>Itech Informatique - <span class="ville">Sainte-Catherine</span></li>
-            <li>2K Fibre - <span class="ville">Liévin</span></li>
-            <li>Services informatiques Keolis - <span class="ville">Sallaumines</span></li>
-            <li>A2B Klic Services - <span class="ville">Liévin</span></li>
-            <li>MSI Nord - <span class="ville">Lens</span></li>
-            <li>Netsoft Pro - <span class="ville">Lens</span></li>
-            <li>Reiz Production - <span class="ville">Liévin</span></li>
-            <li>Tibco Services - <span class="ville">Lens</span></li>
-            <li>Waykonect - <span class="ville">Lille</span></li>
-            <li>Yzee Service - <span class="ville">Grenay</span></li>
-            <li>Yzee Service - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Res Vi Com - <span class="ville">Lens</span></li>
-            <li>Roxys - <span class="ville">Arras</span></li>
-            <li>Laptop Informatique - <span class="ville">Arras</span></li>
-            <li>Linup - <span class="ville">Lens</span></li>
-            <li>Ben Informatique - <span class="ville">Billy-Montigny</span></li>
-            <li>LTPC Info - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>ODTel - <span class="ville">Grenay</span></li>
+          <ul class="place-list">
+            <li><span class="place-icon">🏢</span> <span class="place-name">Secure Informatique</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">DTI Informatique</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">XEFI Lens</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">ENOVA</span> <span class="ville">Lille</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">NERI Info</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">LMELEC</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Veolia Agriculture</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">CESI Campus</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Manpower</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">IG2I</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Proch'Emploi</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Cyberiris</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Stormshield</span> <span class="ville">Villeneuve-d'Ascq</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">VINCI Energies</span> <span class="ville">Gavrelle</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Advitam Performance</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Amipro</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">APF</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Aramys</span> <span class="ville">Hénin-Beaumont</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Artesienne</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Clic Informatiques</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Comitrans</span> <span class="ville">Henin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Consultation Reseaux Com</span> <span class="ville">Achicourt</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Document Solutions 62</span> <span class="ville">Sallaumines</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Eurofiber France</span> <span class="ville">Villeneuve-d’Ascq</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">IB Environnement</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Itinsell</span> <span class="ville">Wasquehal</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Iris Informatique</span> <span class="ville">Douvrin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Itech Informatique</span> <span class="ville">Sainte-Catherine</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">2K Fibre</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Services informatiques Keolis</span> <span class="ville">Sallaumines</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">A2B Klic Services</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">MSI Nord</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Netsoft Pro</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Reiz Production</span> <span class="ville">Liévin</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Tibco Services</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Waykonect</span> <span class="ville">Lille</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Yzee Service</span> <span class="ville">Grenay</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Yzee Service</span> <span class="ville">Vendin-Le-Vieil</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Res Vi Com</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Roxys</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Laptop Informatique</span> <span class="ville">Arras</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Linup</span> <span class="ville">Lens</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">Ben Informatique</span> <span class="ville">Billy-Montigny</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">LTPC Info</span> <span class="ville">Vendin-Le-Vieil</span></li>
+            <li><span class="place-icon">🏢</span> <span class="place-name">ODTel</span> <span class="ville">Grenay</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🔧 Services techniques Municipaux et Services Informatiques Lycée</strong></summary>
-          <ul>
-            <li>Services Informatiques Mairie - <span class="ville">Avion</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Harnes</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Lens</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Liévin</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Méricourt</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Montigny-en-Gohelle</span></li>
-            <li>Services Informatiques Mairie - <span class="ville">Vendin-le-Vieil</span></li>
-            <li>Services Informatiques FAC - <span class="ville">Lens</span></li>
-            <li>Services Informatiques IUT - <span class="ville">Lens</span></li>
-            <li>Médiatheque - <span class="ville">Lens</span></li>
-            <li>Sport Services - <span class="ville">Lens</span></li>
-            <li>Lycée Hennebique - <span class="ville">Liévin</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🔧 Services techniques Municipaux et Services Informatiques Lycée</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <ul class="place-list">
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Avion</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Harnes</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Liévin</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Méricourt</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Montigny-en-Gohelle</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques Mairie</span> <span class="ville">Vendin-le-Vieil</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques FAC</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Services Informatiques IUT</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Médiatheque</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Sport Services</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Lycée Hennebique</span> <span class="ville">Liévin</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🛡️ Technicien Cybersécurité</strong></summary>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🛡️ Technicien Cybersécurité</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
           <p><strong>Description :</strong> Protège les données, identifie les failles de sécurité, sécurise les infrastructures informatiques.</p>
-          <ul>
-            <li>No More Crash – <span class="ville">Vendin-le-Vieil</span></li>
-            <li>Nomios – <span class="ville">Villeneuve-d’Ascq</span></li>
-            <li>SkillX – <span class="ville">Métropole Lilloise</span></li>
-            <li>Cyberiris – <span class="ville">Béthune</span></li>
-            <li>Stormshield – <span class="ville">Villeneuve-d'Ascq</span></li>
-            <li>CESI Arras</li>
-            <li>CPAM de Lens</li>
-            <li>Centre Hospitalier d’Arras</li>
-            <li>Proch'Emploi – <span class="ville">Hénin-Carvin</span></li>
-            <li>VINCI Energies – <span class="ville">Gavrelle</span></li>
-            <li>Veolia Agriculture – <span class="ville">Arras</span></li>
-            <li>CESI Campus – <span class="ville">Arras</span></li>
-            <li>Pilliot Cybersécurité - <span class="ville">Aire-Sur-La-Lys</span></li>
+          <ul class="place-list">
+            <li>🏢 <span class="place-name">No More Crash</span> <span class="ville">Vendin-le-Vieil</span></li>
+            <li>🏢 <span class="place-name">Nomios</span> <span class="ville">Villeneuve-d’Ascq</span></li>
+            <li>🏢 <span class="place-name">SkillX</span> <span class="ville">Métropole Lilloise</span></li>
+            <li>🏢 <span class="place-name">Cyberiris</span> <span class="ville">Béthune</span></li>
+            <li>🏢 <span class="place-name">Stormshield</span> <span class="ville">Villeneuve-d'Ascq</span></li>
+            <li>🏢 <span class="place-name">CESI Arras</span></li>
+            <li>🏢 <span class="place-name">CPAM de Lens</span></li>
+            <li>🏢 <span class="place-name">Centre Hospitalier d’Arras</span></li>
+            <li>🏢 <span class="place-name">Proch'Emploi</span> <span class="ville">Hénin-Carvin</span></li>
+            <li>🏢 <span class="place-name">VINCI Energies</span> <span class="ville">Gavrelle</span></li>
+            <li>🏢 <span class="place-name">Veolia Agriculture</span> <span class="ville">Arras</span></li>
+            <li>🏢 <span class="place-name">CESI Campus</span> <span class="ville">Arras</span></li>
+            <li>🏢 <span class="place-name">Pilliot Cybersécurité</span> <span class="ville">Aire-Sur-La-Lys</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>📡 Technicien IoT / Smart Building</strong></summary>
-          <p><strong>Description :</strong> Gère les installations d'objets connectés dans les bâtiments (domotique, capteurs...)</p>
-          <ul>
-            <li>Kanope – <span class="ville">Lille</span></li>
-            <li>CITC – <span class="ville">Euratech Lille</span></li>
-            <li>Ganeo Confort – <span class="ville">Liévin</span></li>
-            <li>ECS-ELEC – <span class="ville">Lens</span></li>
-            <li>Instal' Service – <span class="ville">Lens</span></li>
-            <li>JB Domotique – <span class="ville">Liévin</span></li>
-            <li>ROBBE Menuiserie & Domotique – <span class="ville">Liévin</span></li>
-            <li>Delta Dore – National</li>
-            <li>Delta Security Solutions - <span class="ville">Lens</span></li>
-            <li>Luminov - <span class="ville">Hulluch</span></li>
-            <li>VMJ Elec - <span class="ville">Loos-en-Gohelle</span></li>
-            <li>SADE - <span class="ville">Lens</span></li>
-            <li>Genie Elec et Domotique - <span class="ville">Liévin</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">📡 Technicien IoT / Smart Building</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <p><strong>Description :</strong> Gère les installations d'objets connectés dans les bâtiments (domotique, capteurs...).</p>
+          <ul class="place-list">
+            <li>🏢 <span class="place-name">Kanope</span> <span class="ville">Lille</span></li>
+            <li>🏢 <span class="place-name">CITC</span> <span class="ville">Euratech Lille</span></li>
+            <li>🏢 <span class="place-name">Ganeo Confort</span> <span class="ville">Liévin</span></li>
+            <li>🏢 <span class="place-name">ECS-ELEC</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Instal' Service</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">JB Domotique</span> <span class="ville">Liévin</span></li>
+            <li>🏢 <span class="place-name">ROBBE Menuiserie & Domotique</span> <span class="ville">Liévin</span></li>
+            <li>🏢 <span class="place-name">Delta Dore</span> <span class="ville">National</span></li>
+            <li>🏢 <span class="place-name">Delta Security Solutions</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Luminov</span> <span class="ville">Hulluch</span></li>
+            <li>🏢 <span class="place-name">VMJ Elec</span> <span class="ville">Loos-en-Gohelle</span></li>
+            <li>🏢 <span class="place-name">SADE</span> <span class="ville">Lens</span></li>
+            <li>🏢 <span class="place-name">Genie Elec et Domotique</span> <span class="ville">Liévin</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🛡️ Technicien Installation/Maintenance Electronique</strong></summary>
-          <p><strong>Description :</strong> Spécialistes chargé de diagnostiquer, entretenir et réparer les équipements électroniques.</p>
-          <ul>
-            <li>Avexa - <span class="ville">Carvin</span></li>
-            <li>Aquareze - <span class="ville">Douvrin</span></li>
-            <li>CGM -<span class="ville">Lens</span></li>
-            <li>Cyber Planete - <span class="ville">Brebières</span></li>
-            <li>Darty - <span class="ville">Hénin-Beaumont</span></li>
-            <li>DKA Electro Dépanne - <span class="ville">Béthune</span></li>
-            <li>Ipsicom - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>LTPC Info - <span class="ville">Vendin-le-Vieil</span></li>
-            <li>Micro Boutique - <span class="ville">Billy-Montigny</span></li>
-            <li>Mobile Angelo - <span class="ville">Douvrin</span></li>
-            <li>S Inter - <span class="ville">Vendin-le-Vieil</span></li>
-            <li>Solvarea - <span class="ville">Oignies</span></li>
-            <li>Teclic - <span class="ville">Thélus</span></li>
-            <li>Virginie Repar - <span class="ville">Haisnes</span></li>
-            <li>VL Multitronique - <span class="ville">Sallaumines</span></li>
-            <li>Web Deal Market - <span class="ville">Béthune</span></li>
-            <li>Cerelia - <span class="ville">Liévin</span></li>
-            <li> RIS - <span class="ville">Lens</span></li>
-            <li>Seibo - <span class="ville">Mazingarbe</span></li>
-            <li>Haagen Dazs - <span class="ville">Arras</span></li>
-            <li>Imprimerie Nationale - <span class="ville">Flers</span></li>
-            <li>Ineo - <span class="ville">Noyelles-Les-Seclin</span></li>
-            <li>Eco Style - <span class="ville">Sainte-Catherine</span></li>
-            <li>Eiffage - <span class="ville">Béthune</span></li>
-            <li>Eiffage - <span class="ville">Lens</span></li>
-            <li>Action Santé - <span class="ville">Aix-Noulette</span></li>
-            <li>AES DANA - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>Axed Protec Automatiques - <span class="ville">Hénin-Beaumont</span></li>
-            <li>Axians - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>BM Tech - <span class="ville">Béthune</span></li>
-            <li>BM Tech - <span class="ville">Hantay</span></li>
-            <li>Boulanger - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Boulanger - <span class="ville">Béthune</span></li>
-            <li>Boulanger - <span class="ville">Lens</span></li>
-            <li>BUT - <span class="ville">Béthune</span></li>
-            <li>CiterNord - <span class="ville">Carvin</span></li>
-            <li>Micro Boutique - <span class="ville">Billy-Montigny</span></li>
-            <li>Tamda Tech - <span class="ville">Lens</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🛡️ Technicien Installation/Maintenance Electronique</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <p><strong>Description :</strong> Spécialiste chargé de diagnostiquer, entretenir et réparer les équipements électroniques.</p>
+          <ul class="place-list">
+            <li>🏢 Avexa <span class="ville">Carvin</span></li>
+            <li>🏢 Aquareze <span class="ville">Douvrin</span></li>
+            <li>🏢 CGM <span class="ville">Lens</span></li>
+            <li>🏢 Cyber Planete <span class="ville">Brebières</span></li>
+            <li>🏢 Darty <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 DKA Electro Dépanne <span class="ville">Béthune</span></li>
+            <li>🏢 Ipsicom <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 LTPC Info <span class="ville">Vendin-le-Vieil</span></li>
+            <li>🏢 Micro Boutique <span class="ville">Billy-Montigny</span></li>
+            <li>🏢 Mobile Angelo <span class="ville">Douvrin</span></li>
+            <li>🏢 S Inter <span class="ville">Vendin-le-Vieil</span></li>
+            <li>🏢 Solvarea <span class="ville">Oignies</span></li>
+            <li>🏢 Teclic <span class="ville">Thélus</span></li>
+            <li>🏢 Virginie Repar <span class="ville">Haisnes</span></li>
+            <li>🏢 VL Multitronique <span class="ville">Sallaumines</span></li>
+            <li>🏢 Web Deal Market <span class="ville">Béthune</span></li>
+            <li>🏢 Cerelia <span class="ville">Liévin</span></li>
+            <li>🏢 RIS <span class="ville">Lens</span></li>
+            <li>🏢 Seibo <span class="ville">Mazingarbe</span></li>
+            <li>🏢 Haagen Dazs <span class="ville">Arras</span></li>
+            <li>🏢 Imprimerie Nationale <span class="ville">Flers</span></li>
+            <li>🏢 Ineo <span class="ville">Noyelles-Les-Seclin</span></li>
+            <li>🏢 Eco Style <span class="ville">Sainte-Catherine</span></li>
+            <li>🏢 Eiffage <span class="ville">Béthune</span></li>
+            <li>🏢 Eiffage <span class="ville">Lens</span></li>
+            <li>🏢 Action Santé <span class="ville">Aix-Noulette</span></li>
+            <li>🏢 AES DANA <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 Axed Protec Automatiques <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 Axians <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 BM Tech <span class="ville">Béthune</span></li>
+            <li>🏢 BM Tech <span class="ville">Hantay</span></li>
+            <li>🏢 Boulanger <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>🏢 Boulanger <span class="ville">Béthune</span></li>
+            <li>🏢 Boulanger <span class="ville">Lens</span></li>
+            <li>🏢 BUT <span class="ville">Béthune</span></li>
+            <li>🏢 CiterNord <span class="ville">Carvin</span></li>
+            <li>🏢 Micro Boutique <span class="ville">Billy-Montigny</span></li>
+            <li>🏢 Tamda Tech <span class="ville">Lens</span></li>
           </ul>
-        </details>
-      </section>
+        </div>
+      </details>
+    </section>
 
-      <!-- MELEC -->
-      <section id="melec">
-        <h3 style="color:#117a3a">⚡ Filière MELEC</h3>
+    <!-- MELEC -->
+    <section id="melec" class="section" data-fil="melec">
+      <h2>⚡ Filière MELEC <span class="tag">Électricité • Maintenance • Domotique</span></h2>
 
-        <details><summary><strong>⚙️ Électricien du Bâtiment/Industrielle</strong></summary>
-          <ul>
-            <li>SNEF</li>
-            <li>SPIE</li>
-            <li>Enedis</li>
-            <li>SPB ÉLEC – <span class="ville">Arras</span></li>
-            <li>GS ELEC – <span class="ville">Lens</span></li>
-            <li>I.R.D ELEC 62 – <span class="ville">Rouvroy</span></li>
-            <li>G.L.I ELEC – <span class="ville">Liévin</span></li>
-            <li>LM Elec – <span class="ville">Fresnes-les-Montauban</span></li>
-            <li>SOCOREBAT – <span class="ville">Lens</span></li>
-            <li>CEVELEC – <span class="ville">Seclin</span></li>
-            <li>Elec 2 Bat – <span class="ville">Lens</span></li>
-            <li>LANELEC – <span class="ville">Lens</span></li>
-            <li>CSF-RENOV – <span class="ville">Lens</span></li>
-            <li>E2J Elec - <span class="ville">Ablain-Saint-Nazaire</span></li>
-            <li>Ramery - <span class="ville">Avion</span></li>
-            <li>Renov Et Vous - <span class="ville">Anzin</span></li>
-            <li>Repair Et Custom - <span class="ville">Lens</span></li>
-            <li>Sertec - <span class="ville">Orchies</span></li>
-            <li>SESG - <span class="ville">Gouy-En-Artois</span></li>
-            <li>Construction Artois Service - <span class="ville">Liévin</span></li>
-            <li>CTI Elec - <span class="ville">Angres</span></li>
-            <li>DDV Elec Fils - <span class="ville">Noeux-Les-Mines</span></li>
-            <li>Foulon Chauffage - <span class="ville">Hersin</span></li>
-            <li>General Energie - <span class="ville">Lens</span></li>
-            <li>GLI Elec - <span class="ville">Liévin</span></li>
-            <li>Group Electricity - <span class="ville">Ruitz</span></li>
-            <li>Ledieu Elec - <span class="ville">Arras</span></li>
-            <li>L'electricien - <span class="ville">Carvin</span></li>
-            <li>LG Electricite - <span class="ville">Aix-Noulette</span></li>
-            <li>LKT - <span class="ville">Liévin</span></li>
-            <li>LP62 - <span class="ville">Lens</span></li>
-            <li>EDF - <span class="ville">Flamanville</span></li>
-            <li>Eiffage - <span class="ville">Béthune</span></li>
-            <li>Eiffage - <span class="ville">Lens</span></li>
-            <li>2Felec - <span class="ville">Pulversheim</span></li>
-            <li>Flash Energy - <span class="ville">Bully-Les-Mines</span></li>
-            <li>ABC Energie - <span class="ville">Merville</span></li>
-            <li>ADFM Batiment - <span class="ville">Lens</span></li>
-            <li>AES DANA - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>Batideko - <span class="ville">Lens</span></li>
-            <li>Be Elec - <span class="ville">Angres</span></li>
-            <li>5COM - <span class="ville">Sains-en-Gohelle</span></li>
-            <li>M4T - <span class="ville">Loos-en-Gohelle</span></li>
-            <li>MT Elec Solutions - <span class="ville">Barlin</span></li>
-            <li>OI France - <span class="ville">Wingles</span></li>
-            <li>Okourant - <span class="ville">Wingles</span></li>
-            <li>STOOPS - <span class="ville">Campin-En-Pevelle</span></li>
-            <li>STTN Energie - <span class="ville">Douvrin</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">⚙️ Électricien du Bâtiment/Industrielle</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <ul class="place-list">
+            <li>🏢 SNEF</li>
+            <li>🏢 SPIE</li>
+            <li>🏢 Enedis</li>
+            <li>🏢 SPB ÉLEC <span class="ville">Arras</span></li>
+            <li>🏢 GS ELEC <span class="ville">Lens</span></li>
+            <li>🏢 I.R.D ELEC 62 <span class="ville">Rouvroy</span></li>
+            <li>🏢 G.L.I ELEC <span class="ville">Liévin</span></li>
+            <li>🏢 LM Elec <span class="ville">Fresnes-les-Montauban</span></li>
+            <li>🏢 SOCOREBAT <span class="ville">Lens</span></li>
+            <li>🏢 CEVELEC <span class="ville">Seclin</span></li>
+            <li>🏢 Elec 2 Bat <span class="ville">Lens</span></li>
+            <li>🏢 LANELEC <span class="ville">Lens</span></li>
+            <li>🏢 CSF-RENOV <span class="ville">Lens</span></li>
+            <li>🏢 E2J Elec <span class="ville">Ablain-Saint-Nazaire</span></li>
+            <li>🏢 Ramery <span class="ville">Avion</span></li>
+            <li>🏢 Renov Et Vous <span class="ville">Anzin</span></li>
+            <li>🏢 Repair Et Custom <span class="ville">Lens</span></li>
+            <li>🏢 Sertec <span class="ville">Orchies</span></li>
+            <li>🏢 SESG <span class="ville">Gouy-En-Artois</span></li>
+            <li>🏢 Construction Artois Service <span class="ville">Liévin</span></li>
+            <li>🏢 CTI Elec <span class="ville">Angres</span></li>
+            <li>🏢 DDV Elec Fils <span class="ville">Noeux-Les-Mines</span></li>
+            <li>🏢 Foulon Chauffage <span class="ville">Hersin</span></li>
+            <li>🏢 General Energie <span class="ville">Lens</span></li>
+            <li>🏢 GLI Elec <span class="ville">Liévin</span></li>
+            <li>🏢 Group Electricity <span class="ville">Ruitz</span></li>
+            <li>🏢 Ledieu Elec <span class="ville">Arras</span></li>
+            <li>🏢 L'electricien <span class="ville">Carvin</span></li>
+            <li>🏢 LG Electricite <span class="ville">Aix-Noulette</span></li>
+            <li>🏢 LKT <span class="ville">Liévin</span></li>
+            <li>🏢 LP62 <span class="ville">Lens</span></li>
+            <li>🏢 EDF <span class="ville">Flamanville</span></li>
+            <li>🏢 Eiffage <span class="ville">Béthune</span></li>
+            <li>🏢 Eiffage <span class="ville">Lens</span></li>
+            <li>🏢 2Felec <span class="ville">Pulversheim</span></li>
+            <li>🏢 Flash Energy <span class="ville">Bully-Les-Mines</span></li>
+            <li>🏢 ABC Energie <span class="ville">Merville</span></li>
+            <li>🏢 ADFM Batiment <span class="ville">Lens</span></li>
+            <li>🏢 AES DANA <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 Batideko <span class="ville">Lens</span></li>
+            <li>🏢 Be Elec <span class="ville">Angres</span></li>
+            <li>🏢 5COM <span class="ville">Sains-en-Gohelle</span></li>
+            <li>🏢 M4T <span class="ville">Loos-en-Gohelle</span></li>
+            <li>🏢 MT Elec Solutions <span class="ville">Barlin</span></li>
+            <li>🏢 OI France <span class="ville">Wingles</span></li>
+            <li>🏢 Okourant <span class="ville">Wingles</span></li>
+            <li>🏢 STOOPS <span class="ville">Campin-En-Pevelle</span></li>
+            <li>🏢 STTN Energie <span class="ville">Douvrin</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🔧 Technicien de Maintenance / Régulation</strong></summary>
-          <ul>
-            <li>ArcelorMittal – <span class="ville">Dunkerque</span></li>
-            <li>Alstom – <span class="ville">Petite-Forêt</span></li>
-            <li>Maxei – <span class="ville">Arras</span></li>
-            <li>ATEC – <span class="ville">Arras</span></li>
-            <li>CITEVERT – <span class="ville">Liévin</span></li>
-            <li>LFB – <span class="ville">Arras</span></li>
-            <li>Eurofins – <span class="ville">Hénin-Beaumont</span></li>
-            <li>D'HONDT BENOIT – <span class="ville">Lens</span></li>
-            <li>FM Bat'inov – <span class="ville">Lens</span></li>
-            <li>SUEZ – <span class="ville">Noyelles-Godault</span></li>
-            <li>EDF</li>
-            <li>Cerelia - <span class="ville">Liévin</span></li>
-            <li>Seibo - <span class="ville">Mazingarbe</span></li>
-            <li>Haagen Dazs - <span class="ville">Arras</span></li>
-            <li>Hôpitaux de l'Artois</li>
-            <li>Idex Energie - <span class="ville">Méricourt</span></li>
-            <li>Ineo - <span class="ville">Noyelles-Les-Seclin</span></li>
-            <li>JD Elec - <span class="ville">Bruay-La-Buissière</span></li>
-            <li>Logista - <span class="ville">Lens</span></li>
-            <li>Logista - <span class="ville">Liévin</span></li>
-            <li>EBM - <span class="ville">Avion</span></li>
-            <li>EBTM - <span class="ville">Harnes</span></li>
-            <li>Eclair Elec - <span class="ville">Avion</span></li>
-            <li>ECL Five - <span class="ville">Lille</span></li>
-            <li>Aide Elec - <span class="ville">Maroeil</span></li>
-            <li>Ahnac - <span class="ville">Riaumont</span></li>
-            <li>ALS LMP - <span class="ville">Hénin-Beaumont</span></li>
-            <li>Amper - <span class="ville">Douai</span></li>
-            <li>Axed Protec Automatiques - <span class="ville">Hénin-Beaumont</span></li>
-            <li>Axians - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>Azelec - <span class="ville">Rouvroy</span></li>
-            <li>Ben Alu - <span class="ville">Liévin</span></li>
-            <li>BL2A Chauffage Climatisation - <span class="ville">Dourges</span></li>
-            <li>CiteVert - <span class="ville">Liévin</span></li>
-            <li>Next Energies - <span class="ville">Méricourt</span></li>
-            <li>Plus Froid - <span class="ville">Dainville</span></li>
-            <li>SM Renovelec - <span class="ville">Houdain</span></li>
-            <li>SNCF - <span class="ville">Méricourt</span></li>
-            <li>TADAO - <span class="ville">Grenay</span></li>
-            <li>ToutBat - <span class="ville">Avion</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🔧 Technicien de Maintenance / Régulation</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <ul class="place-list">
+            <li>🏢 ArcelorMittal <span class="ville">Dunkerque</span></li>
+            <li>🏢 Alstom <span class="ville">Petite-Forêt</span></li>
+            <li>🏢 Maxei <span class="ville">Arras</span></li>
+            <li>🏢 ATEC <span class="ville">Arras</span></li>
+            <li>🏢 CITEVERT <span class="ville">Liévin</span></li>
+            <li>🏢 LFB <span class="ville">Arras</span></li>
+            <li>🏢 Eurofins <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 D'HONDT BENOIT <span class="ville">Lens</span></li>
+            <li>🏢 FM Bat'inov <span class="ville">Lens</span></li>
+            <li>🏢 SUEZ <span class="ville">Noyelles-Godault</span></li>
+            <li>🏢 EDF</li>
+            <li>🏢 Cerelia <span class="ville">Liévin</span></li>
+            <li>🏢 Seibo <span class="ville">Mazingarbe</span></li>
+            <li>🏢 Haagen Dazs <span class="ville">Arras</span></li>
+            <li>🏢 Hôpitaux de l'Artois</li>
+            <li>🏢 Idex Energie <span class="ville">Méricourt</span></li>
+            <li>🏢 Ineo <span class="ville">Noyelles-Les-Seclin</span></li>
+            <li>🏢 JD Elec <span class="ville">Bruay-La-Buissière</span></li>
+            <li>🏢 Logista <span class="ville">Lens</span></li>
+            <li>🏢 Logista <span class="ville">Liévin</span></li>
+            <li>🏢 EBM <span class="ville">Avion</span></li>
+            <li>🏢 EBTM <span class="ville">Harnes</span></li>
+            <li>🏢 Eclair Elec <span class="ville">Avion</span></li>
+            <li>🏢 ECL Five <span class="ville">Lille</span></li>
+            <li>🏢 Aide Elec <span class="ville">Maroeil</span></li>
+            <li>🏢 Ahnac <span class="ville">Riaumont</span></li>
+            <li>🏢 ALS LMP <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 Amper <span class="ville">Douai</span></li>
+            <li>🏢 Axed Protec Automatiques <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 Axians <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 Azelec <span class="ville">Rouvroy</span></li>
+            <li>🏢 Ben Alu <span class="ville">Liévin</span></li>
+            <li>🏢 BL2A Chauffage Climatisation <span class="ville">Dourges</span></li>
+            <li>🏢 CiteVert <span class="ville">Liévin</span></li>
+            <li>🏢 Next Energies <span class="ville">Méricourt</span></li>
+            <li>🏢 Plus Froid <span class="ville">Dainville</span></li>
+            <li>🏢 SM Renovelec <span class="ville">Houdain</span></li>
+            <li>🏢 SNCF <span class="ville">Méricourt</span></li>
+            <li>🏢 TADAO <span class="ville">Grenay</span></li>
+            <li>🏢 ToutBat <span class="ville">Avion</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🔧 Services techniques Municipaux/Lycée/Collège</strong></summary>
-          <ul>
-            <li>Services Techniques Mairie - <span class="ville">Avion</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Harnes</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Lens</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Liévin</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Méricourt</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Montigny-en-Gohelle</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Vendin-le-Vieil</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Souchez</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Billy-Montigny</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Vimy</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Mazingarbe</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Auchy-Les-Mines</span></li>
-            <li>Services Techniques Mairie - <span class="ville">Angres</span></li>
-            <li>Collège Riaumont - <span class="ville">Liévin</span></li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🔧 Services techniques Municipaux/Lycée/Collège</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <ul class="place-list">
+            <li>🏢 Services Techniques Mairie <span class="ville">Avion</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Harnes</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Lens</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Liévin</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Méricourt</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Montigny-en-Gohelle</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Vendin-le-Vieil</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Souchez</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Billy-Montigny</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Vimy</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Mazingarbe</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Auchy-Les-Mines</span></li>
+            <li>🏢 Services Techniques Mairie <span class="ville">Angres</span></li>
+            <li>🏢 Collège Riaumont <span class="ville">Liévin</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🤖 Automaticien</strong></summary>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🤖 Automaticien</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
           <p><strong>Description :</strong> Programme les systèmes automatiques dans les usines et chaînes de production.</p>
           <p><strong>Qualités :</strong> Logique, rigueur, esprit de synthèse.</p>
-          <p><strong>Lieux de stage :</strong></p>
-          <ul>
-            <li>Actemium</li>
-            <li>Siemens</li>
-            <li>Bosch</li>
-            <li>Recup'Tri - <span class="ville">Grenay</span></li>
+          <ul class="place-list">
+            <li>🏢 Actemium</li>
+            <li>🏢 Siemens</li>
+            <li>🏢 Bosch</li>
+            <li>🏢 Recup'Tri <span class="ville">Grenay</span></li>
           </ul>
-        </details>
+        </div>
+      </details>
 
-        <details><summary><strong>🏠 Domoticien</strong></summary>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🏠 Domoticien</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
           <p><strong>Description :</strong> Configure les équipements connectés : volets roulants, éclairage intelligent, capteurs…</p>
           <p><strong>Qualités :</strong> Sens du détail, double compétence en électricité/informatique.</p>
-          <p><strong>Lieux de stage :</strong></p>
-          <ul>
-            <li>Delta Dore</li>
-            <li>Legrand</li>
-            <li>Somfy</li>
-            <li>R2D - <span class="ville">Courrieres</span></li>
-            <li>Domow Elec - <span class="ville">Labourse</span></li>
-            <li>Genie Elec et Domotique - <span class="ville">Liévin</span></li>
+          <ul class="place-list">
+            <li>🏢 Delta Dore</li>
+            <li>🏢 Legrand</li>
+            <li>🏢 Somfy</li>
+            <li>🏢 R2D <span class="ville">Courrieres</span></li>
+            <li>🏢 Domow Elec <span class="ville">Labourse</span></li>
+            <li>🏢 Genie Elec et Domotique <span class="ville">Liévin</span></li>
           </ul>
-        </details>
-      </section>
+        </div>
+      </details>
+    </section>
 
-      <!-- CHAUDRONNERIE -->
-      <section id="chaudronnerie">
-        <h3 style="color:#8e44ad">🏗️ Filière Chaudronnerie</h3>
+    <!-- CHAUDRONNERIE -->
+    <section id="chaudronnerie" class="section" data-fil="chaud">
+      <h2>🏗️ Filière Chaudronnerie <span class="tag">Métallerie • Soudage • Tuyauterie</span></h2>
 
-        <details><summary><strong>🛠️ Technicien Chaudronnier</strong></summary>
-          <ul>
-            <li>Rouby Industrie – <span class="ville">Lens</span></li>
-            <li>Groupe Beaucourt – <span class="ville">Billy-Berclau</span></li>
-            <li>BENALU – <span class="ville">Liévin</span></li>
-            <li>STBE – <span class="ville">Ruitz</span></li>
-            <li>Maxystem – <span class="ville">Lens</span></li>
-            <li>ETCI – <span class="ville">Lens</span></li>
-            <li>AFPI Alternance – <span class="ville">Hénin-Beaumont</span></li>
-            <li>SETRACO – <span class="ville">Aniche</span></li>
-            <li>Chaudsoud – <span class="ville">Loison-sous-Lens</span></li>
-            <li>CSM Industrie – <span class="ville">Sallaumines</span></li>
-            <li>Qualitub - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Ramery - <span class="ville">Avion</span></li>
-            <li>Renard - <span class="ville">Loison-sous-Lens</span></li>
-            <li>RTE - <span class="ville">Béthune</span></li>
-            <li>RZ Jardin Multi Services - <span class="ville">Saint-en-Gohelle</span></li>
-            <li>SADE - <span class="ville">Lens</span></li>
-            <li>Satmi - <span class="ville">Wingles</span></li>
-            <li>Secre Energie - <span class="ville">Lens</span></li>
-            <li>SET - <span class="ville">Rouvroy</span></li>
-            <li>SGE GPE - <span class="ville">Billy-Montigny</span></li>
-            <li>CMBH - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>CML Indus - <span class="ville">Wingles</span></li>
-            <li>Couverture Charpente Solaire - <span class="ville">Bully-Les-Mines</span></li>
-            <li>Cressent - <span class="ville">Sains-en-Gohelle</span></li>
-            <li>Cromi - <span class="ville">Oppi</span></li>
-            <li>CTA - <span class="ville">Calonne-Ricouart</span></li>
-            <li>Dassault Aviation - <span class="ville">Seclin</span></li>
-            <li>Decima - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>Delemazure - <span class="ville">Haisnes</span></li>
-            <li>Deligny - <span class="ville">Saint-Pôle-Sur-Ternoise</span></li>
-            <li>Delobelle - <span class="ville">Douai</span></li>
-            <li>Destée Chaudronnerie - <span class="ville">Flines-lez-Raches</span></li>
-            <li>Flinois - <span class="ville">Dourges</span></li>
-            <li>FMS Poulet - <span class="ville">Aix-Noulette</span></li>
-            <li>Haagen Dazs - <span class="ville">Arras</span></li>
-            <li>Heripret - <span class="ville">Wingles</span></li>
-            <li>Huwer - <span class="ville">Ruitz</span></li>
-            <li>J2C Chaudronnerie - <span class="ville">La Comté</span></li>
-            <li>KY Plast - <span class="ville">Ruitz</span></li>
-            <li>LDMD - <span class="ville">Lens</span></li>
-            <li>Loridan - <span class="ville">Violaines</span></li>
-            <li>DPI - <span class="ville">Feuchy</span></li>
-            <li>EBTM - <span class="ville">Harnes</span></li>
-            <li>Eiffage - <span class="ville">Béthune</span></li>
-            <li>Eiffage - <span class="ville">Lens</span></li>
-            <li>EIM - <span class="ville">Douvrin</span></li>
-            <li>Emip - <span class="ville">Somme</span></li>
-            <li>Endel - <span class="ville">Lens</span></li>
-            <li>Escaliers Delalleau - <span class="ville">Aix-Noulette</span></li>
-            <li>ETCI - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Eurogaz - <span class="ville">Lens</span></li>
-            <li>Fer et Alu - <span class="ville">Liévin</span></li>
-            <li>ACIP Chaudronnerie - <span class="ville">Phalempin</span></li>
-            <li>ACMB - <span class="ville">Beuvry</span></li>
-            <li>Actri - <span class="ville">Noeux-Les-Mines</span></li>
-            <li>Alkern - <span class="ville">Harnes</span></li>
-            <li>Apic - <span class="ville">Ruitz</span></li>
-            <li>Arras Maxei Feuchy - <span class="ville">Arras</span></li>
-            <li>Atram - <span class="ville">Fleurbaix</span></li>
-            <li>Bati Pat Services - <span class="ville">Loos-en-Gohelle</span></li>
-            <li>Ben Alu - <span class="ville">Liévin</span></li>
-            <li>Bouillet - <span class="ville">Wavrin</span></li>
-            <li>Breschard - <span class="ville">Wahagnies</span></li>
-            <li>Carosserie Barre - <span class="ville">Sallaumines</span></li>
-            <li>Cime Environnement - <span class="ville">Labourse</span></li>
-            <li>Max Mine - <span class="ville">Béthune</span></li>
-            <li>Mecatec - <span class="ville">Quiéry La Motte</span></li>
-            <li>Module Espace Alu - <span class="ville">Sailly-La-Bourse</span></li>
-            <li>M.S.T.I - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Nord tuyauterie - <span class="ville">Billy-Montigny</span></li>
-            <li>Ortec Friedlander - <span class="ville">Douvrin</span></li>
-            <li>Palchem - <span class="ville">Angres</span></li>
-            <li>Panien - <span class="ville">Inchy-En-Artois</span></li>
-            <li>Peme - <span class="ville">Gourdin</span></li>
-            <li>Polybat Alu - <span class="ville">Herlies</span></li>
-            <li>SMCI - <span class="ville">Vendin-Le-Vieil</span></li>
-            <li>Snaam - <span class="ville">Liévin</span></li>
-            <li>SNCF - <span class="ville">Achicourt</span></li>
-            <li>STBE - <span class="ville">Ruitz</span></li>
-            <li>STID - <span class="ville">Courrieres</span></li>
-            <li>STIN Verdon - <span class="ville">Douvrin</span></li>
-            <li> TCB - <span class="ville">Bruay-La-Buissière</span></li>
-            <li>TCM - <span class="ville">Sains-en-Gohelle</span></li>
-            <li>TDI - <span class="ville">Liévin</span></li>
-            <li>Techni Gaine Plus - <span class="ville">Saint-Laurent-Blangy</span></li>
-            <li>Terberg Matec - <span class="ville">Grenay</span></li>
-            <li>Tuyauteurs 4 vents - <span class="ville">La Comte</span></li>
-            <li>Vasseur Serrurerie et Métallerie - <span class="ville">Méricourt</span></li>
-            <li>Vitalis - <span class="ville">Violaines</span></li>
-            <li>Wehr Groupe</li>
+      <details>
+        <summary>
+          <div class="sum-left">
+            <div class="sum-title">🛠️ Technicien Chaudronnier</div>
+            <div class="counter" aria-live="polite"></div>
+          </div>
+          <div class="chev">▾</div>
+        </summary>
+        <div class="panel">
+          <ul class="place-list">
+            <li>🏢 Rouby Industrie <span class="ville">Lens</span></li>
+            <li>🏢 Groupe Beaucourt <span class="ville">Billy-Berclau</span></li>
+            <li>🏢 BENALU <span class="ville">Liévin</span></li>
+            <li>🏢 STBE <span class="ville">Ruitz</span></li>
+            <li>🏢 Maxystem <span class="ville">Lens</span></li>
+            <li>🏢 ETCI <span class="ville">Lens</span></li>
+            <li>🏢 AFPI Alternance <span class="ville">Hénin-Beaumont</span></li>
+            <li>🏢 SETRACO <span class="ville">Aniche</span></li>
+            <li>🏢 Chaudsoud <span class="ville">Loison-sous-Lens</span></li>
+            <li>🏢 CSM Industrie <span class="ville">Sallaumines</span></li>
+            <li>🏢 Qualitub <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>🏢 Ramery <span class="ville">Avion</span></li>
+            <li>🏢 Renard <span class="ville">Loison-sous-Lens</span></li>
+            <li>🏢 RTE <span class="ville">Béthune</span></li>
+            <li>🏢 RZ Jardin Multi Services <span class="ville">Saint-en-Gohelle</span></li>
+            <li>🏢 SADE <span class="ville">Lens</span></li>
+            <li>🏢 Satmi <span class="ville">Wingles</span></li>
+            <li>🏢 Secre Energie <span class="ville">Lens</span></li>
+            <li>🏢 SET <span class="ville">Rouvroy</span></li>
+            <li>🏢 SGE GPE <span class="ville">Billy-Montigny</span></li>
+            <li>🏢 CMBH <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 CML Indus <span class="ville">Wingles</span></li>
+            <li>🏢 Couverture Charpente Solaire <span class="ville">Bully-Les-Mines</span></li>
+            <li>🏢 Cressent <span class="ville">Sains-en-Gohelle</span></li>
+            <li>🏢 Cromi <span class="ville">Oppi</span></li>
+            <li>🏢 CTA <span class="ville">Calonne-Ricouart</span></li>
+            <li>🏢 Dassault Aviation <span class="ville">Seclin</span></li>
+            <li>🏢 Decima <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 Delemazure <span class="ville">Haisnes</span></li>
+            <li>🏢 Deligny <span class="ville">Saint-Pôle-Sur-Ternoise</span></li>
+            <li>🏢 Delobelle <span class="ville">Douai</span></li>
+            <li>🏢 Destée Chaudronnerie <span class="ville">Flines-lez-Raches</span></li>
+            <li>🏢 Flinois <span class="ville">Dourges</span></li>
+            <li>🏢 FMS Poulet <span class="ville">Aix-Noulette</span></li>
+            <li>🏢 Haagen Dazs <span class="ville">Arras</span></li>
+            <li>🏢 Heripret <span class="ville">Wingles</span></li>
+            <li>🏢 Huwer <span class="ville">Ruitz</span></li>
+            <li>🏢 J2C Chaudronnerie <span class="ville">La Comté</span></li>
+            <li>🏢 KY Plast <span class="ville">Ruitz</span></li>
+            <li>🏢 LDMD <span class="ville">Lens</span></li>
+            <li>🏢 Loridan <span class="ville">Violaines</span></li>
+            <li>🏢 DPI <span class="ville">Feuchy</span></li>
+            <li>🏢 EBTM <span class="ville">Harnes</span></li>
+            <li>🏢 Eiffage <span class="ville">Béthune</span></li>
+            <li>🏢 Eiffage <span class="ville">Lens</span></li>
+            <li>🏢 EIM <span class="ville">Douvrin</span></li>
+            <li>🏢 Emip <span class="ville">Somme</span></li>
+            <li>🏢 Endel <span class="ville">Lens</span></li>
+            <li>🏢 Escaliers Delalleau <span class="ville">Aix-Noulette</span></li>
+            <li>🏢 ETCI <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>🏢 Eurogaz <span class="ville">Lens</span></li>
+            <li>🏢 Fer et Alu <span class="ville">Liévin</span></li>
+            <li>🏢 ACIP Chaudronnerie <span class="ville">Phalempin</span></li>
+            <li>🏢 ACMB <span class="ville">Beuvry</span></li>
+            <li>🏢 Actri <span class="ville">Noeux-Les-Mines</span></li>
+            <li>🏢 Alkern <span class="ville">Harnes</span></li>
+            <li>🏢 Apic <span class="ville">Ruitz</span></li>
+            <li>🏢 Arras Maxei Feuchy <span class="ville">Arras</span></li>
+            <li>🏢 Atram <span class="ville">Fleurbaix</span></li>
+            <li>🏢 Bati Pat Services <span class="ville">Loos-en-Gohelle</span></li>
+            <li>🏢 Ben Alu <span class="ville">Liévin</span></li>
+            <li>🏢 Bouillet <span class="ville">Wavrin</span></li>
+            <li>🏢 Breschard <span class="ville">Wahagnies</span></li>
+            <li>🏢 Carosserie Barre <span class="ville">Sallaumines</span></li>
+            <li>🏢 Cime Environnement <span class="ville">Labourse</span></li>
+            <li>🏢 Max Mine <span class="ville">Béthune</span></li>
+            <li>🏢 Mecatec <span class="ville">Quiéry La Motte</span></li>
+            <li>🏢 Module Espace Alu <span class="ville">Sailly-La-Bourse</span></li>
+            <li>🏢 M.S.T.I <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>🏢 Nord tuyauterie <span class="ville">Billy-Montigny</span></li>
+            <li>🏢 Ortec Friedlander <span class="ville">Douvrin</span></li>
+            <li>🏢 Palchem <span class="ville">Angres</span></li>
+            <li>🏢 Panien <span class="ville">Inchy-En-Artois</span></li>
+            <li>🏢 Peme <span class="ville">Gourdin</span></li>
+            <li>🏢 Polybat Alu <span class="ville">Herlies</span></li>
+            <li>🏢 SMCI <span class="ville">Vendin-Le-Vieil</span></li>
+            <li>🏢 Snaam <span class="ville">Liévin</span></li>
+            <li>🏢 SNCF <span class="ville">Achicourt</span></li>
+            <li>🏢 STBE <span class="ville">Ruitz</span></li>
+            <li>🏢 STID <span class="ville">Courrieres</span></li>
+            <li>🏢 STIN Verdon <span class="ville">Douvrin</span></li>
+            <li>🏢 TCB <span class="ville">Bruay-La-Buissière</span></li>
+            <li>🏢 TCM <span class="ville">Sains-en-Gohelle</span></li>
+            <li>🏢 TDI <span class="ville">Liévin</span></li>
+            <li>🏢 Techni Gaine Plus <span class="ville">Saint-Laurent-Blangy</span></li>
+            <li>🏢 Terberg Matec <span class="ville">Grenay</span></li>
+            <li>🏢 Tuyauteurs 4 vents <span class="ville">La Comte</span></li>
+            <li>🏢 Vasseur Serrurerie et Métallerie <span class="ville">Méricourt</span></li>
+            <li>🏢 Vitalis <span class="ville">Violaines</span></li>
+            <li>🏢 Wehr Groupe</li>
           </ul>
-        </details>
-      </section>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot-inner">
+      <span>© <span id="year"></span> PFMP HENRI DARRAS</span>
+      <span>PFMP HENRI DARRAS • 2025</span>
     </div>
-  </div>
- <script>
-  // Base de données des temps de trajet
-  const tempsTrajets = {
-    "Ablain-Saint-Nazaire": { temps: "13 min", mode: "🚌 Bus" },
-    "Achicourt": { temps: "29 min", mode: "🚌 Bus" },
-    "Aix-Noulette": { temps: "35 min", mode: "🚌 Bus" },
-    "Arras": { temps: "22 min", mode: "🚆 Train" },
-    "Auchy-Les-Mines": { temps: "32 min", mode: "🚌 Bus" },
-    "Avion": { temps: "18 min", mode: "🚌 Bus" },
-    "Billy-Montigny": { temps: "35 min", mode: "🚌 Bus" },
-    "Bruay-La-Buissière": { temps: "62 min", mode: "🚆 Train" },
-    "Bully-Les-Mines": { temps: "14 min", mode: "🚌 Bus" },
-    "Béthune": { temps: "25 min", mode: "🚆 Train" },
-    "Carvin": { temps: "38 min", mode: "🚆 Train" },
-    "Courrieres": { temps: "11 min", mode: "🚌 Bus" },
-    "Dainville": { temps: "30 min", mode: "🚌 Bus" },
-    "Dourges": { temps: "61 min", mode: "🚆 Train" },
-    "Douvrin": { temps: "7 min", mode: "🚌 Bus" },
-    "Grenay": { temps: "66 min", mode: "🚆 Train" },
-    "Hénin-Beaumont": { temps: "61 min", mode: "🚆 Train" },
-    "Labourse": { temps: "74 min", mode: "🚆 Train" },
-    "Lens": { temps: "11 min", mode: "🚌 Bus" },
-    "Lille": { temps: "59 min", mode: "🚆 Train" },
-    "Liévin": { temps: "5 min", mode: "🚌 Bus" },
-    "Loison-sous-Lens": { temps: "40 min", mode: "🚆 Train" },
-    "Loos-en-Gohelle": { temps: "13 min", mode: "🚌 Bus" },
-    "Mazingarbe": { temps: "13 min", mode: "🚌 Bus" },
-    "Montigny-en-Gohelle": { temps: "19 min", mode: "🚌 Bus" },
-    "Méricourt": { temps: "51 min", mode: "🚆 Train" },
-    "Noyelles-Les-Seclin": { temps: "73 min", mode: "🚆 Train" },
-    "Orchies": { temps: "30 min", mode: "🚆 Train" },
-    "Riaumont": { temps: "14 min", mode: "🚌 Bus" },
-    "Rouvroy": { temps: "44 min", mode: "🚆 Train" },
-    "Sains-en-Gohelle": { temps: "75 min", mode: "🚆 Train" },
-    "Saint-Laurent-Blangy": { temps: "21 min", mode: "🚌 Bus" },
-    "Saint-Pôle-Sur-Ternoise": { temps: "64 min", mode: "🚆 Train" },
-    "Sallaumines": { temps: "35 min", mode: "🚌 Bus" },
-    "Seclin": { temps: "47 min", mode: "🚆 Train" },
-    "Vendin-le-Vieil": { temps: "33 min", mode: "🚌 Bus" },
-    "Villeneuve-d'Ascq": { temps: "51 min", mode: "🚆 Train" },
-    "Vimy": { temps: "8 min", mode: "🚌 Bus" },
-    "Wasquehal": { temps: "53 min", mode: "🚆 Train" },
-    "Wingles": { temps: "19 min", mode: "🚌 Bus" }
-  };
+  </footer>
 
-  // Fonction pour mélanger un tableau (Fisher-Yates)
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+  <script>
+    // ===================== Données temps de trajet =====================
+    const tempsTrajets = {
+      "Ablain-Saint-Nazaire": { temps: "13 min", mode: "🚌 Bus" },
+      "Achicourt": { temps: "29 min", mode: "🚌 Bus" },
+      "Aix-Noulette": { temps: "35 min", mode: "🚌 Bus" },
+      "Arras": { temps: "22 min", mode: "🚆 Train" },
+      "Auchy-Les-Mines": { temps: "32 min", mode: "🚌 Bus" },
+      "Avion": { temps: "18 min", mode: "🚌 Bus" },
+      "Billy-Montigny": { temps: "35 min", mode: "🚌 Bus" },
+      "Bruay-La-Buissière": { temps: "62 min", mode: "🚆 Train" },
+      "Bully-Les-Mines": { temps: "14 min", mode: "🚌 Bus" },
+      "Béthune": { temps: "25 min", mode: "🚆 Train" },
+      "Carvin": { temps: "38 min", mode: "🚆 Train" },
+      "Courrieres": { temps: "11 min", mode: "🚌 Bus" },
+      "Dainville": { temps: "30 min", mode: "🚌 Bus" },
+      "Dourges": { temps: "61 min", mode: "🚆 Train" },
+      "Douvrin": { temps: "7 min", mode: "🚌 Bus" },
+      "Grenay": { temps: "66 min", mode: "🚆 Train" },
+      "Hénin-Beaumont": { temps: "61 min", mode: "🚆 Train" },
+      "Labourse": { temps: "74 min", mode: "🚆 Train" },
+      "Lens": { temps: "11 min", mode: "🚌 Bus" },
+      "Lille": { temps: "59 min", mode: "🚆 Train" },
+      "Liévin": { temps: "5 min", mode: "🚌 Bus" },
+      "Loison-sous-Lens": { temps: "40 min", mode: "🚆 Train" },
+      "Loos-en-Gohelle": { temps: "13 min", mode: "🚌 Bus" },
+      "Mazingarbe": { temps: "13 min", mode: "🚌 Bus" },
+      "Montigny-en-Gohelle": { temps: "19 min", mode: "🚌 Bus" },
+      "Méricourt": { temps: "51 min", mode: "🚆 Train" },
+      "Noyelles-Les-Seclin": { temps: "73 min", mode: "🚆 Train" },
+      "Orchies": { temps: "30 min", mode: "🚆 Train" },
+      "Riaumont": { temps: "14 min", mode: "🚌 Bus" },
+      "Rouvroy": { temps: "44 min", mode: "🚆 Train" },
+      "Sains-en-Gohelle": { temps: "75 min", mode: "🚆 Train" },
+      "Saint-Laurent-Blangy": { temps: "21 min", mode: "🚌 Bus" },
+      "Saint-Pôle-Sur-Ternoise": { temps: "64 min", mode: "🚆 Train" },
+      "Sallaumines": { temps: "35 min", mode: "🚌 Bus" },
+      "Seclin": { temps: "47 min", mode: "🚆 Train" },
+      "Vendin-le-Vieil": { temps: "33 min", mode: "🚌 Bus" },
+      "Villeneuve-d'Ascq": { temps: "51 min", mode: "🚆 Train" },
+      "Vimy": { temps: "8 min", mode: "🚌 Bus" },
+      "Wasquehal": { temps: "53 min", mode: "🚆 Train" },
+      "Wingles": { temps: "19 min", mode: "🚌 Bus" }
+    };
+
+    // ===================== Utilitaires =====================
+    function shuffleArray(array){
+      for(let i=array.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [array[i],array[j]]=[array[j],array[i]];
+      }
+      return array;
     }
-    return array;
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Ajout des temps de trajet
-    document.querySelectorAll('.ville').forEach(span => {
-      const ville = span.textContent.trim();
-      if (tempsTrajets[ville]) {
-        const { temps, mode } = tempsTrajets[ville];
-        span.textContent += ` – ${mode} ${temps}`;
-      }
+    // ===================== Filtres =====================
+    function filterCards(){
+      const input = document.getElementById('searchInput').value.toLowerCase().trim();
+      document.querySelectorAll('section .section details').forEach(d=>{
+        const text = d.innerText.toLowerCase();
+        d.style.display = text.includes(input) ? '' : 'none';
+      });
+    }
+    function filterByFiliere(){
+      const filiere = document.getElementById('filiereSelect').value; // ciel | melec | chaud | all
+      document.querySelectorAll('main .section').forEach(sec=>{
+        sec.style.display = (filiere==='all' || sec.dataset.fil===filiere) ? '' : 'none';
+      });
+    }
+
+    // ===================== Init =====================
+    function applyTrajets(){
+      document.querySelectorAll('.ville').forEach(span=>{
+        const city = span.textContent.trim();
+        const data = tempsTrajets[city];
+        if(data){ span.textContent = `${city} — ${data.mode} ${data.temps}`; }
+      });
+    }
+
+    function mixLists(){
+      document.querySelectorAll('details ul').forEach(ul=>{
+        const items=[...ul.children];
+        shuffleArray(items).forEach(li=>ul.appendChild(li));
+      });
+    }
+
+    // Mélange ciblé d'une seule liste (utilisé à l'ouverture d'un <details>)
+    function shuffleList(ul){
+      const items=[...ul.children];
+      shuffleArray(items).forEach(li=>ul.appendChild(li));
+    }
+
+    function updateCounters(){
+      document.querySelectorAll('details').forEach(d=>{
+        const count = d.querySelectorAll('li').length;
+        const counter = d.querySelector('.counter');
+        if(counter){ counter.textContent = `(${count} lieux)`; }
+      });
+      // totaux par filière (badges)
+      const countBySection = (id)=>[...document.querySelectorAll(`#${id} details li`)].length;
+      document.getElementById('count-ciel').textContent = `(${countBySection('ciel')})`;
+      document.getElementById('count-melec').textContent = `(${countBySection('melec')})`;
+      document.getElementById('count-chaud').textContent = `(${countBySection('chaudronnerie')})`;
+    }
+
+    // Accessibilité : ouvrir/fermer au clavier avec Space/Enter correctement (native ok) + focus style
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.getElementById('year').textContent = new Date().getFullYear();
+      applyTrajets();
+      mixLists();
+      updateCounters();
+      filterByFiliere();
+
+      // Re-mélanger dynamiquement à chaque ouverture d'un bloc
+      document.querySelectorAll('details').forEach(d=>{
+        d.addEventListener('toggle',()=>{
+          if(d.open){
+            const ul = d.querySelector('ul');
+            if(ul) shuffleList(ul);
+            updateCounters();
+          }
+        });
+      });
     });
-
-    // 2. Mélange des lieux de stage dans chaque <ul>
-    document.querySelectorAll('details ul').forEach(ul => {
-      const items = Array.from(ul.children);
-      shuffleArray(items).forEach(li => ul.appendChild(li));
-    });
-
-    // 3. Mise à jour des compteurs de lieux
-    document.querySelectorAll('details').forEach(detail => {
-      const count = detail.querySelectorAll('li').length;
-      const summary = detail.querySelector('summary');
-      if (!summary.innerHTML.includes('lieux')) {
-        summary.innerHTML += ` <span style="color:gray;font-weight:normal;">(${count} lieux)</span>`;
-      }
-    });
-  });
-</script>
-
-
+  </script>
 </body>
 </html>
